@@ -179,7 +179,7 @@ namespace CoffeShop.Migrations
             modelBuilder.Entity("CoffeShop.Models.Item", b =>
                 {
                     b.HasOne("CoffeShop.Models.ItemGroup", "Group")
-                        .WithMany()
+                        .WithMany("GroupItems")
                         .HasForeignKey("GroupId");
 
                     b.HasOne("CoffeShop.Models.Order")

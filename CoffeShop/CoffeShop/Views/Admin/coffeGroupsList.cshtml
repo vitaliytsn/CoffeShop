@@ -5,10 +5,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Групи товарів</h2>
 
 <p>
-    <a asp-action="CreateCoffeGroup">Create New</a>
+    <a asp-action="CreateCoffeGroup">Створити нову групу</a>
 </p>
 <table class="table">
     <thead>
@@ -32,15 +32,7 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-            @Html.ActionLink(
-                "Додай Продукт До Групи",
-                "CreateItemInGroup",            // controller action
-                "Admin",        // controller
-                new { groupId = item.Id })        
-            </td>
-            <td>
                 <a asp-action="EditCoffeGroup" asp-route-id="@item.Id">Едитуй Групу</a> |||
-                <a asp-action="CoffeGroupDetails" asp-route-id="@item.Id">Деталі</a>
             </td>
         </tr>
 }

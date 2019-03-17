@@ -16,8 +16,10 @@ namespace CoffeShop.Controllers
     {
         private readonly IRepository<ItemGroup, CoffeShopContext> _itemGroupRepository;
         private readonly IRepository<Item, CoffeShopContext> _itemRepository;
-        public AdminController(IRepository<ItemGroup, CoffeShopContext> itemGroupRepository, IRepository<Item, CoffeShopContext> itemRepository)
+        private readonly CoffeShopContext _context;
+        public AdminController(CoffeShopContext context,IRepository<ItemGroup, CoffeShopContext> itemGroupRepository, IRepository<Item, CoffeShopContext> itemRepository)
         {
+            _context = context;
             _itemRepository = itemRepository;
             _itemGroupRepository = itemGroupRepository;
         }
@@ -90,13 +92,18 @@ namespace CoffeShop.Controllers
         {
             item.Group = _itemGroupRepository.GetByID(item.Group.Id);
             _itemRepository.Add(item);
-            return RedirectToAction(nameof(CoffeGroupsList));
+            return RedirectToAction(nameof(EditCoffeGroup), new { id = item.Group.Id });
         }
         public ActionResult ItemListPartial(int X, int Y,int groupId)
         {
             ViewBag.Width = X / 12;
             ViewBag.Height = Y / 12;
-            List<Item> items = _itemRepository.GetAll().Where(x=>x.Group.Id==groupId).ToList();
+            ViewBag.GroupId = groupId;
+            
+            List<Item> items = _context.Set<Item>().Include(item => item.Group).Where(x=>x.Group.Id==groupId)
+                    .ToList();              
+            
+           // List<Item> items = _itemRepository.GetAll().Where(x=>x.Group.Id==groupId).ToList();
             return PartialView(items);
         }
 
@@ -113,7 +120,11 @@ namespace CoffeShop.Controllers
             {
                 try
                 {
-                    _itemGroupRepository.Update(itemGroup);
+                    ItemGroup toEdit = _context.Set<ItemGroup>().Find(id);
+                    toEdit.Description = itemGroup.Description;
+                    toEdit.Name = itemGroup.Name;
+                    _context.Set<ItemGroup>().Update(toEdit);
+                   // _itemGroupRepository.Update(itemGroup);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -160,6 +171,20 @@ namespace CoffeShop.Controllers
             return RedirectToAction(nameof(Index));
         }
         */
+        public ActionResult EditItem(int itemId)
+        {
+            Item item = _context.Set<Item>().Include(items => items.Group).Where(x => x.Id == itemId)
+                .ToList().FirstOrDefault();
+            ViewBag.GroupId = item.Group.Id;
+            return View(item);
+        }
+        [HttpPost]
+        public ActionResult EditItem(Item item)
+        {
+            _itemRepository.Update(item);
+            return RedirectToAction(nameof(EditCoffeGroup), new { id = item.Group.Id });
+        }
+
         private bool ItemGroupExists(int id)
         {
             return _itemGroupRepository.GetByID(id)==null;

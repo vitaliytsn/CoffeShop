@@ -29,7 +29,7 @@ namespace CoffeShop.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
+            builder.Entity<Item>().HasOne(s => s.Group).WithMany(s=>s.GroupItems);
         }
     }
 }
