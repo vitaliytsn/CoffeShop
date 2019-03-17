@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoffeShop.Migrations
 {
     [DbContext(typeof(CoffeShopContext))]
-    [Migration("20190317112826_FirstAttempt")]
+    [Migration("20190317202549_FirstAttempt")]
     partial class FirstAttempt
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,7 +55,7 @@ namespace CoffeShop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Descrition");
+                    b.Property<string>("Description");
 
                     b.Property<int?>("GroupId");
 
@@ -181,7 +181,7 @@ namespace CoffeShop.Migrations
             modelBuilder.Entity("CoffeShop.Models.Item", b =>
                 {
                     b.HasOne("CoffeShop.Models.ItemGroup", "Group")
-                        .WithMany()
+                        .WithMany("GroupItems")
                         .HasForeignKey("GroupId");
 
                     b.HasOne("CoffeShop.Models.Order")

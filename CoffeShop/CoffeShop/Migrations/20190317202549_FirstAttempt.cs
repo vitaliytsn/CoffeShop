@@ -116,7 +116,7 @@ namespace CoffeShop.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    Descrition = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
                     GroupId = table.Column<int>(nullable: true),
                     Price = table.Column<double>(nullable: false),
                     OrderId = table.Column<int>(nullable: true)

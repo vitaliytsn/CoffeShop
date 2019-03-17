@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CoffeShop.Models
 {
@@ -9,8 +10,11 @@ namespace CoffeShop.Models
                 Group = new ItemGroup();
         }
         public int Id { get; set; }
+        [Display(Name="Назва")]
         public string Name { get; set; }
-        public string Descrition { get; set; }
+        [Display(Name = "Опис")]
+        public string Description { get; set; }
+        
         public ItemGroup Group { get; set; }
         public List<ItemComponent> ItemComponents { get; set; }
         public List<ItemImage> Images { get; set; }

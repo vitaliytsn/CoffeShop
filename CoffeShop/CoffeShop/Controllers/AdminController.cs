@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CoffeShop.Data;
 using CoffeShop.Models;
 using CoffeShop.Repository;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Metadata.Internal; 
 
 namespace CoffeShop.Controllers
 {
@@ -24,6 +24,8 @@ namespace CoffeShop.Controllers
             _itemGroupRepository = itemGroupRepository;
         }
 
+        #region CoffeGroup
+  
         public async Task<IActionResult> CoffeGroupsList()
         {
             return View(_itemGroupRepository.GetAll());
@@ -80,32 +82,7 @@ namespace CoffeShop.Controllers
             return View(itemGroup);
         }
 
-        public ActionResult CreateItemInGroup(int groupId)
-        {
-            Item item = new Item();
-            item.Group = _itemGroupRepository.GetByID(groupId);
-            return View(item);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateItemInGroup(Item item)
-        {
-            item.Group = _itemGroupRepository.GetByID(item.Group.Id);
-            _itemRepository.Add(item);
-            return RedirectToAction(nameof(EditCoffeGroup), new { id = item.Group.Id });
-        }
-        public ActionResult ItemListPartial(int X, int Y,int groupId)
-        {
-            ViewBag.Width = X / 12;
-            ViewBag.Height = Y / 12;
-            ViewBag.GroupId = groupId;
-            
-            List<Item> items = _context.Set<Item>().Include(item => item.Group).Where(x=>x.Group.Id==groupId)
-                    .ToList();              
-            
-           // List<Item> items = _itemRepository.GetAll().Where(x=>x.Group.Id==groupId).ToList();
-            return PartialView(items);
-        }
+     
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -141,36 +118,69 @@ namespace CoffeShop.Controllers
             }
             return View(itemGroup);
         }
-
-  /*      // GET: Admin/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        private bool ItemGroupExists(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var itemGroup = await _context.ItemGroups
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (itemGroup == null)
-            {
-                return NotFound();
-            }
-
-            return View(itemGroup);
+            return _itemGroupRepository.GetByID(id) == null;
         }
+        #endregion
+        /*      // GET: Admin/Delete/5
+              public async Task<IActionResult> Delete(int? id)
+              {
+                  if (id == null)
+                  {
+                      return NotFound();
+                  }
 
-        // POST: Admin/Delete/5
-        [HttpPost, ActionName("Delete")]
+                  var itemGroup = await _context.ItemGroups
+                      .FirstOrDefaultAsync(m => m.Id == id);
+                  if (itemGroup == null)
+                  {
+                      return NotFound();
+                  }
+
+                  return View(itemGroup);
+              }
+
+              // POST: Admin/Delete/5
+              [HttpPost, ActionName("Delete")]
+              [ValidateAntiForgeryToken]
+              public async Task<IActionResult> DeleteConfirmed(int id)
+              {
+                  var itemGroup = await _context.ItemGroups.FindAsync(id);
+                  _context.ItemGroups.Remove(itemGroup);
+                  await _context.SaveChangesAsync();
+                  return RedirectToAction(nameof(Index));
+              }
+              */
+
+        #region Item
+
+        public ActionResult CreateItemInGroup(int groupId)
+        {
+            Item item = new Item();
+            item.Group = _itemGroupRepository.GetByID(groupId);
+            return View(item);
+        }
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public ActionResult CreateItemInGroup(Item item)
         {
-            var itemGroup = await _context.ItemGroups.FindAsync(id);
-            _context.ItemGroups.Remove(itemGroup);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            item.Group = _itemGroupRepository.GetByID(item.Group.Id);
+            _itemRepository.Add(item);
+            return RedirectToAction(nameof(EditCoffeGroup), new { id = item.Group.Id });
         }
-        */
+        public ActionResult ItemListPartial(int X, int Y, int groupId)
+        {
+            ViewBag.Width = X / 12;
+            ViewBag.Height = Y / 12;
+            ViewBag.GroupId = groupId;
+
+            List<Item> items = _context.Set<Item>().Include(item => item.Group).Where(x => x.Group.Id == groupId)
+                .ToList();
+
+            // List<Item> items = _itemRepository.GetAll().Where(x=>x.Group.Id==groupId).ToList();
+            return PartialView(items);
+        }
         public ActionResult EditItem(int itemId)
         {
             Item item = _context.Set<Item>().Include(items => items.Group).Where(x => x.Id == itemId)
@@ -184,10 +194,7 @@ namespace CoffeShop.Controllers
             _itemRepository.Update(item);
             return RedirectToAction(nameof(EditCoffeGroup), new { id = item.Group.Id });
         }
-
-        private bool ItemGroupExists(int id)
-        {
-            return _itemGroupRepository.GetByID(id)==null;
-        }
+        #endregion
+      
     }
 }

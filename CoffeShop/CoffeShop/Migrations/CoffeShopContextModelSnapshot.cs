@@ -53,7 +53,7 @@ namespace CoffeShop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Descrition");
+                    b.Property<string>("Description");
 
                     b.Property<int?>("GroupId");
 
