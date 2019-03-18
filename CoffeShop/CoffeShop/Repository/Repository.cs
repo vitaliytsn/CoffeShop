@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CoffeShop.Repository
 {
-    public class Repository<T, TContext> : IRepository<T, TContext> where T : class where TContext : DbContext
+    public class Repository<T, TContext> : IRepository<T, TContext> where T : IRepoEntity where TContext : DbContext
     {
         private const int _constraintErrorNumber = 547;
         protected DbContext _dbContext;
@@ -65,7 +65,8 @@ namespace CoffeShop.Repository
 
         public void Update(T item)
         {
-            _dbContext.Entry(item).CurrentValues.SetValues(item);
+            T toUpdate = _dbContext.Set<T>().Find(item.Id);
+            _dbContext.Entry(toUpdate).CurrentValues.SetValues(item);
             _dbContext.SaveChanges();
         }
 

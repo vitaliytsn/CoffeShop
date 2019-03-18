@@ -4,14 +4,16 @@ using CoffeShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CoffeShop.Migrations
 {
     [DbContext(typeof(CoffeShopContext))]
-    partial class CoffeShopContextModelSnapshot : ModelSnapshot
+    [Migration("20190318193120_ComponentDescription")]
+    partial class ComponentDescription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,17 +82,17 @@ namespace CoffeShop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Amount");
-
-                    b.Property<int?>("ComponentItemId");
-
                     b.Property<int?>("CurrentComponentId");
+
+                    b.Property<int?>("ItemId");
+
+                    b.Property<double>("amount");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ComponentItemId");
-
                     b.HasIndex("CurrentComponentId");
+
+                    b.HasIndex("ItemId");
 
                     b.ToTable("ItemComponents");
                 });
@@ -191,13 +193,13 @@ namespace CoffeShop.Migrations
 
             modelBuilder.Entity("CoffeShop.Models.ItemComponent", b =>
                 {
-                    b.HasOne("CoffeShop.Models.Item", "ComponentItem")
-                        .WithMany("ItemComponents")
-                        .HasForeignKey("ComponentItemId");
-
                     b.HasOne("CoffeShop.Models.Component", "CurrentComponent")
                         .WithMany()
                         .HasForeignKey("CurrentComponentId");
+
+                    b.HasOne("CoffeShop.Models.Item")
+                        .WithMany("ItemComponents")
+                        .HasForeignKey("ItemId");
                 });
 
             modelBuilder.Entity("CoffeShop.Models.ItemImage", b =>

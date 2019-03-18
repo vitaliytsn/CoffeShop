@@ -4,14 +4,16 @@ using CoffeShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CoffeShop.Migrations
 {
     [DbContext(typeof(CoffeShopContext))]
-    partial class CoffeShopContextModelSnapshot : ModelSnapshot
+    [Migration("20190318200907_ItemComponentReference")]
+    partial class ItemComponentReference
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

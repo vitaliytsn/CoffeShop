@@ -39,8 +39,12 @@ namespace CoffeShop
 
             services.AddScoped<IRepository<Item, CoffeShopContext>,
                 Repository<Item, CoffeShopContext>>();
+            services.AddScoped<IRepository<Component, CoffeShopContext>,
+                Repository<Component, CoffeShopContext>>();
             services.AddScoped<IRepository<ItemGroup, CoffeShopContext>,
                 Repository<ItemGroup, CoffeShopContext>>();
+            services.AddScoped<IRepository<ItemComponent, CoffeShopContext>,
+                Repository<ItemComponent, CoffeShopContext>>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

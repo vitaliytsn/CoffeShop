@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoffeShop.Repository;
 
 namespace CoffeShop.Models
 {
-    public class Order
+    public class Order : IRepoEntity
     {
-        public int Id { get; set; } 
         public User CreatorUser { get; set; }
         public List<Item> OrderedItems { get; set; }
     }

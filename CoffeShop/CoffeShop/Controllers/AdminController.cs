@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CoffeShop.Data;
 using CoffeShop.Models;
+using CoffeShop.Models.ViewModels;
 using CoffeShop.Repository;
 using Microsoft.EntityFrameworkCore.Metadata.Internal; 
 
@@ -16,9 +17,13 @@ namespace CoffeShop.Controllers
     {
         private readonly IRepository<ItemGroup, CoffeShopContext> _itemGroupRepository;
         private readonly IRepository<Item, CoffeShopContext> _itemRepository;
+        private readonly IRepository<Component, CoffeShopContext> _componentRepository;
+        private readonly IRepository<ItemComponent, CoffeShopContext> _itemComponentRepository;
         private readonly CoffeShopContext _context;
-        public AdminController(CoffeShopContext context,IRepository<ItemGroup, CoffeShopContext> itemGroupRepository, IRepository<Item, CoffeShopContext> itemRepository)
+        public AdminController(IRepository<ItemComponent, CoffeShopContext> itemComponentRepository, IRepository<Component, CoffeShopContext> componentRepository, CoffeShopContext context,IRepository<ItemGroup, CoffeShopContext> itemGroupRepository, IRepository<Item, CoffeShopContext> itemRepository)
         {
+            _itemGroupRepository = itemGroupRepository;
+            _componentRepository = componentRepository;
             _context = context;
             _itemRepository = itemRepository;
             _itemGroupRepository = itemGroupRepository;
@@ -97,11 +102,7 @@ namespace CoffeShop.Controllers
             {
                 try
                 {
-                    ItemGroup toEdit = _context.Set<ItemGroup>().Find(id);
-                    toEdit.Description = itemGroup.Description;
-                    toEdit.Name = itemGroup.Name;
-                    _context.Set<ItemGroup>().Update(toEdit);
-                   // _itemGroupRepository.Update(itemGroup);
+                     _itemGroupRepository.Update(itemGroup);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -153,7 +154,7 @@ namespace CoffeShop.Controllers
               }
               */
 
-        #region Item
+        #region Items
 
         public ActionResult CreateItemInGroup(int groupId)
         {
@@ -190,11 +191,57 @@ namespace CoffeShop.Controllers
         }
         [HttpPost]
         public ActionResult EditItem(Item item)
-        {
+        {           
             _itemRepository.Update(item);
             return RedirectToAction(nameof(EditCoffeGroup), new { id = item.Group.Id });
         }
         #endregion
-      
+
+        #region Components
+
+        public ActionResult ComponentsList()
+        {
+            return View(_componentRepository.GetAll());
+        }
+
+        public ActionResult ComponentCreate()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ComponentCreate(Component component)
+        {
+            _componentRepository.Add(component);
+            return RedirectToAction(nameof(ComponentsList));
+        }
+
+        #endregion
+
+        #region ItemComponents
+
+        public ActionResult ItemComponentListPartial(int itemId)
+        {
+            List<ItemComponent> itemComponents= new List<ItemComponent>();
+            foreach (var component in _context.Set<Item>().Include(item => item.ItemComponents).Where(x => x.Id == itemId)
+                .ToList().FirstOrDefault().ItemComponents)
+            {
+            itemComponents.Add(component);
+            }           
+            return PartialView(itemComponents);
+        }
+
+        public ActionResult ItemComponentCreate(int itemId)
+        {
+            ItemComponent itemComponent = new ItemComponent();
+            itemComponent.ComponentItem = _itemRepository.GetByID(itemId);
+
+           /* ItemComponentVM vm = new ItemComponentVM();
+            vm.ComponentsList = _componentRepository.GetAll().ToList();
+            vm.ItemComponentCurrent = itemComponent;*/
+            ViewBag.Components = _componentRepository.GetAll().ToList();
+            return View(itemComponent);
+        }
+
+        #endregion
     }
 }

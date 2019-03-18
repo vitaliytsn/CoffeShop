@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CoffeShop.Repository
 {
-    public interface IRepository<T, TContext> where T : class where TContext : DbContext
+    public interface IRepository<T, TContext> where T : IRepoEntity where TContext : DbContext
     {
         List<string> CoughtConstraints { get; set; }
         IEnumerable<T> GetAll();

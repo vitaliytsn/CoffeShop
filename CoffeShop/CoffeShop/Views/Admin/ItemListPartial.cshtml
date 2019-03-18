@@ -11,7 +11,7 @@
     <thead>
     <td>
     @Html.ActionLink(
-        "Додай Продукт До Групи",
+        "Додати Продукт До Групи",
         "CreateItemInGroup",            // controller action
         "Admin",        // controller
         new { groupId = @ViewBag.GroupId })        
@@ -43,11 +43,11 @@
             </td>
             <td>
                 @Html.ActionLink(
-                    "Едитуй товар",
+                    "Едитувати",
                     "EditItem",            // controller action
                     "Admin",        // controller
                     new { itemId = item.Id }) |||
-                <a asp-action="Details" asp-route-id="@item.Id">Деталбніше</a> ||||
+                <a asp-action="Details" asp-route-id="@item.Id">Детальніше</a> ||||
                 <a asp-action="Delete" asp-route-id="@item.Id">Усунути товар</a>
             </td>
         </tr>

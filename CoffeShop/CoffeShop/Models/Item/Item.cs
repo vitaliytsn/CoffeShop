@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using CoffeShop.Repository;
 
 namespace CoffeShop.Models
 {
-    public class Item
+    public class Item : IRepoEntity
     {
         public Item()
         {
                 Group = new ItemGroup();
         }
-        public int Id { get; set; }
         [Display(Name="Назва")]
         public string Name { get; set; }
         [Display(Name = "Опис")]
