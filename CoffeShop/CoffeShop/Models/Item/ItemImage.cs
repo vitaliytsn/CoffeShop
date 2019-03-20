@@ -11,7 +11,7 @@ namespace CoffeShop.Models
     {
         public ItemImage()
         {
-
+            Active = true;
         }
         public ItemImage(Item item, byte[] Image)
         {
@@ -20,5 +20,6 @@ namespace CoffeShop.Models
         }
         public int itemId { get; set; }
         public byte[] image { get; set; }
+        public bool Active { get; set; }
     }
 }

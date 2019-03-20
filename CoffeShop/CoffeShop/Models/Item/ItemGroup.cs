@@ -9,10 +9,15 @@ namespace CoffeShop.Models
 {
     public class ItemGroup : IRepoEntity
     {
+        public ItemGroup()
+        {
+            Active = true;
+        }
         [Display(Name = "Назва")]
         public string Name { get; set; }
         [Display(Name = "Опис")]
         public string Description { get; set; }
         public List<Item> GroupItems { get; set; }
+        public bool Active { get; set; }
     }
 }

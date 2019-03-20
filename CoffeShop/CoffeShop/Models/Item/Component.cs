@@ -9,9 +9,15 @@ namespace CoffeShop.Models
 {
     public class Component: IRepoEntity
     {
+        public Component()
+        {
+            Active = true;
+        }
         [Display(Name="Назва")]
         public string Name { get; set; }
         [Display(Name = "Опис")]
         public  string Description { get; set; }
+
+        public bool Active { get; set; }
     }
 }

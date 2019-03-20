@@ -22,6 +22,7 @@ namespace CoffeShop.Controllers
         private readonly CoffeShopContext _context;
         public AdminController(IRepository<ItemComponent, CoffeShopContext> itemComponentRepository, IRepository<Component, CoffeShopContext> componentRepository, CoffeShopContext context,IRepository<ItemGroup, CoffeShopContext> itemGroupRepository, IRepository<Item, CoffeShopContext> itemRepository)
         {
+            _itemComponentRepository = itemComponentRepository;
             _itemGroupRepository = itemGroupRepository;
             _componentRepository = componentRepository;
             _context = context;
@@ -240,7 +241,7 @@ namespace CoffeShop.Controllers
             List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> selectListItems = new List<SelectListItem>();             
             foreach (var component in _componentRepository.GetAll())
             {
-                selectListItems.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(component.Id.ToString(), component.Id.ToString()));
+                selectListItems.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(component.Name, component.Id.ToString()));
             }
             ViewBag.Components = selectListItems;
             return View(itemComponent);
@@ -248,8 +249,11 @@ namespace CoffeShop.Controllers
 
         [HttpPost]
         public ActionResult ItemComponentCreate(ItemComponent itemComponent)
-        {
-            return RedirectToAction(nameof(EditItem), new {itemId = itemComponent.ComponentItem.Id});
+        {           
+            itemComponent.ComponentItem = _itemRepository.GetByID(itemComponent.ComponentItem.Id);
+            itemComponent.CurrentComponent = _componentRepository.GetByID(itemComponent.CurrentComponent.Id);         
+            _itemComponentRepository.Add(itemComponent);
+            return RedirectToAction(nameof(EditItem), new {itemId = itemComponent.ComponentItem.Id });
         }
 
         #endregion
