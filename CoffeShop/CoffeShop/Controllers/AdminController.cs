@@ -226,7 +226,9 @@ namespace CoffeShop.Controllers
                 .ToList().FirstOrDefault().ItemComponents)
             {
             itemComponents.Add(component);
-            }           
+            }
+
+            ViewBag.ItemId = itemId;
             return PartialView(itemComponents);
         }
 
@@ -235,13 +237,21 @@ namespace CoffeShop.Controllers
             ItemComponent itemComponent = new ItemComponent();
             itemComponent.ComponentItem = _itemRepository.GetByID(itemId);
 
-           /* ItemComponentVM vm = new ItemComponentVM();
-            vm.ComponentsList = _componentRepository.GetAll().ToList();
-            vm.ItemComponentCurrent = itemComponent;*/
-            ViewBag.Components = _componentRepository.GetAll().ToList();
+            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> selectListItems = new List<SelectListItem>();             
+            foreach (var component in _componentRepository.GetAll())
+            {
+                selectListItems.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(component.Id.ToString(), component.Id.ToString()));
+            }
+            ViewBag.Components = selectListItems;
             return View(itemComponent);
         }
 
+        [HttpPost]
+        public ActionResult ItemComponentCreate(ItemComponent itemComponent)
+        {
+            return RedirectToAction(nameof(EditItem), new {itemId = itemComponent.ComponentItem.Id});
+        }
+
         #endregion
-    }
+        }
 }

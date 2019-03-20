@@ -6,20 +6,25 @@
 
 <h2>Список Компонентів</h2>
 
-<p>
-    <a asp-action="ItemComponentCreate">Додати компонент до товару</a>
-</p>
 <table class="table">
+    <td>
+    @Html.ActionLink(
+        "Додати складник до товару",
+        "ItemComponentCreate",            // controller action
+        "Admin",        // controller
+        new { groupId = @ViewBag.ItemId })        
+    </td>
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Amount)
@@ -30,6 +35,6 @@
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>

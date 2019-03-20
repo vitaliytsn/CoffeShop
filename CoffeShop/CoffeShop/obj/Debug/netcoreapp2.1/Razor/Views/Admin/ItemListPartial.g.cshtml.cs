@@ -160,7 +160,7 @@ Write(Html.ActionLink(
             WriteLiteral(" |||\r\n                ");
             EndContext();
             BeginContext(1316, 62, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7971dd69fb5a4be296b19f5743cd9b74", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7593d71f61d74cd8b5b3c06e82eea068", async() => {
                 BeginContext(1364, 10, true);
                 WriteLiteral("Детальніше");
                 EndContext();
@@ -195,7 +195,7 @@ Write(Html.ActionLink(
             WriteLiteral(" ||||\r\n                ");
             EndContext();
             BeginContext(1401, 64, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f24f8f0860964c30a6574c4ab236910e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bf84f87ececa43a292077ac5c1d46e61", async() => {
                 BeginContext(1448, 13, true);
                 WriteLiteral("Усунути товар");
                 EndContext();
