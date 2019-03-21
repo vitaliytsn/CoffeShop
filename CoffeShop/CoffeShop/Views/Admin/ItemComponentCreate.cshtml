@@ -4,9 +4,8 @@
     ViewData["Title"] = "ItemComponentCreate";
 }
 
-<h2>ItemComponentCreate</h2>
+<h2>Новий Складник Товару</h2>
 
-<h4>ItemComponent</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,7 +13,7 @@
             @Html.HiddenFor(model => model.ComponentItem.Id)
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CurrentComponent.Id" class="control-label">Teacher</label>
+                <label asp-for="CurrentComponent.Id" class="control-label">Складники</label>
                 <select asp-for="CurrentComponent.Id" class="form-control" asp-items="ViewBag.Components"></select>
                 <span asp-validation-for="CurrentComponent" class="text-danger"></span>
             </div>
@@ -24,13 +23,19 @@
                 <span asp-validation-for="Amount" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Створити" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <div>
+        @Html.ActionLink(
+            "назад",
+            "EditItem",            // controller action
+            "Admin",        // controller
+            new {ItemId = @ViewBag.itemId })
+    </div>
 </div>
 

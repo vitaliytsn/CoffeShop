@@ -37,23 +37,6 @@ namespace CoffeShop.Controllers
             return View(_itemGroupRepository.GetAll());
         }
 
-     
-        public async Task<IActionResult> CoffeGroupDetails(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var itemGroup = _itemGroupRepository.GetByID((int)id);
-            if (itemGroup == null)
-            {
-                return NotFound();
-            }
-
-            return View(itemGroup);
-        }
-
        
         public IActionResult CreateCoffeGroup()
         {
@@ -160,6 +143,7 @@ namespace CoffeShop.Controllers
         public ActionResult CreateItemInGroup(int groupId)
         {
             Item item = new Item();
+            ViewBag.GroupId = groupId;
             item.Group = _itemGroupRepository.GetByID(groupId);
             return View(item);
         }
@@ -169,6 +153,7 @@ namespace CoffeShop.Controllers
         {
             item.Group = _itemGroupRepository.GetByID(item.Group.Id);
             _itemRepository.Add(item);
+            ViewBag.GroupId = item.Group.Id;
             return RedirectToAction(nameof(EditCoffeGroup), new { id = item.Group.Id });
         }
         public ActionResult ItemListPartial(int X, int Y, int groupId)
@@ -226,7 +211,10 @@ namespace CoffeShop.Controllers
             foreach (var component in _context.Set<Item>().Include(item => item.ItemComponents).Where(x => x.Id == itemId)
                 .ToList().FirstOrDefault().ItemComponents)
             {
-            itemComponents.Add(component);
+                var temComponent = _context.Set<ItemComponent>().Include(y => y.CurrentComponent)
+                    .Where(x => x.Id == component.Id)
+                    .ToList().FirstOrDefault();
+            itemComponents.Add(temComponent);
             }
 
             ViewBag.ItemId = itemId;
@@ -237,7 +225,7 @@ namespace CoffeShop.Controllers
         {
             ItemComponent itemComponent = new ItemComponent();
             itemComponent.ComponentItem = _itemRepository.GetByID(itemId);
-
+            ViewBag.itemid = itemId;
             List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> selectListItems = new List<SelectListItem>();             
             foreach (var component in _componentRepository.GetAll())
             {
@@ -253,9 +241,20 @@ namespace CoffeShop.Controllers
             itemComponent.ComponentItem = _itemRepository.GetByID(itemComponent.ComponentItem.Id);
             itemComponent.CurrentComponent = _componentRepository.GetByID(itemComponent.CurrentComponent.Id);         
             _itemComponentRepository.Add(itemComponent);
+            ViewBag.itemId = itemComponent.ComponentItem.Id;
             return RedirectToAction(nameof(EditItem), new {itemId = itemComponent.ComponentItem.Id });
         }
 
-        #endregion
+       /* public ActionResult ItemComponentDelete(int itemId,int itemComponentId)
+        {
+           return RedirectToAction(nameof(EditItem), new { itemId = itemId });
         }
+        [HttpPost]
+        public ActionResult ItemComponentDelete(ItemComponent itemComponent)
+        {
+            return RedirectToAction(nameof(EditItem), new { itemId = itemId });
+        }*/
+
+        #endregion
+    }
 }

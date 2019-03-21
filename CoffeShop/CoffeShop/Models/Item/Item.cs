@@ -19,6 +19,7 @@ namespace CoffeShop.Models
         public ItemGroup Group { get; set; }
         public List<ItemComponent> ItemComponents { get; set; }
         public List<ItemImage> Images { get; set; }
+        [Display(Name = "Ціна")]
         public double Price { get; set; }
         public bool Active { get; set; }
     }
