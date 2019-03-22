@@ -36,8 +36,17 @@
                 @Html.DisplayFor(modelItem => item.Amount)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Внести Зміни</a> |||
-                <a asp-action="Delete" asp-route-id="@item.Id">Усунути</a>
+                @Html.ActionLink(
+                    "Внести Зміни",
+                    "ItemComponentEdit",
+                    "Admin",
+                    new { itemComponentId = item.Id })  |||
+               
+                @Html.ActionLink(
+                    "Усунути Складник",
+                    "ItemComponentDelete",
+                    "Admin",
+                    new { itemComponentId = item.Id })  
             </td>
         </tr>
     }

@@ -11,7 +11,7 @@ namespace CoffeShop.Models
             Group = new ItemGroup();
             Active = true;
         }
-        [Display(Name = "Назва")]
+        [Display(Name = "Назва Товару")]
         public string Name { get; set; }
         [Display(Name = "Опис")]
         public string Description { get; set; }

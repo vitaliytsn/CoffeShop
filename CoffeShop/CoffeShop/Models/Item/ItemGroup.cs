@@ -13,7 +13,7 @@ namespace CoffeShop.Models
         {
             Active = true;
         }
-        [Display(Name = "Назва")]
+        [Display(Name = "Назва Групи")]
         public string Name { get; set; }
         [Display(Name = "Опис")]
         public string Description { get; set; }

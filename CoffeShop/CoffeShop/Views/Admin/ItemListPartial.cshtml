@@ -47,7 +47,11 @@
                     "EditItem",            // controller action
                     "Admin",        // controller
                     new { itemId = item.Id }) |||
-                <a asp-action="Delete" asp-route-id="@item.Id">Усунути товар</a>
+                 @Html.ActionLink(
+                    "Усунути товар",
+                    "Item_Delete",
+                    "Admin",
+                    new { itemId = item.Id }) 
             </td>
         </tr>
 }

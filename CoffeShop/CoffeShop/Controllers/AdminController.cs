@@ -34,7 +34,7 @@ namespace CoffeShop.Controllers
   
         public async Task<IActionResult> CoffeGroupsList()
         {
-            return View(_itemGroupRepository.GetAll());
+            return View(_itemGroupRepository.GetByQuery(x=>x.Active==true));
         }
 
        
@@ -49,6 +49,7 @@ namespace CoffeShop.Controllers
         {
             if (ModelState.IsValid)
             {
+                itemGroup.Active = true;
                 _itemGroupRepository.Add(itemGroup);
                 return RedirectToAction(nameof(CoffeGroupsList));
             }
@@ -69,9 +70,7 @@ namespace CoffeShop.Controllers
                 return NotFound();
             }
             return View(itemGroup);
-        }
-
-     
+        }    
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -152,6 +151,7 @@ namespace CoffeShop.Controllers
         public ActionResult CreateItemInGroup(Item item)
         {
             item.Group = _itemGroupRepository.GetByID(item.Group.Id);
+            item.Active = true;
             _itemRepository.Add(item);
             ViewBag.GroupId = item.Group.Id;
             return RedirectToAction(nameof(EditCoffeGroup), new { id = item.Group.Id });
@@ -162,7 +162,7 @@ namespace CoffeShop.Controllers
             ViewBag.Height = Y / 12;
             ViewBag.GroupId = groupId;
 
-            List<Item> items = _context.Set<Item>().Include(item => item.Group).Where(x => x.Group.Id == groupId)
+            List<Item> items = _context.Set<Item>().Include(item => item.Group).Where(x => x.Group.Id == groupId && x.Active==true)
                 .ToList();
 
             // List<Item> items = _itemRepository.GetAll().Where(x=>x.Group.Id==groupId).ToList();
@@ -181,6 +181,19 @@ namespace CoffeShop.Controllers
             _itemRepository.Update(item);
             return RedirectToAction(nameof(EditCoffeGroup), new { id = item.Group.Id });
         }
+
+        public ActionResult Item_Delete(int itemId)
+        {
+            return View(_context.Set<Item>().Include(y => y.Group).Where(x => x.Id == itemId).ToList().FirstOrDefault()); 
+        }
+        [HttpPost]
+        public ActionResult Item_Delete(Item item)
+        {
+            Item itemToDelete=_itemRepository.GetByID(item.Id);
+            itemToDelete.Active = false;
+            _itemRepository.Update(itemToDelete);
+            return RedirectToAction(nameof(EditCoffeGroup), new { id = item.Group.Id });
+        }
         #endregion
 
         #region Components
@@ -197,6 +210,7 @@ namespace CoffeShop.Controllers
         [HttpPost]
         public ActionResult ComponentCreate(Component component)
         {
+            component.Active = true;
             _componentRepository.Add(component);
             return RedirectToAction(nameof(ComponentsList));
         }
@@ -208,17 +222,30 @@ namespace CoffeShop.Controllers
         public ActionResult ItemComponentListPartial(int itemId)
         {
             List<ItemComponent> itemComponents= new List<ItemComponent>();
-            foreach (var component in _context.Set<Item>().Include(item => item.ItemComponents).Where(x => x.Id == itemId)
-                .ToList().FirstOrDefault().ItemComponents)
-            {
-                var temComponent = _context.Set<ItemComponent>().Include(y => y.CurrentComponent)
-                    .Where(x => x.Id == component.Id)
-                    .ToList().FirstOrDefault();
-            itemComponents.Add(temComponent);
-            }
+
+            itemComponents = _context.Set<ItemComponent>().Include(y => y.CurrentComponent).Include(y=>y.ComponentItem)
+                    .Where(x => x.ComponentItem.Id==itemId && x.Active == true)
+                    .ToList();
+          //  itemComponents.Add(temComponent);
+           
 
             ViewBag.ItemId = itemId;
             return PartialView(itemComponents);
+        }
+
+        public ActionResult ItemComponentEdit(int itemComponentId)
+        {
+            ItemComponent itemComponent = _context.Set<ItemComponent>().Include(y => y.CurrentComponent).Include(y => y.ComponentItem)
+                .Where(x => x.Id==itemComponentId).ToList().FirstOrDefault();
+
+            return View(itemComponent);
+        }
+        [HttpPost]
+        public ActionResult ItemComponentEdit(ItemComponent itemComponent)
+        {
+           _itemComponentRepository.Update(itemComponent);
+
+            return RedirectToAction(nameof(EditItem), new { itemId = itemComponent.ComponentItem.Id });
         }
 
         public ActionResult ItemComponentCreate(int itemId)
@@ -239,21 +266,30 @@ namespace CoffeShop.Controllers
         public ActionResult ItemComponentCreate(ItemComponent itemComponent)
         {           
             itemComponent.ComponentItem = _itemRepository.GetByID(itemComponent.ComponentItem.Id);
-            itemComponent.CurrentComponent = _componentRepository.GetByID(itemComponent.CurrentComponent.Id);         
+            itemComponent.CurrentComponent = _componentRepository.GetByID(itemComponent.CurrentComponent.Id);
+            itemComponent.Active = true;
             _itemComponentRepository.Add(itemComponent);
             ViewBag.itemId = itemComponent.ComponentItem.Id;
             return RedirectToAction(nameof(EditItem), new {itemId = itemComponent.ComponentItem.Id });
         }
 
-       /* public ActionResult ItemComponentDelete(int itemId,int itemComponentId)
+        public ActionResult ItemComponentDelete(int itemComponentId)
         {
-           return RedirectToAction(nameof(EditItem), new { itemId = itemId });
+           
+            ItemComponent itemComponent= _context.Set<ItemComponent>().Include(item => item.ComponentItem).Include(item=>item.CurrentComponent)
+                .Where(x => x.Id == itemComponentId)
+                .ToList().FirstOrDefault();
+             ViewBag.itemId = itemComponent.ComponentItem.Id;
+            return View(itemComponent); 
         }
         [HttpPost]
         public ActionResult ItemComponentDelete(ItemComponent itemComponent)
         {
-            return RedirectToAction(nameof(EditItem), new { itemId = itemId });
-        }*/
+            ItemComponent componentToDelete = _itemComponentRepository.GetByID(itemComponent.Id);
+            componentToDelete.Active = false;
+            _itemComponentRepository.Update(componentToDelete);
+            return RedirectToAction(nameof(EditItem), new { itemId = itemComponent.ComponentItem.Id });
+        }
 
         #endregion
     }
