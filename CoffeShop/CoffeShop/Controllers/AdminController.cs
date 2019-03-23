@@ -200,7 +200,7 @@ namespace CoffeShop.Controllers
 
         public ActionResult ComponentsList()
         {
-            return View(_componentRepository.GetAll());
+            return View(_componentRepository.GetByQuery(x=>x.Active==true));
         }
 
         public ActionResult ComponentCreate()
@@ -215,6 +215,29 @@ namespace CoffeShop.Controllers
             return RedirectToAction(nameof(ComponentsList));
         }
 
+        public ActionResult Component_Edit(int componentId)
+        {
+            return View(_componentRepository.GetByID(componentId));
+        }
+        [HttpPost]
+        public ActionResult Component_Edit(Component component)
+        { 
+            _componentRepository.Update(component);
+            return RedirectToAction(nameof(ComponentsList));
+        }
+
+        public ActionResult Component_Delete(int componentId)
+        {
+            return View(_componentRepository.GetByID(componentId));
+        }
+        [HttpPost]
+        public ActionResult Component_Delete(Component component)
+        {
+            component = _componentRepository.GetByID(component.Id);
+            component.Active = false;
+            _componentRepository.Update(component);
+            return RedirectToAction(nameof(ComponentsList));
+        }
         #endregion
 
         #region ItemComponents

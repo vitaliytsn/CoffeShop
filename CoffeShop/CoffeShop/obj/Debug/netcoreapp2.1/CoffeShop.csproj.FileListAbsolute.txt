@@ -75,3 +75,5 @@ C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcorea
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\CoffeShop.csproj.CopyComplete
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\Admin\ItemComponentEdit.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\Admin\Item_Delete.g.cshtml.cs
+C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\Admin\Component_Edit.g.cshtml.cs
+C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\Admin\Component_Delete.g.cshtml.cs
