@@ -30,34 +30,34 @@ namespace CoffeShop.Controllers
             _itemGroupRepository = itemGroupRepository;
         }
 
-        #region CoffeGroup
+        #region ItemGroup
   
-        public async Task<IActionResult> CoffeGroupsList()
+        public async Task<IActionResult> ItemGroup_List()
         {
             return View(_itemGroupRepository.GetByQuery(x=>x.Active==true));
         }
 
        
-        public IActionResult CreateCoffeGroup()
+        public IActionResult ItemGroup_Create()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateCoffeGroup([Bind("Id,Name,Description")] ItemGroup itemGroup)
+        public async Task<IActionResult> ItemGroup_Create([Bind("Id,Name,Description")] ItemGroup itemGroup)
         {
             if (ModelState.IsValid)
             {
                 itemGroup.Active = true;
                 _itemGroupRepository.Add(itemGroup);
-                return RedirectToAction(nameof(CoffeGroupsList));
+                return RedirectToAction(nameof(ItemGroup_List));
             }
             return View(itemGroup);
         }
 
     
-        public async Task<IActionResult> EditCoffeGroup(int? id)
+        public async Task<IActionResult> ItemGroup_Edit(int? id)
         {
             if (id == null)
             {
@@ -74,7 +74,7 @@ namespace CoffeShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditCoffeGroup(int id, [Bind("Id,Name,Description")] ItemGroup itemGroup)
+        public async Task<IActionResult> ItemGroup_Edit(int id, [Bind("Id,Name,Description")] ItemGroup itemGroup)
         {
             if (id != itemGroup.Id)
             {
@@ -98,7 +98,7 @@ namespace CoffeShop.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(CoffeGroupsList));
+                return RedirectToAction(nameof(ItemGroup_List));
             }
             return View(itemGroup);
         }
@@ -139,7 +139,7 @@ namespace CoffeShop.Controllers
 
         #region Items
 
-        public ActionResult CreateItemInGroup(int groupId)
+        public ActionResult Item_Create(int groupId)
         {
             Item item = new Item();
             ViewBag.GroupId = groupId;
@@ -148,15 +148,15 @@ namespace CoffeShop.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateItemInGroup(Item item)
+        public ActionResult Item_Create(Item item)
         {
             item.Group = _itemGroupRepository.GetByID(item.Group.Id);
             item.Active = true;
             _itemRepository.Add(item);
             ViewBag.GroupId = item.Group.Id;
-            return RedirectToAction(nameof(EditCoffeGroup), new { id = item.Group.Id });
+            return RedirectToAction(nameof(ItemGroup_Edit), new { id = item.Group.Id });
         }
-        public ActionResult ItemListPartial(int X, int Y, int groupId)
+        public ActionResult Item_ListPartial(int X, int Y, int groupId)
         {
             ViewBag.Width = X / 12;
             ViewBag.Height = Y / 12;
@@ -168,7 +168,7 @@ namespace CoffeShop.Controllers
             // List<Item> items = _itemRepository.GetAll().Where(x=>x.Group.Id==groupId).ToList();
             return PartialView(items);
         }
-        public ActionResult EditItem(int itemId)
+        public ActionResult Item_Edit(int itemId)
         {
             Item item = _context.Set<Item>().Include(items => items.Group).Where(x => x.Id == itemId)
                 .ToList().FirstOrDefault();
@@ -176,10 +176,10 @@ namespace CoffeShop.Controllers
             return View(item);
         }
         [HttpPost]
-        public ActionResult EditItem(Item item)
+        public ActionResult Item_Edit(Item item)
         {           
             _itemRepository.Update(item);
-            return RedirectToAction(nameof(EditCoffeGroup), new { id = item.Group.Id });
+            return RedirectToAction(nameof(ItemGroup_Edit), new { id = item.Group.Id });
         }
 
         public ActionResult Item_Delete(int itemId)
@@ -192,27 +192,27 @@ namespace CoffeShop.Controllers
             Item itemToDelete=_itemRepository.GetByID(item.Id);
             itemToDelete.Active = false;
             _itemRepository.Update(itemToDelete);
-            return RedirectToAction(nameof(EditCoffeGroup), new { id = item.Group.Id });
+            return RedirectToAction(nameof(ItemGroup_Edit), new { id = item.Group.Id });
         }
         #endregion
 
         #region Components
 
-        public ActionResult ComponentsList()
+        public ActionResult Component_List()
         {
             return View(_componentRepository.GetByQuery(x=>x.Active==true));
         }
 
-        public ActionResult ComponentCreate()
+        public ActionResult Component_Create()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult ComponentCreate(Component component)
+        public ActionResult Component_Create(Component component)
         {
             component.Active = true;
             _componentRepository.Add(component);
-            return RedirectToAction(nameof(ComponentsList));
+            return RedirectToAction(nameof(Component_List));
         }
 
         public ActionResult Component_Edit(int componentId)
@@ -223,7 +223,7 @@ namespace CoffeShop.Controllers
         public ActionResult Component_Edit(Component component)
         { 
             _componentRepository.Update(component);
-            return RedirectToAction(nameof(ComponentsList));
+            return RedirectToAction(nameof(Component_List));
         }
 
         public ActionResult Component_Delete(int componentId)
@@ -236,13 +236,13 @@ namespace CoffeShop.Controllers
             component = _componentRepository.GetByID(component.Id);
             component.Active = false;
             _componentRepository.Update(component);
-            return RedirectToAction(nameof(ComponentsList));
+            return RedirectToAction(nameof(Component_List));
         }
         #endregion
 
         #region ItemComponents
 
-        public ActionResult ItemComponentListPartial(int itemId)
+        public ActionResult ItemComponent_ListPartial(int itemId)
         {
             List<ItemComponent> itemComponents= new List<ItemComponent>();
 
@@ -256,7 +256,7 @@ namespace CoffeShop.Controllers
             return PartialView(itemComponents);
         }
 
-        public ActionResult ItemComponentEdit(int itemComponentId)
+        public ActionResult ItemComponent_Edit(int itemComponentId)
         {
             ItemComponent itemComponent = _context.Set<ItemComponent>().Include(y => y.CurrentComponent).Include(y => y.ComponentItem)
                 .Where(x => x.Id==itemComponentId).ToList().FirstOrDefault();
@@ -264,14 +264,14 @@ namespace CoffeShop.Controllers
             return View(itemComponent);
         }
         [HttpPost]
-        public ActionResult ItemComponentEdit(ItemComponent itemComponent)
+        public ActionResult ItemComponent_Edit(ItemComponent itemComponent)
         {
            _itemComponentRepository.Update(itemComponent);
 
-            return RedirectToAction(nameof(EditItem), new { itemId = itemComponent.ComponentItem.Id });
+            return RedirectToAction(nameof(Item_Edit), new { itemId = itemComponent.ComponentItem.Id });
         }
 
-        public ActionResult ItemComponentCreate(int itemId)
+        public ActionResult ItemComponent_Create(int itemId)
         {
             ItemComponent itemComponent = new ItemComponent();
             itemComponent.ComponentItem = _itemRepository.GetByID(itemId);
@@ -286,17 +286,17 @@ namespace CoffeShop.Controllers
         }
 
         [HttpPost]
-        public ActionResult ItemComponentCreate(ItemComponent itemComponent)
+        public ActionResult ItemComponent_Create(ItemComponent itemComponent)
         {           
             itemComponent.ComponentItem = _itemRepository.GetByID(itemComponent.ComponentItem.Id);
             itemComponent.CurrentComponent = _componentRepository.GetByID(itemComponent.CurrentComponent.Id);
             itemComponent.Active = true;
             _itemComponentRepository.Add(itemComponent);
             ViewBag.itemId = itemComponent.ComponentItem.Id;
-            return RedirectToAction(nameof(EditItem), new {itemId = itemComponent.ComponentItem.Id });
+            return RedirectToAction(nameof(Item_Edit), new {itemId = itemComponent.ComponentItem.Id });
         }
 
-        public ActionResult ItemComponentDelete(int itemComponentId)
+        public ActionResult ItemComponent_Delete(int itemComponentId)
         {
            
             ItemComponent itemComponent= _context.Set<ItemComponent>().Include(item => item.ComponentItem).Include(item=>item.CurrentComponent)
@@ -306,12 +306,12 @@ namespace CoffeShop.Controllers
             return View(itemComponent); 
         }
         [HttpPost]
-        public ActionResult ItemComponentDelete(ItemComponent itemComponent)
+        public ActionResult ItemComponent_Delete(ItemComponent itemComponent)
         {
             ItemComponent componentToDelete = _itemComponentRepository.GetByID(itemComponent.Id);
             componentToDelete.Active = false;
             _itemComponentRepository.Update(componentToDelete);
-            return RedirectToAction(nameof(EditItem), new { itemId = itemComponent.ComponentItem.Id });
+            return RedirectToAction(nameof(Item_Edit), new { itemId = itemComponent.ComponentItem.Id });
         }
 
         #endregion

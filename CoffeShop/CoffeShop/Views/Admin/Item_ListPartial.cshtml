@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Item>
 
 @{
-    ViewData["Title"] = "ItemListPartial";
+    ViewData["Title"] = "Item_ListPartial";
 }
 
 <h2>Товари в групі</h2>
@@ -10,11 +10,11 @@
 <table class="table">
     <thead>
     <td>
-    @Html.ActionLink(
-        "Додати Товар До Групи",
-        "CreateItemInGroup",            // controller action
-        "Admin",        // controller
-        new { groupId = @ViewBag.GroupId })        
+        @Html.ActionLink(
+            "Додати Товар До Групи",
+            "Item_Create",            // controller action
+            "Admin",        // controller
+            new { groupId = @ViewBag.GroupId })
     </td>
     <tr>
         <th>
@@ -44,7 +44,7 @@
             <td>
                 @Html.ActionLink(
                     "Внести Зміни",
-                    "EditItem",            // controller action
+                    "Item_Edit",            // controller action
                     "Admin",        // controller
                     new { itemId = item.Id }) |||
                  @Html.ActionLink(

@@ -1,7 +1,7 @@
 ﻿@model ItemComponent
 
 @{
-    ViewData["Title"] = "ItemComponentCreate";
+    ViewData["Title"] = "ItemComponent_Create";
 }
 
 <h2>Новий Складник Товару</h2>
@@ -9,7 +9,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="ItemComponentCreate">
+        <form asp-action="ItemComponent_Create">
             @Html.HiddenFor(model => model.ComponentItem.Id)
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -33,7 +33,7 @@
     <div>
         @Html.ActionLink(
             "назад",
-            "EditItem",            // controller action
+            "Item_Edit",            // controller action
             "Admin",        // controller
             new {ItemId = @ViewBag.itemId })
     </div>

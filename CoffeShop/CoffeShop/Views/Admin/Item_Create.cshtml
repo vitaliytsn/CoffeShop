@@ -2,19 +2,17 @@
 @model Item
 
 @{
-    ViewData["Title"] = "EditItem";
+    ViewData["Title"] = "Item_Create";
 }
 
-<h2>Внести Зміни До Товару</h2>
+<h2>Новий Товар</h2>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="EditItem">
+        <form asp-action="Item_Create">
             @Html.HiddenFor(model => model.Group.Id)
-            @Html.HiddenFor(model => model.Id)
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -31,30 +29,21 @@
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Зберегти" class="btn btn-default" />
+                <input type="submit" value="Створити" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
-<div id="SellingPartial">
-</div>
-<script type="text/javascript">
-    window.onload=function () {
-        var x = window.innerHeight;
-        var y = window.innerWidth;
-        var link =
-            "@Html.Raw(Url.Action("ItemComponentListPartial", "Admin", new { X= "widthToReplace", Y = "heightToReplace", itemId = @Model.Id }))";
-        link = link.replace("heightToReplace", x);
-        link = link.replace("widthToReplace", y);
-        $("#SellingPartial").load(link);
-    };
-</script>
 
 <div>
     @Html.ActionLink(
         "назад",
-        "EditCoffeGroup",            // controller action
+        "ItemGroup_Edit",            // controller action
         "Admin",        // controller
-        new {Id = @ViewBag.GroupId })
+        new {id = @ViewBag.GroupId })
 </div>
 
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

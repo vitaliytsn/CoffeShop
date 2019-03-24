@@ -8,11 +8,11 @@
 
 <table class="table">
     <tr>
-    @Html.ActionLink(
-        "Додати складник до товару",
-        "ItemComponentCreate",            // controller action
-        "Admin",        // controller
-        new { itemId = @ViewBag.ItemId })        
+        @Html.ActionLink(
+            "Додати складник до товару",
+            "ItemComponent_Create",            // controller action
+            "Admin",        // controller
+            new { itemId = @ViewBag.ItemId })
     </tr>
     <thead>
     <tr>
@@ -38,15 +38,15 @@
             <td>
                 @Html.ActionLink(
                     "Внести Зміни",
-                    "ItemComponentEdit",
+                    "ItemComponent_Edit",
                     "Admin",
-                    new { itemComponentId = item.Id })  |||
-               
+                    new { itemComponentId = item.Id }) |||
+
                 @Html.ActionLink(
                     "Усунути Складник",
-                    "ItemComponentDelete",
+                    "ItemComponent_Delete",
                     "Admin",
-                    new { itemComponentId = item.Id })  
+                    new { itemComponentId = item.Id })
             </td>
         </tr>
     }
