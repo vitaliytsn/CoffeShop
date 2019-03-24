@@ -19,9 +19,15 @@ namespace CoffeShop.Controllers
         private readonly IRepository<Item, CoffeShopContext> _itemRepository;
         private readonly IRepository<Component, CoffeShopContext> _componentRepository;
         private readonly IRepository<ItemComponent, CoffeShopContext> _itemComponentRepository;
+        private readonly IRepository<Models.CoffeShop, CoffeShopContext> _coffeShopRepository;
+        private readonly IRepository<User, CoffeShopContext> _userRepository;
+        private readonly IRepository<Role, CoffeShopContext> _roleRepository;
         private readonly CoffeShopContext _context;
-        public AdminController(IRepository<ItemComponent, CoffeShopContext> itemComponentRepository, IRepository<Component, CoffeShopContext> componentRepository, CoffeShopContext context,IRepository<ItemGroup, CoffeShopContext> itemGroupRepository, IRepository<Item, CoffeShopContext> itemRepository)
+        public AdminController(IRepository<Role, CoffeShopContext> roleRepository, IRepository<User, CoffeShopContext> userRepository, IRepository<Models.CoffeShop, CoffeShopContext> coffeShopRepository,IRepository<ItemComponent, CoffeShopContext> itemComponentRepository, IRepository<Component, CoffeShopContext> componentRepository, CoffeShopContext context,IRepository<ItemGroup, CoffeShopContext> itemGroupRepository, IRepository<Item, CoffeShopContext> itemRepository)
         {
+            _roleRepository = roleRepository;
+            _userRepository = userRepository;
+            _coffeShopRepository = coffeShopRepository;
             _itemComponentRepository = itemComponentRepository;
             _itemGroupRepository = itemGroupRepository;
             _componentRepository = componentRepository;
@@ -315,5 +321,95 @@ namespace CoffeShop.Controllers
         }
 
         #endregion
+
+        #region CoffeShop
+
+        public ActionResult CoffeShop_List()
+        {
+            return View(_coffeShopRepository.GetAll());
+        }
+
+        public ActionResult CoffeShop_Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CoffeShop_Create(Models.CoffeShop coffeShop)
+        {
+            _coffeShopRepository.Add(coffeShop);
+            return RedirectToAction(nameof(CoffeShop_List));
+        }
+
+        public ActionResult CoffeShop_Edit(int coffeShopId)
+        {
+            return View(_coffeShopRepository.GetByID(coffeShopId));
+        }
+        [HttpPost]
+        public ActionResult CoffeShop_Edit(Models.CoffeShop coffeShop)
+        {
+            _coffeShopRepository.Update(coffeShop);
+            return RedirectToAction(nameof(CoffeShop_List));
+        }
+        #endregion
+
+        #region User
+
+        public ActionResult User_ListPartial(int coffeShopId)
+        {
+            ViewBag.CoffeShopId = coffeShopId;
+            List<User> users = _context.Set<User>().Include(item => item.UserShop)
+                .Where(x => x.UserShop.Id == coffeShopId && x.Active).ToList();
+
+            return PartialView(users);
+        }
+
+        public ActionResult User_Create(int coffeShopId)
+        {
+             User user = new User();
+            user.UserShop.Id = coffeShopId;
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult User_Create(User user)
+        {
+            user.UserShop = _coffeShopRepository.GetByID(user.UserShop.Id);
+            user.Active = true;
+            user.UserRole = _roleRepository.GetByQuery(x => x.Name == "User").ToList().FirstOrDefault();
+            _userRepository.Add(user);
+            return RedirectToAction(nameof(CoffeShop_Edit),new{ coffeShopId=user.UserShop.Id });
+        }
+
+        public ActionResult User_Edit(int userId)
+        {
+            User user = _context.Set<User>().Include(item => item.UserShop)
+                .Where(x => x.Id==userId).ToList().FirstOrDefault();
+            return View(user);
+        }
+        [HttpPost]
+        public ActionResult User_Edit(User user)
+        {
+           _userRepository.Update(user);
+           return RedirectToAction(nameof(CoffeShop_Edit), new { coffeShopId = user.UserShop.Id });
+        }
+
+        public ActionResult User_Delete(int userId)
+        {
+            User user = _context.Set<User>().Include(item => item.UserShop)
+                .Where(x => x.Id == userId).ToList().FirstOrDefault();
+            return View(user);
+        }
+        [HttpPost]
+        public ActionResult User_Delete(User user)
+        {
+            user = _context.Set<User>().Include(item => item.UserShop).Include(item=>item.UserRole)
+                .Where(x => x.Id == user.Id).ToList().FirstOrDefault();
+            user.Active = false;
+            _userRepository.Update(user);
+            return RedirectToAction(nameof(CoffeShop_Edit), new { coffeShopId = user.UserShop.Id });
+        }
+        #endregion
+
+
     }
 }

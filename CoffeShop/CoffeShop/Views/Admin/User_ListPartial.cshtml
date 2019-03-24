@@ -1,0 +1,47 @@
+﻿@model IEnumerable<User>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<h2>Працівники Даної Кав'ярні</h2>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+<p>
+    <a asp-action="User_Create" asp-route-coffeShopId="@ViewBag.CoffeShopId">Додати Нового Працівника</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Surname)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                <a asp-action="User_Edit" asp-route-userId="@item.Id">Внести Зміни</a> |||
+                <a asp-action="User_Delete" asp-route-userId="@item.Id">Усунути Працівника</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>
