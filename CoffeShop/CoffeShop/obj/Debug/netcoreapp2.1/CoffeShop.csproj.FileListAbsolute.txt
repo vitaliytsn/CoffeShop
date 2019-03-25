@@ -46,8 +46,6 @@ C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcorea
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\CoffeShop.TagHelpers.input.cache
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\CoffeShop.TagHelpers.output.cache
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\CoffeShop.RazorCoreGenerate.cache
-C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\Account\Login.g.cshtml.cs
-C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\Account\Register.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\Home\Index.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Error.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
@@ -85,3 +83,4 @@ C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcorea
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\Admin\User_Create.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\Admin\User_Edit.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\Admin\User_Delete.g.cshtml.cs
+C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\Account\Login.g.cshtml.cs
