@@ -11,7 +11,9 @@ namespace CoffeShop.Models
         public Order()
         {
             Active = true;
+            Temp = true;
         }
+        public bool Temp { get; set; }
         public User CreatorUser { get; set; }
         public List<Item> OrderedItems { get; set; }
         public bool Active { get; set; }

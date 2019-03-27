@@ -1,0 +1,52 @@
+﻿@using CoffeShop.Models;
+@model ItemGroup
+
+@{
+    ViewData["Title"] = "Edit";
+}
+@{
+    Layout = null;
+}
+<h2>Група Товарів</h2>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ItemGroup_Edit">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" readonly="readonly" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" readonly="readonly" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="SellingPartial">
+</div>
+<div>
+    <a asp-action="ItemGroup_List">назад</a>
+</div>
+
+<script type="text/javascript">
+    window.onload=function () {
+        var x = window.innerHeight;
+        var y = window.innerWidth;
+        var link =
+            "@Html.Raw(Url.Action("Item_ListPartial", "User", new { X= "widthToReplace", Y = "heightToReplace",groupId=@Model.Id }))";
+        link = link.replace("heightToReplace", x);
+        link = link.replace("widthToReplace", y);
+        $("#SellingPartial").load(link);
+    };
+</script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

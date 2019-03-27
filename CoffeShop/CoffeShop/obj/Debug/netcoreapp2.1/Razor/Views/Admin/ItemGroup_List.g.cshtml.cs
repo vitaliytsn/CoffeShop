@@ -64,7 +64,7 @@ using CoffeShop.Models;
             WriteLiteral("\r\n<h2>Групи товарів</h2>\r\n\r\n<p>\r\n    ");
             EndContext();
             BeginContext(138, 56, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8b47d7436f3e44049a9682c17ccc47b7", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "81ad4207a2de41e8b82930cb766f4b7e", async() => {
                 BeginContext(171, 19, true);
                 WriteLiteral("Створити нову групу");
                 EndContext();
@@ -134,7 +134,7 @@ using CoffeShop.Models;
             WriteLiteral("\r\n            </td>\r\n            <td>\r\n                ");
             EndContext();
             BeginContext(793, 71, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f322628ef4fa44c8ae156613506af244", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fdba73a0788a40c996cce2da47786fad", async() => {
                 BeginContext(848, 12, true);
                 WriteLiteral("Внести Зміни");
                 EndContext();

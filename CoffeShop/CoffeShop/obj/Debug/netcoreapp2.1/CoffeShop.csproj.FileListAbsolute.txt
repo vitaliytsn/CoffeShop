@@ -84,3 +84,7 @@ C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcorea
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\Admin\User_Edit.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\Admin\User_Delete.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\Account\Login.g.cshtml.cs
+C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\User\MainOrder.g.cshtml.cs
+C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\User\ItemGroup_Partial.g.cshtml.cs
+C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\User\ItemGroup_Components.g.cshtml.cs
+C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\User\Item_ListPartial.g.cshtml.cs

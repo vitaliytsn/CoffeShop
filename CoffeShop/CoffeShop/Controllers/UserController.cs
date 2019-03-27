@@ -1,93 +1,82 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
+using CoffeShop.Data;
+using CoffeShop.Models;
+using CoffeShop.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoffeShop.Controllers
 {
     public class UserController : Controller
     {
         // GET: User
-        public ActionResult Index()
+        private readonly IRepository<ItemGroup, CoffeShopContext> _itemGroupRepository;
+        private readonly IRepository<Item, CoffeShopContext> _itemRepository;
+        private readonly IRepository<Component, CoffeShopContext> _componentRepository;
+        private readonly IRepository<ItemComponent, CoffeShopContext> _itemComponentRepository;
+        private readonly IRepository<Models.CoffeShop, CoffeShopContext> _coffeShopRepository;
+        private readonly IRepository<User, CoffeShopContext> _userRepository;
+        private readonly IRepository<Role, CoffeShopContext> _roleRepository;
+        private readonly CoffeShopContext _context;
+
+        public UserController(IRepository<Role, CoffeShopContext> roleRepository, IRepository<User, CoffeShopContext> userRepository, IRepository<Models.CoffeShop, CoffeShopContext> coffeShopRepository, IRepository<ItemComponent, CoffeShopContext> itemComponentRepository, IRepository<Component, CoffeShopContext> componentRepository, CoffeShopContext context,IRepository<ItemGroup, CoffeShopContext> itemGroupRepository, IRepository<Item, CoffeShopContext> itemRepository)
         {
-            return View();
+            _roleRepository = roleRepository;
+            _userRepository = userRepository;
+            _coffeShopRepository = coffeShopRepository;
+            _itemComponentRepository = itemComponentRepository;
+            _itemGroupRepository = itemGroupRepository;
+            _componentRepository = componentRepository;
+            _context = context;
+            _itemRepository = itemRepository;
+            
+        }
+    public ActionResult MainOrder(bool newOrder)
+        {            
+            List<Item> items = _itemRepository.GetAll().ToList();
+            List<int> arr = (from item in items select item.Id).ToList();
+            ViewBag.arr = arr;
+            return View(items);
         }
 
-        // GET: User/Details/5
-        public ActionResult Details(int id)
+        public ActionResult ItemGroup_Partial(List<int> items)
         {
-            return View();
+            List<ItemGroup> groups= _itemGroupRepository.GetAll().ToList();
+            ViewBag.arr = items;
+            return PartialView(groups);
         }
-
-        // GET: User/Create
-        public ActionResult Create()
+        public async Task<IActionResult> ItemGroup_Components(int? itemGroupId)
         {
-            return View();
-        }
-
-        // POST: User/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            if (itemGroupId == null)
             {
-                // TODO: Add insert logic here
+                return NotFound();
+            }
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+            var itemGroup = _itemGroupRepository.GetByID((int)itemGroupId);
+            if (itemGroup == null)
             {
-                return View();
+                return NotFound();
             }
+            return PartialView(itemGroup);
         }
 
-        // GET: User/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Item_ListPartial(int X, int Y, int groupId)
         {
-            return View();
+            ViewBag.Width = X / 12;
+            ViewBag.Height = Y / 12;
+            ViewBag.GroupId = groupId;
+
+            List<Item> items = _context.Set<Item>().Include(item => item.Group).Where(x => x.Group.Id == groupId && x.Active == true)
+                .ToList();
+
+            // List<Item> items = _itemRepository.GetAll().Where(x=>x.Group.Id==groupId).ToList();
+            return PartialView(items);
         }
 
-        // POST: User/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: User/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: User/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }
