@@ -29,8 +29,12 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                <a asp-action="ItemGroup_Components" asp-route-itemGroupId="@item.Id" class="bg-success">Вибрати</a>
-            </td>
+                @Html.ActionLink(
+                    "Вибрати",
+                    "ItemGroup_Components",
+                    "User",
+                    new { items = ViewBag.arr, itemGroupId = item.Id })
+              </td>
         </tr>
     }
     </tbody>

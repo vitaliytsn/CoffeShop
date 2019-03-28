@@ -5,9 +5,8 @@
 @{
     Layout = (string)ViewData["Layout"] ?? "_Layout";
 }
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<h2>MainOrder</h2>
+<h2>Замовлення</h2>
 <html style="height: 100%">
 <head>
 </head>
@@ -61,7 +60,7 @@
         var x = window.innerHeight;
         var y = window.innerWidth;
         var link =
-            "@Html.Raw(Url.Action("ItemGroup_Partial", "User", new { X= "widthToReplace", Y = "heightToReplace", items =@ViewBag.arr}))";
+            "@Html.Raw(Url.Action("ItemGroup_ListPartial", "User", new { X= "widthToReplace", Y = "heightToReplace", items =@ViewBag.arr}))";
         link = link.replace("heightToReplace", x);
         link = link.replace("widthToReplace", y);
         $("#ItemGroupPartial").load(link);

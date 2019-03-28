@@ -36,21 +36,20 @@ namespace CoffeShop.Controllers
             _itemRepository = itemRepository;
             
         }
-    public ActionResult MainOrder(bool newOrder)
-        {            
-            List<Item> items = _itemRepository.GetAll().ToList();
-            List<int> arr = (from item in items select item.Id).ToList();
-            ViewBag.arr = arr;
-            return View(items);
+    public ActionResult MainOrder(List<int> items)
+    {
+        List<Item> orderItems = (from item in items select _itemRepository.GetByID(item)).ToList(); 
+            ViewBag.arr = items;
+            return View(orderItems);
         }
 
-        public ActionResult ItemGroup_Partial(List<int> items)
+        public ActionResult ItemGroup_ListPartial(List<int> items)
         {
             List<ItemGroup> groups= _itemGroupRepository.GetAll().ToList();
             ViewBag.arr = items;
             return PartialView(groups);
         }
-        public async Task<IActionResult> ItemGroup_Components(int? itemGroupId)
+        public ActionResult ItemGroup_Components(int? itemGroupId, List<int> items)
         {
             if (itemGroupId == null)
             {
@@ -62,20 +61,27 @@ namespace CoffeShop.Controllers
             {
                 return NotFound();
             }
+            ViewBag.arr = items;
             return PartialView(itemGroup);
         }
 
-        public ActionResult Item_ListPartial(int X, int Y, int groupId)
+        [HttpGet]
+        public ActionResult Item_AddToOrder(int ItemId, List<int> items)
+        {
+            items.Add(ItemId);
+            return RedirectToAction(nameof(MainOrder), new { items = items });
+        }
+
+        public ActionResult Item_ListPartial(int X, int Y, int groupId, List<int> items)
         {
             ViewBag.Width = X / 12;
             ViewBag.Height = Y / 12;
             ViewBag.GroupId = groupId;
-
-            List<Item> items = _context.Set<Item>().Include(item => item.Group).Where(x => x.Group.Id == groupId && x.Active == true)
+            ViewBag.arr = items;
+            List<Item> groupItems = _context.Set<Item>().Include(item => item.Group).Where(x => x.Group.Id == groupId && x.Active == true)
                 .ToList();
 
-            // List<Item> items = _itemRepository.GetAll().Where(x=>x.Group.Id==groupId).ToList();
-            return PartialView(items);
+            return PartialView(groupItems);
         }
 
     }

@@ -36,10 +36,10 @@
             </td>
             <td>
                 @Html.ActionLink(
-                    "Вибрати товар",
-                    "Item_Delete",
-                    "Admin",
-                    new { itemId = item.Id }) 
+                    "Додати До Замовлення",
+                    "Item_AddToOrder",
+                    "User",
+                    new { items = ViewBag.arr, ItemId = item.Id })
             </td>
         </tr>
     }

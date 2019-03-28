@@ -5,7 +5,7 @@
     ViewData["Title"] = "Edit";
 }
 @{
-    Layout = null;
+    Layout = (string)ViewData["Layout"] ?? "_Layout";
 }
 <h2>Група Товарів</h2>
 
@@ -33,7 +33,13 @@
 <div id="SellingPartial">
 </div>
 <div>
-    <a asp-action="ItemGroup_List">назад</a>
+   
+    @Html.ActionLink(
+        "назад",
+        "MainOrder",
+        "User",
+        new { items = ViewBag.arr})
+   
 </div>
 
 <script type="text/javascript">
@@ -41,7 +47,7 @@
         var x = window.innerHeight;
         var y = window.innerWidth;
         var link =
-            "@Html.Raw(Url.Action("Item_ListPartial", "User", new { X= "widthToReplace", Y = "heightToReplace",groupId=@Model.Id }))";
+            "@Html.Raw(Url.Action("Item_ListPartial", "User", new { X= "widthToReplace", Y = "heightToReplace",groupId=@Model.Id,items =@ViewBag.arr }))";
         link = link.replace("heightToReplace", x);
         link = link.replace("widthToReplace", y);
         $("#SellingPartial").load(link);
