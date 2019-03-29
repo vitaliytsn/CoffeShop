@@ -40,7 +40,11 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                <a asp-action="ItemGroup_Edit" asp-route-id="@item.Id" style="color: #F8171C; background-color: #EDC3AA">Усунути</a>
+                @Html.ActionLink(
+                    "Усунути З Замовлення",
+                    "Item_RemoveFromOrder",
+                    "User",
+                    new { items = ViewBag.arr, ItemId = item.Id })
             </td>
         </tr>
     }

@@ -72,6 +72,13 @@ namespace CoffeShop.Controllers
             return RedirectToAction(nameof(MainOrder), new { items = items });
         }
 
+        [HttpGet]
+        public ActionResult Item_RemoveFromOrder(int ItemId, List<int> items)
+        {
+            items.Remove(ItemId);
+            return RedirectToAction(nameof(MainOrder), new { items = items });
+        }
+
         public ActionResult Item_ListPartial(int X, int Y, int groupId, List<int> items)
         {
             ViewBag.Width = X / 12;
