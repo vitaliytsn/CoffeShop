@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+<!DOCTYPE html>
+
 <html>
 <head>
     <meta charset="utf-8" />
@@ -28,15 +30,24 @@
                 </button>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">CoffeShop</a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Admin" asp-action="ItemGroup_List">Групи Товарів</a></li>
-                    <li><a asp-area="" asp-controller="Admin" asp-action="Component_List">Складники Товарів</a></li>
-                    <li><a asp-area="" asp-controller="Admin" asp-action="CoffeShop_List">Кав'ярні Та Працівники</a></li>
-                    <li><a asp-area="" asp-controller="User" asp-action="MainOrder">Нове Замовлення</a></li>
-                </ul>
-                @await Html.PartialAsync("_LoginPartial")
-            </div>
+            @{
+                var role = Context.Session.GetString("userRole");
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        @if (role == "Administrator")
+                        {
+                        <li><a asp-area="" asp-controller="Admin" asp-action="ItemGroup_List">Групи Товарів</a></li>
+                        <li><a asp-area="" asp-controller="Admin" asp-action="Component_List">Складники Товарів</a></li>
+                        <li><a asp-area="" asp-controller="Admin" asp-action="CoffeShop_List">Кав'ярні Та Працівники</a></li>
+                        }
+                    @if (role == "User")
+                    {
+                        <li><a asp-area="" asp-controller="User" asp-action="MainOrder">Нове Замовлення</a></li>
+                    }
+                    </ul>
+                    @await Html.PartialAsync("_LoginPartial")
+                </div>
+            }
         </div>
     </nav>
 

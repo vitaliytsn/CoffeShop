@@ -15,15 +15,21 @@ namespace CoffeShop.Models
             UserShop = new CoffeShop();
             Active = true;
         }
+        [Required]
         [Display(Name="Електронна пошта")]
         public string Email { get; set; }
+        [Required]
         [Display(Name="Ім'я")]
         public string Name { get; set; }
+        [Required]
         [Display(Name = "Прізвище")]
         public string Surname { get; set; }
+        [Required]
         [Display(Name="Пароль")]
         public string password { get; set; }
+        [Required]
         public Role UserRole { get; set; }
+        [Required]
         public CoffeShop UserShop { get; set; }
         public bool Active { get; set; }
     }
