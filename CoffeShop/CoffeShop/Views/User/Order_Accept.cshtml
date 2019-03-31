@@ -1,0 +1,46 @@
+﻿@model global::CoffeShop.Models.ViewModels.OrderVM
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+
+<h2>Чек</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            <p>Обслуговуючий Персонал:</p>
+            @Html.DisplayFor(model => model.Employee.Name)
+            @Html.DisplayFor(model => model.Employee.Surname)
+        </th>
+        <th>
+            <p>До Сплати:</p>
+            @Html.DisplayFor(model => model.FinalPrice)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <hr />
+    <hr />
+    <hr />
+    @foreach (var item in Model.OrderItems)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+        </tr>
+    }
+    
+    </tbody>
+</table>
+

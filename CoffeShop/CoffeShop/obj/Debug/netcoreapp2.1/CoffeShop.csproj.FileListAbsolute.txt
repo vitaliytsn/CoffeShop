@@ -88,3 +88,4 @@ C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcorea
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\User\Item_ListPartial.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\User\ItemGroup_ListPartial.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
+C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\User\Order_Accept.g.cshtml.cs

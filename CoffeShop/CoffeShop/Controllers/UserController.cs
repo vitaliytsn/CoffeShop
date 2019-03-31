@@ -5,6 +5,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using CoffeShop.Data;
 using CoffeShop.Models;
+using CoffeShop.Models.ViewModels;
 using CoffeShop.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -77,6 +78,23 @@ namespace CoffeShop.Controllers
         {
             items.Remove(ItemId);
             return RedirectToAction(nameof(MainOrder), new { items = items });
+        }
+
+        public ActionResult Order_Accept(List<int> items)
+        {
+            List<Item> orderedItems = (from item in items select _itemRepository.GetByID(item)).ToList();
+            User employee = _userRepository.GetByID((int)HttpContext.Session.GetInt32("userId"));
+            OrderVM acceptedOrder = new OrderVM(orderedItems,employee);
+            foreach (var orderedItem in orderedItems)
+            {
+                acceptedOrder.FinalPrice += orderedItem.Price;
+            }
+
+            Order order = new Order();
+            order.CreatorUser = employee;
+            order.OrderedItems = orderedItems;
+            _context.Set<Order>().Add(order);
+            return View(acceptedOrder);
         }
 
         public ActionResult Item_ListPartial(int X, int Y, int groupId, List<int> items)
