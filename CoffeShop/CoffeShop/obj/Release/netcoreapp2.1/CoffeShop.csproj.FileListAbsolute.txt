@@ -56,3 +56,4 @@ C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcor
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\User\ItemGroup_ListPartial.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\User\Item_ListPartial.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\User\MainOrder.g.cshtml.cs
+C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\User\Order_Accept.g.cshtml.cs
