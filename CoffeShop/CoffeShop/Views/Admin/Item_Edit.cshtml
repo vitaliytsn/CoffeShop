@@ -1,5 +1,5 @@
-﻿@using CoffeShop.Models;
-@model Item
+﻿@using CoffeShop.Models.ViewModels;
+@model ItemVM
 
 @{
     ViewData["Title"] = "Item_Edit";
@@ -10,25 +10,28 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Item_Edit">
-            @Html.HiddenFor(model => model.Group.Id)
-            @Html.HiddenFor(model => model.Id)
+        <form asp-action="Item_Edit" method="post" enctype="multipart/form-data">
+            @Html.HiddenFor(model => model.CurrentItem.Group.Id)
+            @Html.HiddenFor(model => model.CurrentItem.Id)
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CurrentItem.Id" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="CurrentItem.Name" class="control-label"></label>
+                <input asp-for="CurrentItem.Name" class="form-control" />
+                <span asp-validation-for="CurrentItem.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="CurrentItem.Description" class="control-label"></label>
+                <input asp-for="CurrentItem.Description" class="form-control" />
+                <span asp-validation-for="CurrentItem.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
+                <label asp-for="CurrentItem.Price" class="control-label"></label>
+                <input asp-for="CurrentItem.Price" class="form-control" />
+                <span asp-validation-for="CurrentItem.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="file"  asp-for="UploadImage" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Зберегти" class="btn btn-default" />
@@ -43,7 +46,7 @@
         var x = window.innerHeight;
         var y = window.innerWidth;
         var link =
-            "@Html.Raw(Url.Action("ItemComponent_ListPartial", "Admin", new { X= "widthToReplace", Y = "heightToReplace", itemId = @Model.Id }))";
+            "@Html.Raw(Url.Action("ItemComponent_ListPartial", "Admin", new { X= "widthToReplace", Y = "heightToReplace", itemId = @Model.CurrentItem.Id }))";
         link = link.replace("heightToReplace", x);
         link = link.replace("widthToReplace", y);
         $("#SellingPartial").load(link);

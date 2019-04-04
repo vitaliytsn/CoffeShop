@@ -52,6 +52,8 @@ namespace CoffeShop
                 Repository<User, CoffeShopContext>>();
             services.AddScoped<IRepository<Role, CoffeShopContext>,
                 Repository<Role, CoffeShopContext>>();
+            services.AddScoped<IRepository<ItemImage, CoffeShopContext>,
+                Repository<ItemImage, CoffeShopContext>>();
 
             services.AddSession();
 

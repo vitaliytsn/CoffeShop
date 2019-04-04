@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -22,9 +23,11 @@ namespace CoffeShop.Controllers
         private readonly IRepository<Models.CoffeShop, CoffeShopContext> _coffeShopRepository;
         private readonly IRepository<User, CoffeShopContext> _userRepository;
         private readonly IRepository<Role, CoffeShopContext> _roleRepository;
+        private readonly IRepository<ItemImage, CoffeShopContext> _itemImageRepository;
         private readonly CoffeShopContext _context;
-        public AdminController(IRepository<Role, CoffeShopContext> roleRepository, IRepository<User, CoffeShopContext> userRepository, IRepository<Models.CoffeShop, CoffeShopContext> coffeShopRepository,IRepository<ItemComponent, CoffeShopContext> itemComponentRepository, IRepository<Component, CoffeShopContext> componentRepository, CoffeShopContext context,IRepository<ItemGroup, CoffeShopContext> itemGroupRepository, IRepository<Item, CoffeShopContext> itemRepository)
+        public AdminController(IRepository<ItemImage, CoffeShopContext> itemImageRepository, IRepository<Role, CoffeShopContext> roleRepository, IRepository<User, CoffeShopContext> userRepository, IRepository<Models.CoffeShop, CoffeShopContext> coffeShopRepository,IRepository<ItemComponent, CoffeShopContext> itemComponentRepository, IRepository<Component, CoffeShopContext> componentRepository, CoffeShopContext context,IRepository<ItemGroup, CoffeShopContext> itemGroupRepository, IRepository<Item, CoffeShopContext> itemRepository)
         {
+            _itemImageRepository = itemImageRepository;
             _roleRepository = roleRepository;
             _userRepository = userRepository;
             _coffeShopRepository = coffeShopRepository;
@@ -179,13 +182,29 @@ namespace CoffeShop.Controllers
             Item item = _context.Set<Item>().Include(items => items.Group).Where(x => x.Id == itemId)
                 .ToList().FirstOrDefault();
             ViewBag.GroupId = item.Group.Id;
-            return View(item);
+            
+            return View(new ItemVM{CurrentItem = item});
         }
         [HttpPost]
-        public ActionResult Item_Edit(Item item)
-        {           
-            _itemRepository.Update(item);
-            return RedirectToAction(nameof(ItemGroup_Edit), new { id = item.Group.Id });
+        public async Task<ActionResult> Item_Edit(ItemVM itemVM)
+        {
+            if (itemVM.UploadImage != null)
+                using (var stream = new MemoryStream())
+                {
+                    await itemVM.UploadImage.CopyToAsync(stream);
+                    ItemImage imageToSave = new ItemImage()
+                    {
+                        Active = true,
+                        image = stream.ToArray(),
+                        itemId = itemVM.CurrentItem.Id
+                    };
+
+                    _itemImageRepository.Add(imageToSave);
+                    itemVM.CurrentItem.Images.Add(imageToSave);
+
+             _itemRepository.Update(itemVM.CurrentItem);
+                }
+            return RedirectToAction(nameof(ItemGroup_Edit), new { id = itemVM.CurrentItem.Group.Id });
         }
 
         public ActionResult Item_Delete(int itemId)

@@ -67,7 +67,7 @@ using CoffeShop.Models;
             WriteLiteral("\r\n<h2>Замовлення</h2>\r\n<html style=\"height: 100%\">\r\n");
             EndContext();
             BeginContext(185, 15, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a209ba47997040339d5a42b177f844de", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c22509daf1da412eb1ca0c6c269b0f32", async() => {
                 BeginContext(191, 2, true);
                 WriteLiteral("\r\n");
                 EndContext();
@@ -87,7 +87,7 @@ using CoffeShop.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(202, 1382, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fe2827d37b054e78b6f410b7ac091033", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7885facfca3243b08f61755dc00410ce", async() => {
                 BeginContext(229, 134, true);
                 WriteLiteral("\r\n<table class=\"table\" style=\"background-color: #CF9979; \">\r\n    <thead>\r\n    <tr style=\"color: #87cefa\">\r\n        <th >\r\n            ");
                 EndContext();

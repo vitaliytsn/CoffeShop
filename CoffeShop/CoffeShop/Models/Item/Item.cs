@@ -8,6 +8,7 @@ namespace CoffeShop.Models
     {
         public Item()
         {
+            Images= new List<ItemImage>();
             Group = new ItemGroup();
             Active = true;
         }

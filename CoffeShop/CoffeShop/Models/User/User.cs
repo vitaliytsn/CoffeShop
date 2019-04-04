@@ -16,6 +16,7 @@ namespace CoffeShop.Models
             Active = true;
         }
         [Required]
+        [EmailAddress]
         [Display(Name="Електронна пошта")]
         public string Email { get; set; }
         [Required]
@@ -25,6 +26,7 @@ namespace CoffeShop.Models
         [Display(Name = "Прізвище")]
         public string Surname { get; set; }
         [Required]
+        [DataType(DataType.Password)]
         [Display(Name="Пароль")]
         public string password { get; set; }
         [Required]
