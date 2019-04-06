@@ -95,8 +95,11 @@ namespace CoffeShop.Controllers
 
             Order order = new Order();
             order.CreatorUser = employee;
-            order.OrderedItems = orderedItems;
+
+            order.OrderItems = (from orderedItem in  orderedItems select new OrderItem(){Item= orderedItem ,ItemId = orderedItem.Id,Order = order}).ToList();
+
             _context.Set<Order>().Add(order);
+            _context.SaveChanges();
             return View(acceptedOrder);
         }
 

@@ -65,7 +65,7 @@ using CoffeShop.Models;
             WriteLiteral("\r\n<h2>Список кав\'ярень</h2>\r\n\r\n<p>\r\n    ");
             EndContext();
             BeginContext(123, 59, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "056c73d7847249b7adfc0a79ff395c2a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "871c9bcfff994fd18c4b6fa6a451a1da", async() => {
                 BeginContext(156, 22, true);
                 WriteLiteral("Створити нову кав\'ярню");
                 EndContext();
@@ -136,7 +136,7 @@ using CoffeShop.Models;
             WriteLiteral("\r\n                </td>\r\n                <td>\r\n                    ");
             EndContext();
             BeginContext(824, 80, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1e3441e46cf8451b900693639093aa52", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "aee19af0224b499c9f8c5dac430a2a4f", async() => {
                 BeginContext(888, 12, true);
                 WriteLiteral("Внести Зміни");
                 EndContext();
@@ -171,7 +171,7 @@ using CoffeShop.Models;
             WriteLiteral(" |\r\n                    ");
             EndContext();
             BeginContext(928, 57, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9bcbe98f7c584b609d2201cb5ee1e5b0", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "beace650a6b0451c820914b88b2ce2b5", async() => {
                 BeginContext(975, 6, true);
                 WriteLiteral("Delete");
                 EndContext();

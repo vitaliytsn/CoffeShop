@@ -66,7 +66,7 @@ using CoffeShop.Controllers;
             WriteLiteral("\r\n<div>\r\n    <ul class=\"nav navbar-nav navbar-right\">\r\n        <li>");
             EndContext();
             BeginContext(160, 69, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6764419fb9a84cf6b4221098f57a77f9", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f9046d31f4ec48f1a3450c87d70c45ba", async() => {
                 BeginContext(219, 6, true);
                 WriteLiteral("Log in");
                 EndContext();

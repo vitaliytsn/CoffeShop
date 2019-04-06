@@ -67,7 +67,7 @@ using CoffeShop.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(277, 137, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8af749a9dd3e4ef88c5b7ecbca07276b", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0c20a7605cb945dea223110b30a891b5", async() => {
                 BeginContext(283, 21, true);
                 WriteLiteral("\r\n\r\n<div>\r\n\r\n    <img");
                 EndContext();

@@ -12,10 +12,11 @@ namespace CoffeShop.Models
         {
             Active = true;
             Temp = true;
+            OrderItems= new List<OrderItem>();
         }
         public bool Temp { get; set; }
         public User CreatorUser { get; set; }
-        public List<Item> OrderedItems { get; set; }
+        public List<OrderItem> OrderItems { get; set; }
         public bool Active { get; set; }
     }
 }

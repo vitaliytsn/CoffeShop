@@ -65,7 +65,7 @@ using CoffeShop.Models;
             WriteLiteral("\r\n<h2>Список Складників</h2>\r\n\r\n<p>\r\n    ");
             EndContext();
             BeginContext(150, 58, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b78ba2b271234629a9408f43a5762e9a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4593102a608f47bba15461a5a7fb35b3", async() => {
                 BeginContext(183, 21, true);
                 WriteLiteral("Додати новий складник");
                 EndContext();
@@ -135,7 +135,7 @@ using CoffeShop.Models;
             WriteLiteral("\r\n            </td>\r\n            <td>\r\n                ");
             EndContext();
             BeginContext(771, 80, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "843bee800d954b01b42d07fd85f8cef5", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7d80d6a3c7034b23a5f7f5385e7ecc88", async() => {
                 BeginContext(835, 12, true);
                 WriteLiteral("Внести Зміни");
                 EndContext();
@@ -170,7 +170,7 @@ using CoffeShop.Models;
             WriteLiteral(" |||\r\n                ");
             EndContext();
             BeginContext(873, 77, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "79d59d7e718947bf8db022852faf2f72", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "194873a7976a445da22d2a1ef2433239", async() => {
                 BeginContext(939, 7, true);
                 WriteLiteral("Усунути");
                 EndContext();

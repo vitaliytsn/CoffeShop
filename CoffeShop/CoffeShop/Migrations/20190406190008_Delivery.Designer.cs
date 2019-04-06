@@ -4,14 +4,16 @@ using CoffeShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CoffeShop.Migrations
 {
     [DbContext(typeof(CoffeShopContext))]
-    partial class CoffeShopContextModelSnapshot : ModelSnapshot
+    [Migration("20190406190008_Delivery")]
+    partial class Delivery
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,11 +88,15 @@ namespace CoffeShop.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int?>("OrderId");
+
                     b.Property<double>("Price");
 
                     b.HasKey("Id");
 
                     b.HasIndex("GroupId");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("Items");
                 });
@@ -173,19 +179,6 @@ namespace CoffeShop.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("CoffeShop.Models.OrderItem", b =>
-                {
-                    b.Property<int>("ItemId");
-
-                    b.Property<int>("OrderId");
-
-                    b.HasKey("ItemId", "OrderId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("OrderItem");
-                });
-
             modelBuilder.Entity("CoffeShop.Models.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -248,6 +241,10 @@ namespace CoffeShop.Migrations
                     b.HasOne("CoffeShop.Models.ItemGroup", "Group")
                         .WithMany("GroupItems")
                         .HasForeignKey("GroupId");
+
+                    b.HasOne("CoffeShop.Models.Order")
+                        .WithMany("OrderedItems")
+                        .HasForeignKey("OrderId");
                 });
 
             modelBuilder.Entity("CoffeShop.Models.ItemComponent", b =>
@@ -274,19 +271,6 @@ namespace CoffeShop.Migrations
                     b.HasOne("CoffeShop.Models.User", "CreatorUser")
                         .WithMany()
                         .HasForeignKey("CreatorUserId");
-                });
-
-            modelBuilder.Entity("CoffeShop.Models.OrderItem", b =>
-                {
-                    b.HasOne("CoffeShop.Models.Item", "Item")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("CoffeShop.Models.Order", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CoffeShop.Models.User", b =>
