@@ -154,17 +154,51 @@ namespace CoffeShop.Controllers
             Item item = new Item();
             ViewBag.GroupId = groupId;
             item.Group = _itemGroupRepository.GetByID(groupId);
-            return View(item);
+            return View(new ItemVM { CurrentItem = item });
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Item_Create(Item item)
+        public async Task<ActionResult> Item_Create(ItemVM itemVM)
         {
-            item.Group = _itemGroupRepository.GetByID(item.Group.Id);
-            item.Active = true;
-            _itemRepository.Add(item);
-            ViewBag.GroupId = item.Group.Id;
-            return RedirectToAction(nameof(ItemGroup_Edit), new { id = item.Group.Id });
+            itemVM.CurrentItem.Group = _itemGroupRepository.GetByID(itemVM.CurrentItem.Group.Id);
+            itemVM.CurrentItem.Active = true;
+            _itemRepository.Add(itemVM.CurrentItem);
+            ViewBag.GroupId = itemVM.CurrentItem.Group.Id;
+
+            ItemImage imageToSave;
+            if (itemVM.UploadImage != null)
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await itemVM.UploadImage.CopyToAsync(stream);
+                    imageToSave = new ItemImage()
+                    {
+                        Active = true,
+                        image = stream.ToArray(),
+                        itemId = itemVM.CurrentItem.Id
+                    };
+
+                }
+            }
+            else
+            {
+                string[] arr = DefaultImage.image.Split(",");
+                byte[] bytearr = new byte[arr.Length - 1];
+                for (int i = 0; i < arr.Length - 1; i++)
+                {
+                    bytearr[i] = Convert.ToByte(arr[i]);
+                }
+                imageToSave = new ItemImage()
+                {
+                    Active = true,
+                    image = bytearr,
+                    itemId = itemVM.CurrentItem.Id
+                };
+            }
+            _itemImageRepository.Add(imageToSave);
+
+           
+            return RedirectToAction(nameof(ItemGroup_Edit), new { id = itemVM.CurrentItem.Group.Id });
         }
         public ActionResult Item_ListPartial(int X, int Y, int groupId)
         {
@@ -193,22 +227,28 @@ namespace CoffeShop.Controllers
         [HttpPost]
         public async Task<ActionResult> Item_Edit(ItemVM itemVM)
         {
+  
             if (itemVM.UploadImage != null)
+            {
                 using (var stream = new MemoryStream())
                 {
                     await itemVM.UploadImage.CopyToAsync(stream);
+
                     ItemImage imageToSave = new ItemImage()
                     {
                         Active = true,
                         image = stream.ToArray(),
                         itemId = itemVM.CurrentItem.Id
                     };
+                    ItemImage itemToUpdate = _itemImageRepository.GetByQuery(x => x.itemId == itemVM.CurrentItem.Id)
+                        .FirstOrDefault();
+                    itemToUpdate.image = imageToSave.image;
+                    _itemImageRepository.Update(itemToUpdate);
 
-                    _itemImageRepository.Add(imageToSave);
-                    itemVM.CurrentItem.Images.Add(imageToSave);
-
-             _itemRepository.Update(itemVM.CurrentItem);
                 }
+            }
+
+            _itemRepository.Update(itemVM.CurrentItem);
             return RedirectToAction(nameof(ItemGroup_Edit), new { id = itemVM.CurrentItem.Group.Id });
         }
 

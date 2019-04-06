@@ -16,6 +16,7 @@ namespace CoffeShop.Models
         public ItemImage(Item item, byte[] Image)
         {
             itemId = item.Id;
+            Active = true;
             image = Image;
         }
         public int itemId { get; set; }
