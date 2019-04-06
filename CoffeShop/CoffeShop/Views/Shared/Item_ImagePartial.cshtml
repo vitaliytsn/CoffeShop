@@ -1,0 +1,19 @@
+﻿@{
+    int Image = this.ViewData.ContainsKey("ImageId") ? (int)this.ViewData["ImageId"] : 0;
+    int X = this.ViewData.ContainsKey("X") ? (int)this.ViewData["X"] : 0;
+    int Y = this.ViewData.ContainsKey("Y") ? (int)this.ViewData["Y"] : 0;
+}
+@{
+    Layout = null;
+}
+
+<body>
+
+<div>
+
+    <img src="@Url.Action("GetImage", "ItemImage", new {ImageId = Image, Width = X, Height = Y })" />
+</div>
+</body>
+
+
+

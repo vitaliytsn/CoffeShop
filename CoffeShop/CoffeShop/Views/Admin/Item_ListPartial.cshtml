@@ -31,29 +31,32 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.ActionLink(
-                    "Внести Зміни",
-                    "Item_Edit",            // controller action
-                    "Admin",        // controller
-                    new { itemId = item.Id }) |||
-                 @Html.ActionLink(
-                    "Усунути товар",
-                    "Item_Delete",
-                    "Admin",
-                    new { itemId = item.Id }) 
-            </td>
-        </tr>
+    <tr>
+        <td>
+           @Html.Partial("Item_ImagePartial", new ViewDataDictionary(ViewData) { { "ImageId", item.Images[0].Id }, { "X", ViewBag.Width }, { "Y", ViewBag.Height } })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.ActionLink(
+                "Внести Зміни",
+                "Item_Edit", // controller action
+                "Admin", // controller
+                new {itemId = item.Id}) |||
+            @Html.ActionLink(
+                "Усунути товар",
+                "Item_Delete",
+                "Admin",
+                new {itemId = item.Id})
+        </td>
+    </tr>
 }
     </tbody>
 </table>

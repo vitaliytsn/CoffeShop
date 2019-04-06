@@ -10,7 +10,8 @@ using CoffeShop.Data;
 using CoffeShop.Models;
 using CoffeShop.Models.ViewModels;
 using CoffeShop.Repository;
-using Microsoft.EntityFrameworkCore.Metadata.Internal; 
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
 
 namespace CoffeShop.Controllers
 {
@@ -171,9 +172,13 @@ namespace CoffeShop.Controllers
             ViewBag.Height = Y / 12;
             ViewBag.GroupId = groupId;
 
-            List<Item> items = _context.Set<Item>().Include(item => item.Group).Where(x => x.Group.Id == groupId && x.Active==true)
+            List<Item> items = _context.Set<Item>().Include(item => item.Group).Include(item=>item.Images).Where(x => x.Group.Id == groupId && x.Active==true)
                 .ToList();
-
+            foreach (var item in items)
+            {
+                if(item.Images.Count==0)
+                    item.Images.Add(new ItemImage(item, System.Text.Encoding.UTF8.GetBytes(DefaultImage.image)));
+            }
             // List<Item> items = _itemRepository.GetAll().Where(x=>x.Group.Id==groupId).ToList();
             return PartialView(items);
         }
