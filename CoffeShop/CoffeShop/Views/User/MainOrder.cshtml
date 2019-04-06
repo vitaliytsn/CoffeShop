@@ -14,6 +14,8 @@
 <table class="table" style="background-color: #CF9979; ">
     <thead>
     <tr style="color: #87cefa">
+        <th>
+        </th>
         <th >
             @Html.DisplayNameFor(model => model.Name)
         </th>
@@ -31,6 +33,9 @@
     {
         <tr style="color: azure">
             <td>
+                @Html.Partial("Item_ImagePartial", new ViewDataDictionary(ViewData) { { "ImageId", item.Images[0].Id }, { "X", ViewBag.Width }, { "Y", ViewBag.Height } })
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
@@ -44,7 +49,7 @@
                     "Усунути З Замовлення",
                     "Item_RemoveFromOrder",
                     "User",
-                    new { items = ViewBag.arr, ItemId = item.Id })
+                    new {items = ViewBag.arr, ItemId = item.Id})
             </td>
         </tr>
     }

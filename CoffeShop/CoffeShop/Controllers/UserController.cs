@@ -37,10 +37,13 @@ namespace CoffeShop.Controllers
             _itemRepository = itemRepository;
             
         }
-    public ActionResult MainOrder(List<int> items)
+    public ActionResult MainOrder(List<int> items,int X,int Y)
     {
-        List<Item> orderItems = (from item in items select _itemRepository.GetByID(item)).ToList(); 
+        List<Item> orderItems = (from item in items select _context.Set<Item>().Include(x=>x.Group).Include(x=> x.Images).Where(y=>y.Id==item).FirstOrDefault()).ToList(); 
             ViewBag.arr = items;
+
+        ViewBag.Width = X ;
+        ViewBag.Height = Y ;
             return View(orderItems);
         }
 
@@ -67,10 +70,10 @@ namespace CoffeShop.Controllers
         }
 
         [HttpGet]
-        public ActionResult Item_AddToOrder(int ItemId, List<int> items)
+        public ActionResult Item_AddToOrder(int ItemId, List<int> items,int X,int Y)
         {
             items.Add(ItemId);
-            return RedirectToAction(nameof(MainOrder), new { items = items });
+            return RedirectToAction(nameof(MainOrder), new { items = items,X=X,Y=Y});
         }
 
         [HttpGet]
@@ -103,10 +106,11 @@ namespace CoffeShop.Controllers
             ViewBag.Height = Y / 12;
             ViewBag.GroupId = groupId;
             ViewBag.arr = items;
-            List<Item> groupItems = _context.Set<Item>().Include(item => item.Group).Where(x => x.Group.Id == groupId && x.Active == true)
+
+            List<Item> itemsVM = _context.Set<Item>().Include(item => item.Group).Include(item => item.Images).Where(x => x.Group.Id == groupId && x.Active == true)
                 .ToList();
 
-            return PartialView(groupItems);
+            return PartialView(itemsVM);
         }
 
     }

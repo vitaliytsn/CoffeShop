@@ -208,17 +208,15 @@ namespace CoffeShop.Controllers
 
             List<Item> items = _context.Set<Item>().Include(item => item.Group).Include(item=>item.Images).Where(x => x.Group.Id == groupId && x.Active==true)
                 .ToList();
-            foreach (var item in items)
-            {
-                if(item.Images.Count==0)
-                    item.Images.Add(new ItemImage(item, System.Text.Encoding.UTF8.GetBytes(DefaultImage.image)));
-            }
+
             // List<Item> items = _itemRepository.GetAll().Where(x=>x.Group.Id==groupId).ToList();
             return PartialView(items);
         }
-        public ActionResult Item_Edit(int itemId)
+        public ActionResult Item_Edit(int X, int Y, int itemId)
         {
-            Item item = _context.Set<Item>().Include(items => items.Group).Where(x => x.Id == itemId)
+            ViewBag.Width = X *3;
+            ViewBag.Height = Y *3;
+            Item item = _context.Set<Item>().Include(items => items.Group).Include(items=>items.Images).Where(x => x.Id == itemId)
                 .ToList().FirstOrDefault();
             ViewBag.GroupId = item.Group.Id;
             

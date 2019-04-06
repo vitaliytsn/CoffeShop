@@ -11,6 +11,9 @@
     <thead>
     <tr>
         <th>
+            
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
@@ -26,6 +29,10 @@
     @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.Partial("Item_ImagePartial", new ViewDataDictionary(ViewData) { { "ImageId", item.Images[0].Id }, { "X", ViewBag.Width }, { "Y", ViewBag.Height } })
+            </td>
+
+            <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
@@ -39,7 +46,7 @@
                     "Додати До Замовлення",
                     "Item_AddToOrder",
                     "User",
-                    new { items = ViewBag.arr, ItemId = item.Id })
+                    new {items = ViewBag.arr, ItemId = item.Id,X= ViewBag.Width, Y= ViewBag.Height })
             </td>
         </tr>
     }

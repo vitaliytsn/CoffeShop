@@ -18,6 +18,9 @@
     </td>
     <tr>
         <th>
+            
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
@@ -49,7 +52,12 @@
                 "Внести Зміни",
                 "Item_Edit", // controller action
                 "Admin", // controller
-                new {itemId = item.Id}) |||
+                new
+                {
+                    itemId = item.Id,
+                    X= ViewBag.Width,
+                    Y= ViewBag.Height
+                }) |||
             @Html.ActionLink(
                 "Усунути товар",
                 "Item_Delete",

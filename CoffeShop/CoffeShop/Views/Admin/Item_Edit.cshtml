@@ -19,6 +19,7 @@
                 <label asp-for="CurrentItem.Name" class="control-label"></label>
                 <input asp-for="CurrentItem.Name" class="form-control" />
                 <span asp-validation-for="CurrentItem.Name" class="text-danger"></span>
+               
             </div>
             <div class="form-group">
                 <label asp-for="CurrentItem.Description" class="control-label"></label>
@@ -30,7 +31,9 @@
                 <input asp-for="CurrentItem.Price" class="form-control" />
                 <span asp-validation-for="CurrentItem.Price" class="text-danger"></span>
             </div>
-
+            <th>
+                @Html.Partial("Item_ImagePartial", new ViewDataDictionary(ViewData) { { "ImageId", @Model.CurrentItem.Images[0].Id }, { "X", ViewBag.Width }, { "Y", ViewBag.Height } })
+            </th>
             <div class="form-group">
                 <input type="file"  asp-for="UploadImage" />
             </div>
