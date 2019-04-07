@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CoffeShop.Models;
 using Microsoft.EntityFrameworkCore;
+using CoffeShop.Models.ViewModels;
 
 namespace CoffeShop.Data
 {
@@ -43,5 +44,6 @@ namespace CoffeShop.Data
                 .WithMany(c => c.OrderItems)
                 .HasForeignKey(bc => bc.OrderId);
         }
+
     }
 }

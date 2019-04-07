@@ -19,5 +19,7 @@ namespace CoffeShop.Models
         public  string Description { get; set; }
 
         public bool Active { get; set; }
+
+        public Units Unit { get; set; }
     }
 }
