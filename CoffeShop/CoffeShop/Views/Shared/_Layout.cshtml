@@ -36,14 +36,15 @@
                     <ul class="nav navbar-nav">
                         @if (role == "Administrator")
                         {
-                        <li><a asp-area="" asp-controller="Admin" asp-action="ItemGroup_List">Групи Товарів</a></li>
-                        <li><a asp-area="" asp-controller="Admin" asp-action="Component_List">Складники Товарів</a></li>
-                        <li><a asp-area="" asp-controller="Admin" asp-action="CoffeShop_List">Кав'ярні Та Працівники</a></li>
+                            <li><a asp-area="" asp-controller="Admin" asp-action="ItemGroup_List">Групи Товарів</a></li>
+                            <li><a asp-area="" asp-controller="Admin" asp-action="Component_List">Складники Товарів</a></li>
+                            <li><a asp-area="" asp-controller="Admin" asp-action="ComponentDelivery_List">Достави складників та товарів</a></li>
+                            <li><a asp-area="" asp-controller="Admin" asp-action="CoffeShop_List">Кав'ярні Та Працівники</a></li>
                         }
-                    @if (role == "User")
-                    {
-                        <li><a asp-area="" asp-controller="User" asp-action="MainOrder">Нове Замовлення</a></li>
-                    }
+                        @if (role == "User")
+                        {
+                            <li><a asp-area="" asp-controller="User" asp-action="MainOrder">Нове Замовлення</a></li>
+                        }
                     </ul>
                     @await Html.PartialAsync("_LoginPartial")
                 </div>

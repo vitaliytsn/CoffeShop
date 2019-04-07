@@ -105,8 +105,8 @@ namespace CoffeShop.Controllers
 
         public ActionResult Item_ListPartial(int X, int Y, int groupId, List<int> items)
         {
-            ViewBag.Width = X / 12;
-            ViewBag.Height = Y / 12;
+            ViewBag.Width = X / 10;
+            ViewBag.Height = Y / 10;
             ViewBag.GroupId = groupId;
             ViewBag.arr = items;
 

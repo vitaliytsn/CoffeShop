@@ -1,16 +1,15 @@
-﻿using System;
+﻿using CoffeShop.Data;
+using CoffeShop.Models;
+using CoffeShop.Models.ViewModels;
+using CoffeShop.Repository;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using CoffeShop.Data;
-using CoffeShop.Models;
-using CoffeShop.Models.ViewModels;
-using CoffeShop.Repository;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 
 namespace CoffeShop.Controllers
@@ -25,9 +24,12 @@ namespace CoffeShop.Controllers
         private readonly IRepository<User, CoffeShopContext> _userRepository;
         private readonly IRepository<Role, CoffeShopContext> _roleRepository;
         private readonly IRepository<ItemImage, CoffeShopContext> _itemImageRepository;
+        private readonly IRepository<ComponentDelivery, CoffeShopContext> _componentDeliveryRepository;
         private readonly CoffeShopContext _context;
-        public AdminController(IRepository<ItemImage, CoffeShopContext> itemImageRepository, IRepository<Role, CoffeShopContext> roleRepository, IRepository<User, CoffeShopContext> userRepository, IRepository<Models.CoffeShop, CoffeShopContext> coffeShopRepository,IRepository<ItemComponent, CoffeShopContext> itemComponentRepository, IRepository<Component, CoffeShopContext> componentRepository, CoffeShopContext context,IRepository<ItemGroup, CoffeShopContext> itemGroupRepository, IRepository<Item, CoffeShopContext> itemRepository)
+        public AdminController(IRepository<ComponentDelivery, CoffeShopContext> componentDeliveryRepository, IRepository<ItemImage, CoffeShopContext> itemImageRepository, IRepository<Role, CoffeShopContext> roleRepository, IRepository<User, CoffeShopContext> userRepository, IRepository<Models.CoffeShop, CoffeShopContext> coffeShopRepository, IRepository<ItemComponent, CoffeShopContext> itemComponentRepository, IRepository<Component, CoffeShopContext> componentRepository, CoffeShopContext context, IRepository<ItemGroup, CoffeShopContext> itemGroupRepository, IRepository<Item, CoffeShopContext> itemRepository)
         {
+            _componentDeliveryRepository = componentDeliveryRepository;
+            _componentRepository = componentRepository;
             _itemImageRepository = itemImageRepository;
             _roleRepository = roleRepository;
             _userRepository = userRepository;
@@ -41,13 +43,13 @@ namespace CoffeShop.Controllers
         }
 
         #region ItemGroup
-  
+
         public async Task<IActionResult> ItemGroup_List()
         {
-            return View(_itemGroupRepository.GetByQuery(x=>x.Active==true));
+            return View(_itemGroupRepository.GetByQuery(x => x.Active == true));
         }
 
-       
+
         public IActionResult ItemGroup_Create()
         {
             return View();
@@ -66,7 +68,7 @@ namespace CoffeShop.Controllers
             return View(itemGroup);
         }
 
-    
+
         public async Task<IActionResult> ItemGroup_Edit(int? id)
         {
             if (id == null)
@@ -74,13 +76,13 @@ namespace CoffeShop.Controllers
                 return NotFound();
             }
 
-            var itemGroup = _itemGroupRepository.GetByID((int) id);
+            var itemGroup = _itemGroupRepository.GetByID((int)id);
             if (itemGroup == null)
             {
                 return NotFound();
             }
             return View(itemGroup);
-        }    
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -95,7 +97,7 @@ namespace CoffeShop.Controllers
             {
                 try
                 {
-                     _itemGroupRepository.Update(itemGroup);
+                    _itemGroupRepository.Update(itemGroup);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -117,35 +119,7 @@ namespace CoffeShop.Controllers
             return _itemGroupRepository.GetByID(id) == null;
         }
         #endregion
-        /*      // GET: Admin/Delete/5
-              public async Task<IActionResult> Delete(int? id)
-              {
-                  if (id == null)
-                  {
-                      return NotFound();
-                  }
 
-                  var itemGroup = await _context.ItemGroups
-                      .FirstOrDefaultAsync(m => m.Id == id);
-                  if (itemGroup == null)
-                  {
-                      return NotFound();
-                  }
-
-                  return View(itemGroup);
-              }
-
-              // POST: Admin/Delete/5
-              [HttpPost, ActionName("Delete")]
-              [ValidateAntiForgeryToken]
-              public async Task<IActionResult> DeleteConfirmed(int id)
-              {
-                  var itemGroup = await _context.ItemGroups.FindAsync(id);
-                  _context.ItemGroups.Remove(itemGroup);
-                  await _context.SaveChangesAsync();
-                  return RedirectToAction(nameof(Index));
-              }
-              */
 
         #region Items
 
@@ -197,16 +171,16 @@ namespace CoffeShop.Controllers
             }
             _itemImageRepository.Add(imageToSave);
 
-           
+
             return RedirectToAction(nameof(ItemGroup_Edit), new { id = itemVM.CurrentItem.Group.Id });
         }
         public ActionResult Item_ListPartial(int X, int Y, int groupId)
         {
-            ViewBag.Width = X / 12;
-            ViewBag.Height = Y / 12;
+            ViewBag.Width = X / 10;
+            ViewBag.Height = Y / 10;
             ViewBag.GroupId = groupId;
 
-            List<Item> items = _context.Set<Item>().Include(item => item.Group).Include(item=>item.Images).Where(x => x.Group.Id == groupId && x.Active==true)
+            List<Item> items = _context.Set<Item>().Include(item => item.Group).Include(item => item.Images).Where(x => x.Group.Id == groupId && x.Active == true)
                 .ToList();
 
             // List<Item> items = _itemRepository.GetAll().Where(x=>x.Group.Id==groupId).ToList();
@@ -214,18 +188,18 @@ namespace CoffeShop.Controllers
         }
         public ActionResult Item_Edit(int X, int Y, int itemId)
         {
-            ViewBag.Width = X *3;
-            ViewBag.Height = Y *3;
-            Item item = _context.Set<Item>().Include(items => items.Group).Include(items=>items.Images).Where(x => x.Id == itemId)
+            ViewBag.Width = X * 3;
+            ViewBag.Height = Y * 3;
+            Item item = _context.Set<Item>().Include(items => items.Group).Include(items => items.Images).Where(x => x.Id == itemId)
                 .ToList().FirstOrDefault();
             ViewBag.GroupId = item.Group.Id;
-            
-            return View(new ItemVM{CurrentItem = item});
+
+            return View(new ItemVM { CurrentItem = item });
         }
         [HttpPost]
         public async Task<ActionResult> Item_Edit(ItemVM itemVM)
         {
-  
+
             if (itemVM.UploadImage != null)
             {
                 using (var stream = new MemoryStream())
@@ -252,12 +226,12 @@ namespace CoffeShop.Controllers
 
         public ActionResult Item_Delete(int itemId)
         {
-            return View(_context.Set<Item>().Include(y => y.Group).Where(x => x.Id == itemId).ToList().FirstOrDefault()); 
+            return View(_context.Set<Item>().Include(y => y.Group).Where(x => x.Id == itemId).ToList().FirstOrDefault());
         }
         [HttpPost]
         public ActionResult Item_Delete(Item item)
         {
-            Item itemToDelete=_itemRepository.GetByID(item.Id);
+            Item itemToDelete = _itemRepository.GetByID(item.Id);
             itemToDelete.Active = false;
             _itemRepository.Update(itemToDelete);
             return RedirectToAction(nameof(ItemGroup_Edit), new { id = item.Group.Id });
@@ -268,7 +242,7 @@ namespace CoffeShop.Controllers
 
         public ActionResult Component_List()
         {
-            return View(_componentRepository.GetByQuery(x=>x.Active==true));
+            return View(_componentRepository.GetByQuery(x => x.Active == true));
         }
 
         public ActionResult Component_Create()
@@ -289,7 +263,7 @@ namespace CoffeShop.Controllers
         }
         [HttpPost]
         public ActionResult Component_Edit(Component component)
-        { 
+        {
             _componentRepository.Update(component);
             return RedirectToAction(nameof(Component_List));
         }
@@ -312,13 +286,13 @@ namespace CoffeShop.Controllers
 
         public ActionResult ItemComponent_ListPartial(int itemId)
         {
-            List<ItemComponent> itemComponents= new List<ItemComponent>();
+            List<ItemComponent> itemComponents = new List<ItemComponent>();
 
-            itemComponents = _context.Set<ItemComponent>().Include(y => y.CurrentComponent).Include(y=>y.ComponentItem)
-                    .Where(x => x.ComponentItem.Id==itemId && x.Active == true)
+            itemComponents = _context.Set<ItemComponent>().Include(y => y.CurrentComponent).Include(y => y.ComponentItem)
+                    .Where(x => x.ComponentItem.Id == itemId && x.Active == true)
                     .ToList();
-          //  itemComponents.Add(temComponent);
-           
+            //  itemComponents.Add(temComponent);
+
 
             ViewBag.ItemId = itemId;
             return PartialView(itemComponents);
@@ -327,24 +301,26 @@ namespace CoffeShop.Controllers
         public ActionResult ItemComponent_Edit(int itemComponentId)
         {
             ItemComponent itemComponent = _context.Set<ItemComponent>().Include(y => y.CurrentComponent).Include(y => y.ComponentItem)
-                .Where(x => x.Id==itemComponentId).ToList().FirstOrDefault();
+                .Where(x => x.Id == itemComponentId).ToList().FirstOrDefault();
 
             return View(itemComponent);
         }
         [HttpPost]
         public ActionResult ItemComponent_Edit(ItemComponent itemComponent)
         {
-           _itemComponentRepository.Update(itemComponent);
+            _itemComponentRepository.Update(itemComponent);
 
             return RedirectToAction(nameof(Item_Edit), new { itemId = itemComponent.ComponentItem.Id });
         }
 
         public ActionResult ItemComponent_Create(int itemId)
         {
-            ItemComponent itemComponent = new ItemComponent();
-            itemComponent.ComponentItem = _itemRepository.GetByID(itemId);
+            ItemComponent itemComponent = new ItemComponent
+            {
+                ComponentItem = _itemRepository.GetByID(itemId)
+            };
             ViewBag.itemid = itemId;
-            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> selectListItems = new List<SelectListItem>();             
+            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> selectListItems = new List<SelectListItem>();
             foreach (var component in _componentRepository.GetAll())
             {
                 selectListItems.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(component.Name, component.Id.ToString()));
@@ -355,23 +331,23 @@ namespace CoffeShop.Controllers
 
         [HttpPost]
         public ActionResult ItemComponent_Create(ItemComponent itemComponent)
-        {           
+        {
             itemComponent.ComponentItem = _itemRepository.GetByID(itemComponent.ComponentItem.Id);
             itemComponent.CurrentComponent = _componentRepository.GetByID(itemComponent.CurrentComponent.Id);
             itemComponent.Active = true;
             _itemComponentRepository.Add(itemComponent);
             ViewBag.itemId = itemComponent.ComponentItem.Id;
-            return RedirectToAction(nameof(Item_Edit), new {itemId = itemComponent.ComponentItem.Id });
+            return RedirectToAction(nameof(Item_Edit), new { itemId = itemComponent.ComponentItem.Id });
         }
 
         public ActionResult ItemComponent_Delete(int itemComponentId)
         {
-           
-            ItemComponent itemComponent= _context.Set<ItemComponent>().Include(item => item.ComponentItem).Include(item=>item.CurrentComponent)
+
+            ItemComponent itemComponent = _context.Set<ItemComponent>().Include(item => item.ComponentItem).Include(item => item.CurrentComponent)
                 .Where(x => x.Id == itemComponentId)
                 .ToList().FirstOrDefault();
-             ViewBag.itemId = itemComponent.ComponentItem.Id;
-            return View(itemComponent); 
+            ViewBag.itemId = itemComponent.ComponentItem.Id;
+            return View(itemComponent);
         }
         [HttpPost]
         public ActionResult ItemComponent_Delete(ItemComponent itemComponent)
@@ -427,7 +403,7 @@ namespace CoffeShop.Controllers
 
         public ActionResult User_Create(int coffeShopId)
         {
-             User user = new User();
+            User user = new User();
             user.UserShop.Id = coffeShopId;
             return View(user);
         }
@@ -439,20 +415,20 @@ namespace CoffeShop.Controllers
             user.Active = true;
             user.UserRole = _roleRepository.GetByQuery(x => x.Name == "User").ToList().FirstOrDefault();
             _userRepository.Add(user);
-            return RedirectToAction(nameof(CoffeShop_Edit),new{ coffeShopId=user.UserShop.Id });
+            return RedirectToAction(nameof(CoffeShop_Edit), new { coffeShopId = user.UserShop.Id });
         }
 
         public ActionResult User_Edit(int userId)
         {
             User user = _context.Set<User>().Include(item => item.UserShop)
-                .Where(x => x.Id==userId).ToList().FirstOrDefault();
+                .Where(x => x.Id == userId).ToList().FirstOrDefault();
             return View(user);
         }
         [HttpPost]
         public ActionResult User_Edit(User user)
         {
-           _userRepository.Update(user);
-           return RedirectToAction(nameof(CoffeShop_Edit), new { coffeShopId = user.UserShop.Id });
+            _userRepository.Update(user);
+            return RedirectToAction(nameof(CoffeShop_Edit), new { coffeShopId = user.UserShop.Id });
         }
 
         public ActionResult User_Delete(int userId)
@@ -464,7 +440,7 @@ namespace CoffeShop.Controllers
         [HttpPost]
         public ActionResult User_Delete(User user)
         {
-            user = _context.Set<User>().Include(item => item.UserShop).Include(item=>item.UserRole)
+            user = _context.Set<User>().Include(item => item.UserShop).Include(item => item.UserRole)
                 .Where(x => x.Id == user.Id).ToList().FirstOrDefault();
             user.Active = false;
             _userRepository.Update(user);
@@ -472,6 +448,89 @@ namespace CoffeShop.Controllers
         }
         #endregion
 
+        #region ComponentDelivery
+
+        public ActionResult ComponentDelivery_List()
+        {
+
+            return View(_context.Set<ComponentDelivery>().Include(item => item.ComponentDelivered).Include(item => item.ItemDelivered).Where(x => x.Active == true));
+        }
+
+        public ActionResult ComponentDelivery_Create()
+        {
+            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> componentSelectListItems = new List<SelectListItem>();
+            foreach (var component in _componentRepository.GetAll())
+            {
+                componentSelectListItems.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(component.Name, component.Id.ToString()));
+            }
+            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> coffeShopSelectListItems = new List<SelectListItem>();
+            foreach (var coffeShop in _coffeShopRepository.GetAll())
+            {
+                coffeShopSelectListItems.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(coffeShop.Name + " " + coffeShop.Adress, coffeShop.Id.ToString()));
+            }
+            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> unitSelectListItems = new List<SelectListItem>
+            {
+                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(Units.Штуки.ToString(),
+                Convert.ToString((int)Units.Штуки)),
+                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(Units.Грами.ToString(),
+                Convert.ToString((int)Units.Грами)),
+                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(Units.МіліЛітри.ToString(),
+                Convert.ToString((int)Units.МіліЛітри))
+            };
+
+            ViewBag.CoffeShops = coffeShopSelectListItems;
+            ViewBag.Units = unitSelectListItems;
+            ViewBag.Components = componentSelectListItems;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ComponentDelivery_Create(ComponentDelivery componentDelivery)
+        {
+            if (componentDelivery.ComponentDelivered != null)
+                componentDelivery.ComponentDelivered =
+                    _componentRepository.GetByID(componentDelivery.ComponentDelivered.Id);
+
+            if (componentDelivery.ItemDelivered != null)
+                componentDelivery.ItemDelivered = _itemRepository.GetByID(componentDelivery.ItemDelivered.Id);
+
+            componentDelivery.CoffeShop = _coffeShopRepository.GetByID(componentDelivery.CoffeShop.Id);
+            componentDelivery.DeliveryTime = DateTime.Now;
+            componentDelivery.UnitsDelivered = (Units)componentDelivery.UnitsDelivered;
+            componentDelivery.Active = true;
+            _componentDeliveryRepository.Add(componentDelivery);
+            return RedirectToAction("ComponentDelivery_List");
+        }
+
+        public ActionResult ItemDelivery_Create()
+        {
+            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> itemSelectListItems = new List<SelectListItem>();
+            foreach (var item in _context.Set<Item>().Include(item => item.ItemComponents).Where(x => x.ItemComponents.Count == 0))
+            {
+                itemSelectListItems.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(item.Name, item.Id.ToString()));
+            }
+            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> coffeShopSelectListItems = new List<SelectListItem>();
+            foreach (var coffeShop in _coffeShopRepository.GetAll())
+            {
+                coffeShopSelectListItems.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(coffeShop.Name + " " + coffeShop.Adress, coffeShop.Id.ToString()));
+            }
+            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> unitSelectListItems = new List<SelectListItem>
+            {
+                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(Units.Штуки.ToString(),
+                Convert.ToString((int)Units.Штуки)),
+                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(Units.Грами.ToString(),
+                Convert.ToString((int)Units.Грами)),
+                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(Units.МіліЛітри.ToString(),
+                Convert.ToString((int)Units.МіліЛітри))
+            };
+
+            ViewBag.Items = itemSelectListItems;
+            ViewBag.CoffeShops = coffeShopSelectListItems;
+            ViewBag.Units = unitSelectListItems;
+
+            return View();
+        }
+
+        #endregion
 
     }
 }
