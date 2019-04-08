@@ -4,7 +4,7 @@
     ViewData["Title"] = "ComponentDelivery_Create";
 }
 
-<h2>Достава Товару</h2>
+<h2>Надходження Товару</h2>
 
 
 <hr />
@@ -27,8 +27,8 @@
                 <input asp-for="Amount" class="form-control" />
                 <span asp-validation-for="Amount" class="text-danger"></span>
 
-                <label asp-for="UnitsDelivered" class="control-label">Одиниці</label>
-                <select asp-for="UnitsDelivered" class="form-control" asp-items="ViewBag.Units"></select>
+                @*<label asp-for="UnitsDelivered" class="control-label">Одиниці</label>
+                <select asp-for="UnitsDelivered" class="form-control" asp-items="ViewBag.Units"></select>*@
 
             </div>
 

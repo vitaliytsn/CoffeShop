@@ -39,7 +39,9 @@ namespace CoffeShop.Controllers
         }
     public ActionResult MainOrder(List<int> items,int X,int Y)
     {
-        List<Item> orderItems = (from item in items select _context.Set<Item>().Include(x=>x.Group).Include(x=> x.Images).Where(y=>y.Id==item).FirstOrDefault()).ToList(); 
+        if (HttpContext.Session.GetString("userRole") == null)
+            return RedirectToAction("Login", "Account");
+            List<Item> orderItems = (from item in items select _context.Set<Item>().Include(x=>x.Group).Include(x=> x.Images).Where(y=>y.Id==item).FirstOrDefault()).ToList(); 
             ViewBag.arr = items;
 
         ViewBag.Width = X ;
@@ -55,6 +57,8 @@ namespace CoffeShop.Controllers
         }
         public ActionResult ItemGroup_Components(int? itemGroupId, List<int> items)
         {
+            if (HttpContext.Session.GetString("userRole") == null)
+                return RedirectToAction("Login", "Account");
             if (itemGroupId == null)
             {
                 return NotFound();
@@ -72,6 +76,8 @@ namespace CoffeShop.Controllers
         [HttpGet]
         public ActionResult Item_AddToOrder(int ItemId, List<int> items,int X,int Y)
         {
+            if (HttpContext.Session.GetString("userRole") == null)
+                return RedirectToAction("Login", "Account");
             items.Add(ItemId);
             return RedirectToAction(nameof(MainOrder), new { items = items,X=X,Y=Y});
         }
@@ -85,6 +91,9 @@ namespace CoffeShop.Controllers
 
         public ActionResult Order_Accept(List<int> items)
         {
+            if (HttpContext.Session.GetString("userRole") == null )
+                return RedirectToAction("Login", "Account");
+
             List<Item> orderedItems = (from item in items select _itemRepository.GetByID(item)).ToList();
             User employee = _userRepository.GetByID((int)HttpContext.Session.GetInt32("userId"));
             OrderVM acceptedOrder = new OrderVM(orderedItems,employee);

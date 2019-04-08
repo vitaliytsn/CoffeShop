@@ -25,7 +25,7 @@ namespace CoffeShop.Controllers
         {
             List<ComponentLeavingVM> componentLeavings = new List<ComponentLeavingVM>();
 
-            foreach (var component in _componentRepository.GetAll())
+            foreach (var component in _componentRepository.GetByQuery(x=>x.Active==true).ToList())
             {
                 double delivered=0.0;
                 double selled=0.0;
@@ -35,7 +35,7 @@ namespace CoffeShop.Controllers
                     .ToList())
                 {
                     delivered += delivery.Amount;
-                    unit = (Units)delivery.UnitsDelivered;
+                   // unit = (Units)delivery.UnitsDelivered;
                 }
 
 

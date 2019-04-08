@@ -13,10 +13,10 @@
 </head>
 <body>
     <p>
-        <a asp-action="ComponentDelivery_Create">Нова Достава Компоненту</a>
+        <a asp-action="ComponentDelivery_Create">Надходження Компоненту</a>
     </p>
     <p>
-        <a asp-action="ItemDelivery_Create">Нова Достава Товару</a>
+        <a asp-action="ItemDelivery_Create">Надходження Товару</a>
     </p>
     <table class="table">
         <thead>
@@ -31,7 +31,7 @@
                     @Html.DisplayNameFor(model => model.Amount)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.UnitsDelivered)
+                    @Html.DisplayNameFor(model => model.ComponentDelivered.Unit)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.DeliveryTime)
@@ -53,7 +53,7 @@
                         @Html.DisplayFor(modelItem => item.Amount)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.UnitsDelivered)
+                        @Html.DisplayFor(modelItem => item.ComponentDelivered.Unit)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.DeliveryTime)

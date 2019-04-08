@@ -19,7 +19,7 @@ namespace CoffeShop.Models
         public  string Description { get; set; }
 
         public bool Active { get; set; }
-
+        [Display(Name = "Одиниця")]
         public Units Unit { get; set; }
     }
 }

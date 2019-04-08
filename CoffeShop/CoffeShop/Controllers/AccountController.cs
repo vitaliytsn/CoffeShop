@@ -38,5 +38,16 @@ namespace CoffeShop.Controllers
             HttpContext.Session.SetString("userRole", (repoUser.UserRole.Name));
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult Logout()
+        {
+            foreach (var cookie in Request.Cookies.Keys)
+            {
+                Response.Cookies.Delete(cookie);
+            }
+
+            return RedirectToAction("Login", "Account");
+        }
+   
     }
 }

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 
 namespace CoffeShop.Controllers
@@ -242,11 +243,23 @@ namespace CoffeShop.Controllers
 
         public ActionResult Component_List()
         {
+          
             return View(_componentRepository.GetByQuery(x => x.Active == true));
         }
 
         public ActionResult Component_Create()
         {
+            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> unitSelectListItems = new List<SelectListItem>
+            {
+                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(Units.Штуки.ToString(),
+                    Convert.ToString((int)Units.Штуки)),
+                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(Units.Грами.ToString(),
+                    Convert.ToString((int)Units.Грами)),
+                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(Units.МіліЛітри.ToString(),
+                    Convert.ToString((int)Units.МіліЛітри))
+            };
+
+            ViewBag.Units = unitSelectListItems;
             return View();
         }
         [HttpPost]
@@ -254,16 +267,33 @@ namespace CoffeShop.Controllers
         {
             component.Active = true;
             _componentRepository.Add(component);
+         
             return RedirectToAction(nameof(Component_List));
         }
 
         public ActionResult Component_Edit(int componentId)
         {
-            return View(_componentRepository.GetByID(componentId));
+            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> unitSelectListItems = new List<SelectListItem>
+            {
+                
+                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(Units.Штуки.ToString(),
+                    Convert.ToString((int)Units.Штуки)){Selected = false},
+                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(Units.Грами.ToString(),
+                    Convert.ToString((int)Units.Грами)){Selected = false},
+            
+                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem("    ", "0"){Selected = true},
+                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(Units.МіліЛітри.ToString(),
+                    Convert.ToString((int)Units.МіліЛітри)){Selected = false}
+            };
+            Component component = _componentRepository.GetByID(componentId);
+            ViewBag.OldUnit= component.Unit;
+            ViewBag.Units = unitSelectListItems;
+            return View(component);
         }
         [HttpPost]
         public ActionResult Component_Edit(Component component)
         {
+            if (component.Unit == 0) component.Unit = _componentRepository.GetByID(component.Id).Unit;
             _componentRepository.Update(component);
             return RedirectToAction(nameof(Component_List));
         }
@@ -321,7 +351,7 @@ namespace CoffeShop.Controllers
             };
             ViewBag.itemid = itemId;
             List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> selectListItems = new List<SelectListItem>();
-            foreach (var component in _componentRepository.GetAll())
+            foreach (var component in _componentRepository.GetByQuery(x=>x.Active==true))
             {
                 selectListItems.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(component.Name, component.Id.ToString()));
             }
@@ -452,34 +482,30 @@ namespace CoffeShop.Controllers
 
         public ActionResult ComponentDelivery_List()
         {
-
+            if (HttpContext.Session.GetString("userRole") == null ||
+                HttpContext.Session.GetString("userRole") != "Administrator")
+                return RedirectToAction("Login", "Account");
             return View(_context.Set<ComponentDelivery>().Include(item => item.ComponentDelivered).Include(item => item.ItemDelivered).Where(x => x.Active == true));
         }
 
         public ActionResult ComponentDelivery_Create()
         {
+            if (HttpContext.Session.GetString("userRole") == null ||
+                HttpContext.Session.GetString("userRole") != "Administrator")
+                return RedirectToAction("Login", "Account");
             List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> componentSelectListItems = new List<SelectListItem>();
-            foreach (var component in _componentRepository.GetAll())
+            foreach (var component in _componentRepository.GetByQuery(x=>x.Active==true))
             {
-                componentSelectListItems.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(component.Name, component.Id.ToString()));
+                componentSelectListItems.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(component.Name +": "+ component.Unit.ToString().ToUpper(), component.Id.ToString()));
             }
             List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> coffeShopSelectListItems = new List<SelectListItem>();
             foreach (var coffeShop in _coffeShopRepository.GetAll())
             {
                 coffeShopSelectListItems.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(coffeShop.Name + " " + coffeShop.Adress, coffeShop.Id.ToString()));
             }
-            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> unitSelectListItems = new List<SelectListItem>
-            {
-                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(Units.Штуки.ToString(),
-                Convert.ToString((int)Units.Штуки)),
-                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(Units.Грами.ToString(),
-                Convert.ToString((int)Units.Грами)),
-                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(Units.МіліЛітри.ToString(),
-                Convert.ToString((int)Units.МіліЛітри))
-            };
+        
 
             ViewBag.CoffeShops = coffeShopSelectListItems;
-            ViewBag.Units = unitSelectListItems;
             ViewBag.Components = componentSelectListItems;
             return View();
         }
@@ -495,7 +521,6 @@ namespace CoffeShop.Controllers
 
             componentDelivery.CoffeShop = _coffeShopRepository.GetByID(componentDelivery.CoffeShop.Id);
             componentDelivery.DeliveryTime = DateTime.Now;
-            componentDelivery.UnitsDelivered = (Units)componentDelivery.UnitsDelivered;
             componentDelivery.Active = true;
             _componentDeliveryRepository.Add(componentDelivery);
             return RedirectToAction("ComponentDelivery_List");
@@ -503,8 +528,11 @@ namespace CoffeShop.Controllers
 
         public ActionResult ItemDelivery_Create()
         {
+            if (HttpContext.Session.GetString("userRole") == null ||
+                HttpContext.Session.GetString("userRole") != "Administrator")
+                return RedirectToAction("Login", "Account");
             List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> itemSelectListItems = new List<SelectListItem>();
-            foreach (var item in _context.Set<Item>().Include(item => item.ItemComponents).Where(x => x.ItemComponents.Count == 0))
+            foreach (var item in _context.Set<Item>().Include(item => item.ItemComponents).Where(x => x.ItemComponents.Count == 0 && x.Active==true))
             {
                 itemSelectListItems.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(item.Name, item.Id.ToString()));
             }
@@ -513,24 +541,18 @@ namespace CoffeShop.Controllers
             {
                 coffeShopSelectListItems.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(coffeShop.Name + " " + coffeShop.Adress, coffeShop.Id.ToString()));
             }
-            List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> unitSelectListItems = new List<SelectListItem>
-            {
-                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(Units.Штуки.ToString(),
-                Convert.ToString((int)Units.Штуки)),
-                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(Units.Грами.ToString(),
-                Convert.ToString((int)Units.Грами)),
-                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(Units.МіліЛітри.ToString(),
-                Convert.ToString((int)Units.МіліЛітри))
-            };
+
 
             ViewBag.Items = itemSelectListItems;
             ViewBag.CoffeShops = coffeShopSelectListItems;
-            ViewBag.Units = unitSelectListItems;
+         
 
             return View();
         }
 
         #endregion
+
+
 
     }
 }
