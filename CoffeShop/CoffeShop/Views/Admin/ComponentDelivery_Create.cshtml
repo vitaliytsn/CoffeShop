@@ -26,10 +26,11 @@
                 <label asp-for="Amount" class="control-label">Кількість</label>
                 <input asp-for="Amount" class="form-control" />
                 <span asp-validation-for="Amount" class="text-danger"></span>
-
-                @*<label asp-for="UnitsDelivered" class="control-label">Одиниці</label>
-                <select asp-for="UnitsDelivered" class="form-control" asp-items="ViewBag.Units"></select>*@
-               
+            </div>
+            <div class="form-group">
+                <label asp-for="DeliveryPrice" class="control-label">Ціна Усього Надходження</label>
+                <input asp-for="DeliveryPrice" class="form-control" />
+                <span asp-validation-for="DeliveryPrice" class="text-danger"></span>
             </div>
 
             <div class="form-group">

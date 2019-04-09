@@ -73,6 +73,20 @@ namespace CoffeShop.Controllers
             return PartialView(itemGroup);
         }
 
+        public ActionResult Order_Delete(int Id)
+        {
+            return View(_context.Set<Order>().Include(item=>item.OrderItems).Where(x=>x.Id== Id).FirstOrDefault());
+        }
+        [HttpPost]
+        public ActionResult Order_Delete(Order order)
+        {
+            order = _context.Set<Order>().Where(x => x.Id == order.Id).FirstOrDefault();
+            order.Active = false;
+            _context.Update(order);
+            _context.SaveChanges();
+            return RedirectToAction("Order_ListOfUser");
+        }
+
         [HttpGet]
         public ActionResult Item_AddToOrder(int ItemId, List<int> items,int X,int Y)
         {
@@ -97,19 +111,30 @@ namespace CoffeShop.Controllers
             List<Item> orderedItems = (from item in items select _itemRepository.GetByID(item)).ToList();
             User employee = _userRepository.GetByID((int)HttpContext.Session.GetInt32("userId"));
             OrderVM acceptedOrder = new OrderVM(orderedItems,employee);
+            double FinalPrice = 0.0;
             foreach (var orderedItem in orderedItems)
             {
-                acceptedOrder.FinalPrice += orderedItem.Price;
+                FinalPrice += orderedItem.Price;
             }
 
+            acceptedOrder.FinalPrice = FinalPrice;
             Order order = new Order();
             order.CreatorUser = employee;
 
             order.OrderItems = (from orderedItem in  orderedItems select new OrderItem(){Item= orderedItem ,ItemId = orderedItem.Id,Order = order}).ToList();
-
+            order.FinalPrice = FinalPrice;
+            order.OrderDateTime=DateTime.Now;
+            order.Active = true;
             _context.Set<Order>().Add(order);
             _context.SaveChanges();
             return View(acceptedOrder);
+        }
+
+        public ActionResult Order_ListOfUser()
+        {
+            if (HttpContext.Session.GetString("userRole") == null)
+                return RedirectToAction("Login", "Account");
+            return View(_context.Set<Order>().Include(x=>x.CreatorUser).Where(item=>item.CreatorUser.Id== (int)HttpContext.Session.GetInt32("userId") ));
         }
 
         public ActionResult Item_ListPartial(int X, int Y, int groupId, List<int> items)

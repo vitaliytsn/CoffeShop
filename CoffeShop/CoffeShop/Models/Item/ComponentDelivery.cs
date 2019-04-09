@@ -16,7 +16,12 @@ namespace CoffeShop.Models
         public Component ComponentDelivered { get; set; }
         public Item ItemDelivered { get; set; }
         [Display(Name="Кількість")]
+        [Required]
         public double Amount { get; set; }
+
+        [Display(Name = "Ціна")]
+        [Required]
+        public double DeliveryPrice { get; set; }
 
     }
 }

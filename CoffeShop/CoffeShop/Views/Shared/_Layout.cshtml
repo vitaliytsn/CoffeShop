@@ -46,6 +46,7 @@
                         @if (role == "User")
                         {
                             <li><a asp-area="" asp-controller="User" asp-action="MainOrder">Нове Замовлення</a></li>
+                            <li><a asp-area="" asp-controller="User" asp-action="Order_ListOfUser">Мої Замовлення</a></li>
                         }
                     </ul>
                     @await Html.PartialAsync("_LoginPartial")

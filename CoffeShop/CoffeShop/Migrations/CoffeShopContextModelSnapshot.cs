@@ -67,6 +67,8 @@ namespace CoffeShop.Migrations
 
                     b.Property<int?>("ComponentDeliveredId");
 
+                    b.Property<double>("DeliveryPrice");
+
                     b.Property<DateTime>("DeliveryTime");
 
                     b.Property<int?>("ItemDeliveredId");
@@ -173,6 +175,10 @@ namespace CoffeShop.Migrations
                     b.Property<bool>("Active");
 
                     b.Property<int?>("CreatorUserId");
+
+                    b.Property<double>("FinalPrice");
+
+                    b.Property<DateTime>("OrderDateTime");
 
                     b.Property<bool>("Temp");
 
