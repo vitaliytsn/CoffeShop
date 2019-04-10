@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoffeShop.Repository;
 
 namespace CoffeShop.Models
 {
-    public class Leavings
+    public class Leavings:IRepoEntity
     {
         public Component Component { get; set; }
         public Item Item { get; set; }

@@ -134,7 +134,7 @@ namespace CoffeShop.Controllers
         {
             if (HttpContext.Session.GetString("userRole") == null)
                 return RedirectToAction("Login", "Account");
-            return View(_context.Set<Order>().Include(x=>x.CreatorUser).Where(item=>item.CreatorUser.Id== (int)HttpContext.Session.GetInt32("userId") ));
+            return View(_context.Set<Order>().Include(x=>x.CreatorUser).Where(item=>item.CreatorUser.Id== (int)HttpContext.Session.GetInt32("userId") ).OrderBy(x=>x.OrderDateTime));
         }
 
         public ActionResult Item_ListPartial(int X, int Y, int groupId, List<int> items)

@@ -61,8 +61,22 @@ namespace CoffeShop.Controllers
                 componentLeavings.Add(new ComponentLeavingVM(component,delivered-selled,unit));
             }
 
+          
            
             return View(componentLeavings);
+        }
+        public ActionResult ProfitRaport(DateTime ProfitDay)
+        {
+            ProfitDay=DateTime.Now;
+            double MoneyProfit = 0.0;
+           List<Order> ordersPerDay= _context.Set<Order>().Where(x => x.OrderDateTime.Date == ProfitDay.Date).ToList();
+            foreach (var order in ordersPerDay)
+            {
+                MoneyProfit += order.FinalPrice;
+            }
+
+            ViewBag.MoneyProfit = MoneyProfit;
+            return View(ordersPerDay);
         }
     }
 }

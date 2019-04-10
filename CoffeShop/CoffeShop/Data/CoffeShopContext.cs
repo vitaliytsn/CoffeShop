@@ -28,6 +28,7 @@ namespace CoffeShop.Data
         public Microsoft.EntityFrameworkCore.DbSet<User> Users { get; set; }
         public Microsoft.EntityFrameworkCore.DbSet<Models.CoffeShop> CoffeShops { get; set; }
         public Microsoft.EntityFrameworkCore.DbSet<ComponentDelivery> ComponentDelivery { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<Leavings> Leavings { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
