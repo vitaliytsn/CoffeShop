@@ -11,7 +11,9 @@ namespace CoffeShop.Models
     public class ComponentDelivery : IRepoEntity
     {      
         public  bool Active { get; set; }
+        [Display(Name = "Використано")]
         public bool AlreadyUsed { get; set; }
+        [Display(Name = "Дата Доставки")]
         public DateTime DeliveryTime { get; set; }
         public CoffeShop CoffeShop { get; set; }
         public Component ComponentDelivered { get; set; }
@@ -19,7 +21,7 @@ namespace CoffeShop.Models
         [Display(Name="Кількість")]
         [Required]
         public double Amount { get; set; }
-
+        [Display(Name = "Залишилось")]
         public double LeftOver { get; set; }
 
         [Display(Name = "Ціна")]

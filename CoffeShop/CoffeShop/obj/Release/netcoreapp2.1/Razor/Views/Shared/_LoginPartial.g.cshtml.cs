@@ -67,7 +67,7 @@ using CoffeShop.Controllers;
             WriteLiteral("\r\n<div>\r\n    <ul class=\"nav navbar-nav navbar-right\">\r\n        <li>");
             EndContext();
             BeginContext(160, 69, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0ef1c426cd8844dd8c426e17ee17797b", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "17c782e76b1f431ea3995cac5d1f932a", async() => {
                 BeginContext(219, 6, true);
                 WriteLiteral("Log in");
                 EndContext();
@@ -93,7 +93,7 @@ using CoffeShop.Controllers;
             WriteLiteral("</li>\r\n        <li>");
             EndContext();
             BeginContext(248, 71, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e823f6513a3849dd98be326d06df7233", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "51fc0eef877444c696b3e3ef557678a3", async() => {
                 BeginContext(308, 7, true);
                 WriteLiteral("Log out");
                 EndContext();

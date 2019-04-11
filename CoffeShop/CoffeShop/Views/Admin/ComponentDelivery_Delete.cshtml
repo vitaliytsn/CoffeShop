@@ -1,0 +1,62 @@
+﻿@model ComponentDelivery
+
+@{
+    ViewData["Title"] = "ComponentDelivery_Delete";
+}
+
+
+<h3>Ви дійсно хочете усунути дану доставку товару?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        @if (@Model.ComponentDelivered!=null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.ComponentDelivered.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ComponentDelivered.Name)
+            </dd>
+        }
+        else
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.ItemDelivered.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ItemDelivered.Name)
+            </dd>
+        }
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliveryTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DeliveryTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LeftOver)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LeftOver)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliveryPrice)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DeliveryPrice)
+        </dd>
+    </dl>
+    
+    <form asp-action="ComponentDelivery_Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Усунути" class="btn btn-default" /> 
+        <hr/>
+        <a asp-action="ComponentDelivery_List">назад</a>
+    </form>
+</div>

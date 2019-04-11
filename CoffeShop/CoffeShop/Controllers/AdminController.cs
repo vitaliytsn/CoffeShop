@@ -488,6 +488,27 @@ namespace CoffeShop.Controllers
             return View(_context.Set<ComponentDelivery>().Include(item => item.ComponentDelivered).Include(item => item.ItemDelivered).Where(x => x.Active == true));
         }
 
+        public ActionResult ComponentDelivery_Delete(int id)
+        {
+           ComponentDelivery componentDelivery = _context.Set<ComponentDelivery>()
+                .Include(item => item.ComponentDelivered).Include(item=>item.ItemDelivered).Where(x => x.Id == id).FirstOrDefault();
+            if(componentDelivery.Amount==componentDelivery.LeftOver)
+            return View(componentDelivery);
+            else
+            {
+               return RedirectToAction("ComponentDelivery_List");
+            }
+        }
+        [HttpPost]
+        public ActionResult ComponentDelivery_Delete(ComponentDelivery  componentDelivery)
+        {
+            ComponentDelivery componentDeliveryToRemove = _context.Set<ComponentDelivery>()
+                .Include(item => item.ComponentDelivered).Where(x => x.Id == componentDelivery.Id).FirstOrDefault();
+            componentDeliveryToRemove.Active = false;
+            _componentDeliveryRepository.Update(componentDeliveryToRemove);
+            return RedirectToAction("ComponentDelivery_List");
+        }
+
         public ActionResult ComponentDelivery_Create()
         {
             if (HttpContext.Session.GetString("userRole") == null ||
@@ -522,6 +543,7 @@ namespace CoffeShop.Controllers
             componentDelivery.CoffeShop = _coffeShopRepository.GetByID(componentDelivery.CoffeShop.Id);
             componentDelivery.DeliveryTime = DateTime.Now;
             componentDelivery.Active = true;
+            componentDelivery.LeftOver = componentDelivery.Amount;
             _componentDeliveryRepository.Add(componentDelivery);
             return RedirectToAction("ComponentDelivery_List");
         }

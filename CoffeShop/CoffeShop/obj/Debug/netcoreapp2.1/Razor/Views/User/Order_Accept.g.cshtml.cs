@@ -137,7 +137,7 @@ using CoffeShop.Models;
             WriteLiteral("    \r\n    </tbody>\r\n</table>\r\n");
             EndContext();
             BeginContext(984, 45, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "735f5d9284564c8d9d66b7709c537691", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "99878704ece9469387d09d697f26f0fa", async() => {
                 BeginContext(1010, 15, true);
                 WriteLiteral("Нове Замовлення");
                 EndContext();
