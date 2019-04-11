@@ -11,5 +11,9 @@ namespace CoffeShop.Models
         public Item Item { get; set; }
         public int OrderId { get; set; }
         public Order Order { get; set; }
+
+        public double ItemPrice { get; set; }
+
+        public double ItemCost { get; set; }
     }
 }

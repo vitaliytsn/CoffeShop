@@ -68,7 +68,7 @@ using CoffeShop.Models;
             WriteLiteral("\r\n<!DOCTYPE html>\r\n\r\n<html>\r\n");
             EndContext();
             BeginContext(132, 117, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c64cb2ede9804ce7babbab0276a07dda", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c3b485a23c444b4b8e7f096dda9def03", async() => {
                 BeginContext(138, 104, true);
                 WriteLiteral("\r\n    <meta name=\"viewport\" content=\"width=device-width\" />\r\n    <title>ComponentDelivery_List</title>\r\n");
                 EndContext();
@@ -88,12 +88,12 @@ using CoffeShop.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(251, 1977, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fcd35bcaac7a45649a313d33934cd50f", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4fbd72e1082d419cb32767f288d0f3cd", async() => {
                 BeginContext(257, 19, true);
                 WriteLiteral("\r\n    <p>\r\n        ");
                 EndContext();
                 BeginContext(276, 67, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f0f4da7de7384b1f86e4cfce75a8e03a", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6ed2c85f5d8d47c88bad4b6be5aaf8d5", async() => {
                     BeginContext(317, 22, true);
                     WriteLiteral("Надходження Компоненту");
                     EndContext();
@@ -115,7 +115,7 @@ using CoffeShop.Models;
                 WriteLiteral("\r\n    </p>\r\n    <p>\r\n        ");
                 EndContext();
                 BeginContext(372, 58, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e134357a5a844a0b99f7ab160d1bb9c9", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7be29aa3640648788fd81d8cf3fcd0b4", async() => {
                     BeginContext(408, 18, true);
                     WriteLiteral("Надходження Товару");
                     EndContext();
@@ -246,7 +246,7 @@ using CoffeShop.Models;
                 WriteLiteral("\r\n                    </td>\r\n                    <td>\r\n                        ");
                 EndContext();
                 BeginContext(1973, 61, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5aad4b977d304ae18bc88303938511a0", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "02d2513783db42d48e60b9aefb4fb4a3", async() => {
                     BeginContext(2018, 12, true);
                     WriteLiteral("Внести Зміни");
                     EndContext();
@@ -281,7 +281,7 @@ using CoffeShop.Models;
                 WriteLiteral(" |||\r\n                        ");
                 EndContext();
                 BeginContext(2064, 58, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "648addd578f047a99b51a8699868d034", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "658749dcaec7488eab35443774353be1", async() => {
                     BeginContext(2111, 7, true);
                     WriteLiteral("Усунути");
                     EndContext();

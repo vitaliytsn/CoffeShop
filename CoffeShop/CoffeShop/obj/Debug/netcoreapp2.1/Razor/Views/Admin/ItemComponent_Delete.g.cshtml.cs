@@ -104,7 +104,7 @@ using CoffeShop.Models;
             WriteLiteral("\r\n        </dd>\r\n    </dl>\r\n    \r\n\r\n    ");
             EndContext();
             BeginContext(578, 226, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7b95f40472534a22bdb89a806ea0b4c5", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0aff2d7fbe214ac9ae12872db5217792", async() => {
                 BeginContext(618, 10, true);
                 WriteLiteral("\r\n        ");
                 EndContext();

@@ -64,7 +64,7 @@ using CoffeShop.Models;
             WriteLiteral("\r\n<h2>Мої замовлення</h2>\r\n\r\n<p>\r\n    ");
             EndContext();
             BeginContext(119, 45, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e550fbada8f0418db6cc383a2dcc322a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fa615213d5174572a93c9dde25098e4f", async() => {
                 BeginContext(145, 15, true);
                 WriteLiteral("Нове Замовлення");
                 EndContext();
@@ -163,7 +163,7 @@ using CoffeShop.Models;
             WriteLiteral("                ");
             EndContext();
             BeginContext(1148, 64, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "192d9b21a4b94bddb7a641842a8b586a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d9a2be8ed6de495c86fcc94b70bdc135", async() => {
                 BeginContext(1201, 7, true);
                 WriteLiteral("Усунути");
                 EndContext();

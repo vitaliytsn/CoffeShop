@@ -37,7 +37,6 @@ C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\bin\Debug\netcorea
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\bin\Debug\netcoreapp2.1\CoffeShop.pdb
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\bin\Debug\netcoreapp2.1\CoffeShop.Views.dll
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\bin\Debug\netcoreapp2.1\CoffeShop.Views.pdb
-C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\CoffeShop.csprojAssemblyReference.cache
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\CoffeShop.csproj.CoreCompileInputs.cache
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\CoffeShop.RazorAssemblyInfo.cache
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\CoffeShop.RazorAssemblyInfo.cs
