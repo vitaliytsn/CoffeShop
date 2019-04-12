@@ -45,7 +45,7 @@ namespace CoffeShop.Data
                 .WithMany(c => c.OrderItems)
                 .HasForeignKey(bc => bc.OrderId);
         }
- 
+      
 
     }
 }

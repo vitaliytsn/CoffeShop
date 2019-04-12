@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using CoffeShop.Data;
@@ -37,6 +38,13 @@ namespace CoffeShop
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+           
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-GB");
+                options.SupportedCultures = new List<CultureInfo> { new CultureInfo("en-GB") };
+                options.RequestCultureProviders.Clear();
+            });
 
             services.AddScoped<IRepository<Item, CoffeShopContext>,
                 Repository<Item, CoffeShopContext>>();
@@ -59,6 +67,7 @@ namespace CoffeShop
 
             services.AddSession();
 
+           
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -79,6 +88,7 @@ namespace CoffeShop
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseSession();
+            app.UseRequestLocalization();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

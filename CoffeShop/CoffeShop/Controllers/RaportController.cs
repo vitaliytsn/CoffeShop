@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using CoffeShop.Data;
 using CoffeShop.Models;
+using CoffeShop.Models.ViewModels;
 using CoffeShop.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -65,7 +67,15 @@ namespace CoffeShop.Controllers
            
             return View(componentLeavings);
         }
-        public ActionResult ProfitRaport(DateTime ProfitDay)
+
+        public ActionResult ProfitRaport()
+        {
+            ProfitRaportVM raportVm = new ProfitRaportVM();
+            raportVm.DateFrom= Convert.ToDateTime(System.DateTime.Now.ToShortDateString());
+            raportVm.DateTo=DateTime.Today;
+            return View(raportVm);
+        }
+        public ActionResult ProfitRaport_Partial(DateTime ProfitDay)
         {
             ProfitDay=DateTime.Now;
             double MoneyProfit = 0.0;
@@ -76,7 +86,7 @@ namespace CoffeShop.Controllers
             }
 
             ViewBag.MoneyProfit = MoneyProfit;
-            return View(ordersPerDay);
+            return PartialView(ordersPerDay);
         }
     }
 }
