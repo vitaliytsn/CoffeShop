@@ -75,11 +75,11 @@ namespace CoffeShop.Controllers
             raportVm.DateTo=DateTime.Today;
             return View(raportVm);
         }
-        public ActionResult ProfitRaport_Partial(DateTime ProfitDay)
+        public ActionResult ProfitRaport_Partial(DateTime DateFrom, DateTime DateTo)
         {
-            ProfitDay=DateTime.Now;
+           
             double MoneyProfit = 0.0;
-           List<Order> ordersPerDay= _context.Set<Order>().Where(x => x.OrderDateTime.Date == ProfitDay.Date).ToList();
+           List<Order> ordersPerDay= _context.Set<Order>().Where(x => x.OrderDateTime.Date >= DateFrom.Date && x.OrderDateTime<=DateTo).ToList();
             foreach (var order in ordersPerDay)
             {
                 MoneyProfit += order.FinalPrice;

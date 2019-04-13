@@ -29,7 +29,22 @@
         </form>
     </div>
 </div>
+<div id="SellingPartial">
+</div>
 
+<button onclick="myFunction()">Click me</button>
+
+<script type="text/javascript">
+    myFunction=function () {
+        var x = window.innerHeight;
+        var y = window.innerWidth;
+        var link =
+        "@Html.Raw(Url.Action("ProfitRaport_Partial", "Raport", new { X= "widthToReplace", Y = "heightToReplace", DateFrom = @Model.DateFrom, DateTo= @Model.DateTo }))";
+        link = link.replace("heightToReplace", x);
+        link = link.replace("widthToReplace", y);
+        $("#SellingPartial").load(link);
+    };
+</script>
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
