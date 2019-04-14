@@ -31,12 +31,20 @@ namespace CoffeShop.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
-            User repoUser = _context.Set<User>().Include(item => item.UserRole).Where(x => x.Email == user.Email)
+            User repoUser = _context.Set<User>().Include(item => item.UserRole).Where(x => x.Email == user.Email && x.password==user.password)
                 .ToList().FirstOrDefault();
-            HttpContext.Session.SetInt32("userId", (repoUser.Id));
-            // HttpContext.Session.SetString("userRole","Admin");
-            HttpContext.Session.SetString("userRole", (repoUser.UserRole.Name));
-            return RedirectToAction("Index", "Home");
+            if (repoUser != null)
+            {
+                HttpContext.Session.SetInt32("userId", (repoUser.Id));
+                // HttpContext.Session.SetString("userRole","Admin");
+                HttpContext.Session.SetString("userRole", (repoUser.UserRole.Name));
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ViewBag.Error = "Невірний пароль або пошта";
+                return View();
+            }
         }
 
         public ActionResult Logout()

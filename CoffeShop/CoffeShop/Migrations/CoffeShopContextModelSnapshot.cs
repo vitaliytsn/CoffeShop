@@ -218,15 +218,21 @@ namespace CoffeShop.Migrations
 
             modelBuilder.Entity("CoffeShop.Models.OrderItem", b =>
                 {
-                    b.Property<int>("ItemId");
-
-                    b.Property<int>("OrderId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<double>("ItemCost");
 
+                    b.Property<int>("ItemId");
+
                     b.Property<double>("ItemPrice");
 
-                    b.HasKey("ItemId", "OrderId");
+                    b.Property<int>("OrderId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
 
                     b.HasIndex("OrderId");
 

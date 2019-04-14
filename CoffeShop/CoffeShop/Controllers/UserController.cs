@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Threading.Tasks;
-using CoffeShop.Data;
+﻿using CoffeShop.Data;
 using CoffeShop.Models;
 using CoffeShop.Models.ViewModels;
 using CoffeShop.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CoffeShop.Controllers
 {
@@ -25,7 +23,7 @@ namespace CoffeShop.Controllers
         private readonly IRepository<Role, CoffeShopContext> _roleRepository;
         private readonly CoffeShopContext _context;
 
-        public UserController(IRepository<Role, CoffeShopContext> roleRepository, IRepository<User, CoffeShopContext> userRepository, IRepository<Models.CoffeShop, CoffeShopContext> coffeShopRepository, IRepository<ItemComponent, CoffeShopContext> itemComponentRepository, IRepository<Component, CoffeShopContext> componentRepository, CoffeShopContext context,IRepository<ItemGroup, CoffeShopContext> itemGroupRepository, IRepository<Item, CoffeShopContext> itemRepository)
+        public UserController(IRepository<Role, CoffeShopContext> roleRepository, IRepository<User, CoffeShopContext> userRepository, IRepository<Models.CoffeShop, CoffeShopContext> coffeShopRepository, IRepository<ItemComponent, CoffeShopContext> itemComponentRepository, IRepository<Component, CoffeShopContext> componentRepository, CoffeShopContext context, IRepository<ItemGroup, CoffeShopContext> itemGroupRepository, IRepository<Item, CoffeShopContext> itemRepository)
         {
             _roleRepository = roleRepository;
             _userRepository = userRepository;
@@ -35,23 +33,23 @@ namespace CoffeShop.Controllers
             _componentRepository = componentRepository;
             _context = context;
             _itemRepository = itemRepository;
-            
+
         }
-    public ActionResult MainOrder(List<int> items,int X,int Y)
-    {
-        if (HttpContext.Session.GetString("userRole") == null)
-            return RedirectToAction("Login", "Account");
-            List<Item> orderItems = (from item in items select _context.Set<Item>().Include(x=>x.Group).Include(x=> x.Images).Where(y=>y.Id==item).FirstOrDefault()).ToList(); 
+        public ActionResult MainOrder(List<int> items, int X, int Y)
+        {
+            if (HttpContext.Session.GetString("userRole") == null)
+                return RedirectToAction("Login", "Account");
+            List<Item> orderItems = (from item in items select _context.Set<Item>().Include(x => x.Group).Include(x => x.Images).Where(y => y.Id == item).FirstOrDefault()).ToList();
             ViewBag.arr = items;
 
-        ViewBag.Width = X ;
-        ViewBag.Height = Y ;
+            ViewBag.Width = X;
+            ViewBag.Height = Y;
             return View(orderItems);
         }
 
         public ActionResult ItemGroup_ListPartial(List<int> items)
         {
-            List<ItemGroup> groups= _itemGroupRepository.GetAll().ToList();
+            List<ItemGroup> groups = _itemGroupRepository.GetAll().ToList();
             ViewBag.arr = items;
             return PartialView(groups);
         }
@@ -75,7 +73,7 @@ namespace CoffeShop.Controllers
 
         public ActionResult Order_Delete(int Id)
         {
-            return View(_context.Set<Order>().Include(item=>item.OrderItems).Where(x=>x.Id== Id).FirstOrDefault());
+            return View(_context.Set<Order>().Include(item => item.OrderItems).Where(x => x.Id == Id).FirstOrDefault());
         }
         [HttpPost]
         public ActionResult Order_Delete(Order order)
@@ -88,12 +86,12 @@ namespace CoffeShop.Controllers
         }
 
         [HttpGet]
-        public ActionResult Item_AddToOrder(int ItemId, List<int> items,int X,int Y)
+        public ActionResult Item_AddToOrder(int ItemId, List<int> items, int X, int Y)
         {
             if (HttpContext.Session.GetString("userRole") == null)
                 return RedirectToAction("Login", "Account");
             items.Add(ItemId);
-            return RedirectToAction(nameof(MainOrder), new { items = items,X=X,Y=Y});
+            return RedirectToAction(nameof(MainOrder), new { items = items, X = X, Y = Y });
         }
 
         [HttpGet]
@@ -105,12 +103,12 @@ namespace CoffeShop.Controllers
 
         public ActionResult Order_Accept(List<int> items)
         {
-            if (HttpContext.Session.GetString("userRole") == null )
+            if (HttpContext.Session.GetString("userRole") == null)
                 return RedirectToAction("Login", "Account");
 
             List<Item> orderedItems = (from item in items select _itemRepository.GetByID(item)).ToList();
             User employee = _userRepository.GetByID((int)HttpContext.Session.GetInt32("userId"));
-            OrderVM acceptedOrder = new OrderVM(orderedItems,employee);
+            OrderVM acceptedOrder = new OrderVM(orderedItems, employee);
             double FinalPrice = 0.0;
             foreach (var orderedItem in orderedItems)
             {
@@ -118,15 +116,76 @@ namespace CoffeShop.Controllers
             }
 
             acceptedOrder.FinalPrice = FinalPrice;
-            Order order = new Order();
-            order.CreatorUser = employee;
+            Order order = new Order
+            {
+                CreatorUser = employee
+            };
 
-            order.OrderItems = (from orderedItem in  orderedItems select new OrderItem(){Item= orderedItem ,ItemId = orderedItem.Id,Order = order}).ToList();
+           // order.OrderItems = 
             order.FinalPrice = FinalPrice;
-            order.OrderDateTime=DateTime.Now;
+            order.OrderDateTime = DateTime.Now;
             order.Active = true;
+        
+            List<OrderItem> OrderItems= new List<OrderItem>();
+            foreach (var orderedItem in orderedItems)
+            {
+                OrderItems.Add(new OrderItem() { Item = orderedItem, ItemId = orderedItem.Id });
+            }
+            //Przeniesc do servisu
+
+            foreach (var orderItem in OrderItems)
+            {
+                List<ItemComponent> ItemComponents = _context.Set<Item>().Include(y => y.ItemComponents)
+                    .Where(x => x.Id == orderItem.Item.Id).FirstOrDefault().ItemComponents;
+
+                ItemComponents = (from ItemComponent in ItemComponents
+                                  select _context.Set<ItemComponent>().Include(y => y.CurrentComponent).Where(y => y.Id == ItemComponent.Id)
+                                      .FirstOrDefault()).ToList();
+          
+
+                if (ItemComponents.Count == 0)
+                {
+                    List<ComponentDelivery> deliveries = _context.Set<ComponentDelivery>().Include(y => y.ItemDelivered)
+                        .Where(y => y.AlreadyUsed == false &&  y.ItemDelivered.Id == orderItem.Item.Id).OrderByDescending(x => x.DeliveryTime).ToList();
+                    ComponentDelivery currentDelivery = deliveries.FirstOrDefault();
+                    if (currentDelivery != null)
+                    {
+                        orderItem.ItemCost = currentDelivery.DeliveryPrice / currentDelivery.Amount;
+                        currentDelivery.LeftOver -= 1;
+
+
+                        if (currentDelivery.LeftOver == 0) currentDelivery.AlreadyUsed = true;
+                    }
+                }
+                else
+                {
+                    foreach (var itemComponent in ItemComponents)
+                    {
+                        List<ComponentDelivery> deliveries = _context.Set<ComponentDelivery>().Include(x => x.ComponentDelivered).
+                            Where(y => y.AlreadyUsed == false && y.ComponentDelivered.Id == itemComponent.CurrentComponent.Id).OrderByDescending(x => x.DeliveryTime).ToList();
+
+                        ComponentDelivery currentDelivery = deliveries.FirstOrDefault();
+                        if (currentDelivery != null)
+                        {
+                            orderItem.ItemCost += itemComponent.Amount / currentDelivery.Amount *
+                                                  currentDelivery.DeliveryPrice;
+
+                            currentDelivery.LeftOver -= itemComponent.Amount;
+                        }
+                    }
+                }
+                orderItem.ItemPrice = orderItem.Item.Price;
+               // _context.Set<OrderItem>().Add(orderItem);
+            }
+
+        
+
+            order.OrderItems = OrderItems;
             _context.Set<Order>().Add(order);
             _context.SaveChanges();
+            
+          
+
             return View(acceptedOrder);
         }
 
@@ -134,7 +193,7 @@ namespace CoffeShop.Controllers
         {
             if (HttpContext.Session.GetString("userRole") == null)
                 return RedirectToAction("Login", "Account");
-            return View(_context.Set<Order>().Include(x=>x.CreatorUser).Where(item=>item.CreatorUser.Id== (int)HttpContext.Session.GetInt32("userId") ).OrderBy(x=>x.OrderDateTime));
+            return View(_context.Set<Order>().Include(x => x.CreatorUser).Where(item => item.CreatorUser.Id == (int)HttpContext.Session.GetInt32("userId")).OrderBy(x => x.OrderDateTime));
         }
 
         public ActionResult Item_ListPartial(int X, int Y, int groupId, List<int> items)

@@ -75,6 +75,12 @@ namespace CoffeShop.Controllers
             raportVm.DateTo=DateTime.Today;
             return View(raportVm);
         }
+        [HttpPost]
+        public ActionResult ProfitRaport(ProfitRaportVM profitRaport)
+        {
+
+            return View(profitRaport);
+        }
         public ActionResult ProfitRaport_Partial(DateTime DateFrom, DateTime DateTo)
         {
            
