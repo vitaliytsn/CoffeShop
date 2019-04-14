@@ -8,7 +8,9 @@ namespace CoffeShop.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-          
+            migrationBuilder.DropTable(
+                name: "OrderItem");
+
             migrationBuilder.CreateTable(
                 name: "OrderItem",
                 columns: table => new
