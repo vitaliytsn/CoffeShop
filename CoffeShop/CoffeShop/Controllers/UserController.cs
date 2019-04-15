@@ -181,6 +181,8 @@ namespace CoffeShop.Controllers
         
 
             order.OrderItems = OrderItems;
+            foreach (var orderItem in OrderItems) order.OrderCost += orderItem.ItemCost;
+
             _context.Set<Order>().Add(order);
             _context.SaveChanges();
             

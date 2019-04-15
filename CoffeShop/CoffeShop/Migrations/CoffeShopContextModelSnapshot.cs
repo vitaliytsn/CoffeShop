@@ -205,6 +205,8 @@ namespace CoffeShop.Migrations
 
                     b.Property<double>("FinalPrice");
 
+                    b.Property<double>("OrderCost");
+
                     b.Property<DateTime>("OrderDateTime");
 
                     b.Property<bool>("Temp");

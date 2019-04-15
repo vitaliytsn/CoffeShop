@@ -23,5 +23,7 @@ namespace CoffeShop.Models
         public DateTime OrderDateTime { get; set; }
         [Display(Name = "Ціна замовлення")]
         public double FinalPrice { get; set; }
+
+        public double OrderCost { get; set; }
     }
 }
