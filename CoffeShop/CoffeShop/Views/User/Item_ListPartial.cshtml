@@ -43,10 +43,21 @@
             </td>
             <td>
                 @Html.ActionLink(
-                    "Додати До Замовлення",
-                    "Item_AddToOrder",
-                    "User",
-                    new {items = ViewBag.arr, ItemId = item.Id,X= ViewBag.Width, Y= ViewBag.Height })
+         "Додати До Замовлення",
+         "Item_AddToOrder",
+         "User",
+                    new { items = ViewBag.arr, ItemId = item.Id, X = ViewBag.Width, Y = ViewBag.Height })|||
+                @Html.ActionLink(
+                    "Склад",
+                    "ItemInfo", // controller action
+                    "User", // controller
+                    new
+                    {
+                        items=@ViewBag.arr,
+                        itemId = item.Id,
+                        X= ViewBag.Width,
+                        Y= ViewBag.Height
+                    })
             </td>
         </tr>
     }

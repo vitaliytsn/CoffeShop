@@ -4,42 +4,48 @@
     ViewData["Title"] = "Order_ListOfUser";
 }
 
-<p>Виручка: @ViewBag.MoneyProfit<p>
-<table class="table">
-    <thead>
-    <tr>
+<p>Виручка: @ViewBag.MoneyIncome<p>
+<p>Затрати: @ViewBag.MoneyProfit<p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderDateTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FinalPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderCost)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
 
-        <th>
-            @Html.DisplayNameFor(model => model.OrderDateTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FinalPrice)
-        </th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model) {
-        <tr>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FinalPrice)
-            </td>
-            <td>
-                @if (!item.Active)
-                {
-                    @Html.ActionLink(
-                        "Усунений",
-                        "","",
-                        new { @class = "btn btn-info" })
-                }
-            </td>
-            <td>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinalPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderCost)
+                </td>
+                <td>
+                    @if (!item.Active)
+                    {
+                        @Html.ActionLink(
+                            "Усунений",
+                            "","",
+                            new { @class = "btn btn-info" })
+                    }
+                </td>
+                <td></td>
+            </tr>
+            }
+        </tbody>
+    </table>

@@ -169,8 +169,14 @@ namespace CoffeShop.Controllers
                         {
                             orderItem.ItemCost += itemComponent.Amount / currentDelivery.Amount *
                                                   currentDelivery.DeliveryPrice;
-
-                            currentDelivery.LeftOver -= itemComponent.Amount;
+                            if(currentDelivery.LeftOver>= itemComponent.Amount)currentDelivery.LeftOver -= itemComponent.Amount;
+                            else
+                            {
+                                double toRemove = itemComponent.Amount - currentDelivery.LeftOver;
+                                currentDelivery.LeftOver = 0;
+                                currentDelivery.AlreadyUsed = true;
+                                deliveries[1].LeftOver -= toRemove;
+                            }
                         }
                     }
                 }
@@ -209,6 +215,32 @@ namespace CoffeShop.Controllers
                 .ToList();
 
             return PartialView(itemsVM);
+        }
+
+        public ActionResult ItemInfo(int X,int Y,int itemId, List<int> items)
+        {
+            ViewBag.arr = items;
+            ViewBag.Width = X * 3;
+            ViewBag.Height = Y * 3;
+            Item item = _context.Set<Item>().Include(Items => Items.Group).Include(Items => Items.Images).Where(x => x.Id == itemId)
+                .ToList().FirstOrDefault();
+            ViewBag.GroupId = item.Group.Id;
+
+            return View(new ItemVM { CurrentItem = item });
+        }
+
+        public ActionResult ItemComponent_ListPartial(int itemId)
+        {
+            List<ItemComponent> itemComponents = new List<ItemComponent>();
+
+            itemComponents = _context.Set<ItemComponent>().Include(y => y.CurrentComponent).Include(y => y.ComponentItem)
+                .Where(x => x.ComponentItem.Id == itemId && x.Active == true)
+                .ToList();
+            //  itemComponents.Add(temComponent);
+
+
+            ViewBag.ItemId = itemId;
+            return PartialView(itemComponents);
         }
 
     }

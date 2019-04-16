@@ -36,32 +36,38 @@
                 <th>
                     @Html.DisplayNameFor(model => model.DeliveryTime)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DeliveryPrice)
+                </th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ComponentDelivered.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ItemDelivered.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Amount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ComponentDelivered.Unit)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DeliveryTime)
-                    </td>
-                    <td>
-                        <a asp-action="ComponentDelivery_Delete" asp-route-id="@item.Id">Усунути</a>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ComponentDelivered.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemDelivered.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ComponentDelivered.Unit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveryTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveryPrice)
+                </td>
+                <td>
+                    <a asp-action="ComponentDelivery_Delete" asp-route-id="@item.Id">Усунути</a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

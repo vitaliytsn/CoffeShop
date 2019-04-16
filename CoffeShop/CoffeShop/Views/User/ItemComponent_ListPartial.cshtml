@@ -1,0 +1,40 @@
+﻿@model IEnumerable<ItemComponent>
+
+    @{
+    ViewData["Title"] = "ItemComponentList";
+    }
+
+    <h2>Список Компонентів</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CurrentComponent.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CurrentComponent.Unit)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+    {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CurrentComponent.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CurrentComponent.Unit)
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>

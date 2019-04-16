@@ -84,13 +84,16 @@ namespace CoffeShop.Controllers
         public ActionResult ProfitRaport_Partial(DateTime DateFrom, DateTime DateTo)
         {
            
+            double MoneyIncome = 0.0;
             double MoneyProfit = 0.0;
            List<Order> ordersPerDay= _context.Set<Order>().Where(x => x.OrderDateTime.Date >= DateFrom.Date && x.OrderDateTime<=DateTo).ToList();
             foreach (var order in ordersPerDay)
             {
-                MoneyProfit += order.FinalPrice;
+                MoneyIncome += order.FinalPrice;
+                MoneyProfit += order.OrderCost;
             }
 
+            ViewBag.MoneyIncome = MoneyIncome;
             ViewBag.MoneyProfit = MoneyProfit;
             return PartialView(ordersPerDay);
         }
