@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="jQuery" Version="3.3.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.6.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.1" />
@@ -16,7 +17,7 @@
 
   <ItemGroup>
     <Reference Include="CoreCompat.System.Drawing">
-      <HintPath>..\..\..\..\..\OneDrive\Desktop\CoreCompat.System.Drawing.dll</HintPath>
+      <HintPath>bin\Debug\netcoreapp2.1\CoreCompat.System.Drawing.dll</HintPath>
     </Reference>
   </ItemGroup>
 

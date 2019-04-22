@@ -32,7 +32,6 @@ C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcor
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\CoffeShop.dll
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\CoffeShop.pdb
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\CoffeShop.csproj.CopyComplete
-C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\UserSecretsAssemblyInfo.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\Admin\CoffeShop_Create.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\Admin\CoffeShop_Edit.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\Admin\CoffeShop_List.g.cshtml.cs
@@ -62,7 +61,6 @@ C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcor
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\Admin\ComponentDelivery_List.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\Admin\ComponentDelivery_Create.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\Admin\ItemDelivery_Create.g.cshtml.cs
-C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\Raport\ComponentLeavings.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\User\Order_ListOfUser.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\User\Order_Delete.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\Raport\ProfitRaport.g.cshtml.cs
@@ -70,3 +68,7 @@ C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcor
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\Raport\ProfitRaport_Partial.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\User\ItemComponent_ListPartial.g.cshtml.cs
 C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\User\ItemInfo.g.cshtml.cs
+C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\Shared\Components\ItemLeavings\Default.g.cshtml.cs
+C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\Shared\Components\ComponentLeavings\Default.g.cshtml.cs
+C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\Raport\ComponentLeavings.g.cshtml.cs
+C:\Users\Vital\source\repos\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\UserSecretsAssemblyInfo.cs

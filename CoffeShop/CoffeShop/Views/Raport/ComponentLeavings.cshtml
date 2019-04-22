@@ -1,40 +1,24 @@
-﻿@model IEnumerable<ComponentLeavingVM>
+﻿
+@{
+    ViewData["Title"] = "ComponentLeavings";
+}
 
-    @{
-    ViewData["Title"] = "ItemComponentList";
-    }
+<div>
+    <a asp-controller="Raport" asp-action="ComponentLeavings" asp-route-IsComponent="true">Залишки Компонентів</a>
+    <hr/>
+    <a asp-controller="Raport" asp-action="ComponentLeavings" asp-route-IsComponent="false">Залишки Товарів</a>
 
-    <h2>Список Компонентів</h2>
+</div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Component.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Amount)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Unit)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-    {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Component.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Unit)
-                </td>
-            </tr>
-    }
-        </tbody>
-    </table>
+@if (@ViewBag.IsComponent)
+{
+    <div>
+        @await Component.InvokeAsync("ComponentLeavings")
+    </div>
+}
+@if (!@ViewBag.IsComponent)
+{
+    <div>
+        @await Component.InvokeAsync("ItemLeavings")
+    </div>
+        }

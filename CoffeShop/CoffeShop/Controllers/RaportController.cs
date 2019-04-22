@@ -23,49 +23,15 @@ namespace CoffeShop.Controllers
             _componentDeliveryRepository = componentDeliveryRepository;
             _componentRepository = componentRepository;
         }
-        public IActionResult ComponentLeavings()
+        public IActionResult ComponentLeavings(bool IsComponent)
         {
-            List<ComponentLeavingVM> componentLeavings = new List<ComponentLeavingVM>();
-
-            foreach (var component in _componentRepository.GetByQuery(x=>x.Active==true).ToList())
-            {
-                double delivered=0.0;
-                double selled=0.0;
-                Units unit=Units.Штуки;
-                foreach (var delivery in _context.Set<ComponentDelivery>()
-                    .Include(item => item.ComponentDelivered).Where(x => x.ComponentDelivered.Id == component.Id)
-                    .ToList())
-                {
-                    delivered += delivery.Amount;
-                   // unit = (Units)delivery.UnitsDelivered;
-                }
-
-
-                foreach (var order in _context.Set<Order>().Include(item => item.OrderItems).ToList())
-                {
-                    foreach (var orderedItem in order.OrderItems)
-                    {
-                        List<ItemComponent> itemComponents = _context.Set<ItemComponent>()
-                            .Include(item => item.ComponentItem).Where(x => x.ComponentItem.Id == orderedItem.ItemId)
-                            .ToList();
-
-                        if (itemComponents.Count != 0)
-                        {
-                            ItemComponent itemComponent = itemComponents.Where(x => x.CurrentComponent.Id == component.Id)
-                                .FirstOrDefault();
-                            if(itemComponent!=null)
-                            selled += itemComponent.Amount;
-                               
-                        }
-
-                    }                
-                }
-                componentLeavings.Add(new ComponentLeavingVM(component,delivered-selled,unit));
-            }
-
-          
-           
-            return View(componentLeavings);
+         
+                if (IsComponent)
+                    ViewBag.IsComponent = true;
+                else
+                    ViewBag.IsComponent = false;
+            
+            return View();
         }
 
         public ActionResult ProfitRaport()
