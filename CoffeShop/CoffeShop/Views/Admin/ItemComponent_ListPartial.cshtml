@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ItemComponent>
+
+@{
+    ViewData["Title"] = "ItemComponentList";
+}
+
+<h2>Список Компонентів</h2>
+
+<table class="table">
+    <tr>
+        @Html.ActionLink(
+            "Додати складник до товару",
+            "ItemComponent_Create",            // controller action
+            "Admin",        // controller
+            new { itemId = @ViewBag.ItemId })
+    </tr>
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrentComponent.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentComponent.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.ActionLink(
+                    "Внести Зміни",
+                    "ItemComponent_Edit",
+                    "Admin",
+                    new { itemComponentId = item.Id }) |||
+
+                @Html.ActionLink(
+                    "Усунути Складник",
+                    "ItemComponent_Delete",
+                    "Admin",
+                    new { itemComponentId = item.Id })
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

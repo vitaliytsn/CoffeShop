@@ -1,0 +1,32 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = "User_Delete";
+}
+
+<h3> Ви впевнені що хочете усунути цього працівника?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Surname)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+    </dl>
+    
+    <form asp-action="User_Delete">
+        <input type="hidden" asp-for="Id" />
+        @Html.HiddenFor(model=>model.UserShop.Id)
+        <input type="submit" value="Усунути" class="btn btn-danger" /> 
+        <hr />
+        <a asp-action="CoffeShop_Edit" asp-route-coffeShopId="@Model.UserShop.Id">назад</a> 
+    </form>
+</div>

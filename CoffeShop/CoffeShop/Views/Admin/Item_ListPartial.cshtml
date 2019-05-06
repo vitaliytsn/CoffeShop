@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Item>
+
+@{
+    ViewData["Title"] = "Item_ListPartial";
+}
+
+<h2>Товари в групі</h2>
+
+
+<table class="table">
+    <thead>
+    <td>
+        @Html.ActionLink(
+            "Додати Товар До Групи",
+            "Item_Create",            // controller action
+            "Admin",        // controller
+            new { groupId = @ViewBag.GroupId })
+    </td>
+    <tr>
+        <th>
+            
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+           @Html.Partial("Item_ImagePartial", new ViewDataDictionary(ViewData) { { "ImageId", item.Images[0].Id }, { "X", ViewBag.Width }, { "Y", ViewBag.Height } })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.ActionLink(
+                "Внести Зміни",
+                "Item_Edit", // controller action
+                "Admin", // controller
+                new
+                {
+                    itemId = item.Id,
+                    X= ViewBag.Width,
+                    Y= ViewBag.Height
+                }) |||
+            @Html.ActionLink(
+                "Усунути товар",
+                "Item_Delete",
+                "Admin",
+                new {itemId = item.Id})
+        </td>
+    </tr>
+}
+    </tbody>
+</table>

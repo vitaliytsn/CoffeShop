@@ -1,0 +1,164 @@
+﻿@using CoffeShop.Models.ViewModels;
+@model IEnumerable<OrderedItemVm>
+
+    @{
+    ViewData["Title"] = "Item_ListPartial";
+    }
+
+    <h2>Товари в групі</h2>
+
+
+
+    @using (Html.BeginForm())
+    {
+    @Html.AntiForgeryToken()
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Item.Name)
+                </th>
+                <th>
+
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Item.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Item.Price)
+                </th>
+                <th>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.Partial("Item_ImagePartial", new ViewDataDictionary(ViewData) { { "ImageId", item.Item.Images[0].Id }, { "X", ViewBag.Width }, { "Y", ViewBag.Height } })
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Item.Name)
+                </td>
+                <td>
+                    @Html.ActionLink(
+                    "Склад",
+                    "ItemInfo", // controller action
+                    "User", // controller
+                    new
+                    {
+                    items = @ViewBag.arr,
+                    itemId = item.Item.Id,
+                    X = ViewBag.Width,
+                    Y = ViewBag.Height
+                    })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Item.Price)
+                </td>
+                <td>
+                    <input class="btnSubtraction btn btn-default" type="button" data-id="@item.Item.Id" value="minus" />
+                </td>
+                <td style="width:7%">
+                    <input style="width:50%" type="text" value="@item.Amount" id="@item.Item.Id" />
+                    @*@Html.EditorFor(modelItem => item.Amount,
+                    new { htmlAttributes = new { @class = "ParticipantNumber", disabled = "disabled", id = item.Item.Id } })*@
+
+                </td>
+                <td>
+                    <input class="btnAdd btn btn-default" type="button" data-id="@item.Item.Id" value="plus" />
+                </td>
+
+            </tr>
+
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>
+                    <input id="btnSubmit" type="button" value="Submit" class="btn btn-default" />
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+    }
+
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+    <script type="text/javascript">
+
+    var orders = [];
+    $(function () {
+        $('.btnAdd').click(function () {
+            var btn = $(this);
+            var $itemId = btn.data('id');
+            var elem = document.getElementById($itemId);
+            document.getElementById($itemId).value = parseInt($("#" + $itemId).val(), 10) + 1;
+            if (orders.length == 0) {
+                orders.push({ ItemId: $itemId, Amount: 1 });
+            } else {
+                var inOrder = false;
+                for (var i = 0; i < orders.length; i++) {
+                    if (orders[i].ItemId == $itemId) {
+                        orders[i].Amount += 1;
+                        inOrder = true;
+                    }
+                }
+                if (!inOrder) {
+                    orders.push({ ItemId: $itemId, Amount: 1 });
+                }
+            }
+        });
+    });
+    $(function () {
+        $('.btnSubtraction').click(function () {
+            var btn = $(this);
+            var $itemId = btn.data('id');
+            var elem = document.getElementById($itemId);
+
+            var inOrder = false;
+            for (var i = 0; i < orders.length; i++) {
+                if (orders[i].ItemId == $itemId && orders[i].Amount > 0) {
+                    orders[i].Amount -= 1;
+                    inOrder = true;
+                }
+            }
+            if (inOrder) {
+                document.getElementById($itemId).value = parseInt($("#" + $itemId).val(), 10) - 1;
+            }
+        });
+    });
+
+    $('#btnSubmit').click(function () {
+
+        var arr = [1, 2, 3, 4, 5];
+        var x = window.innerHeight;
+        var y = window.innerWidth;
+        var link =
+            "@Html.Raw(Url.Action("MainOrder", "User", new { X = "widthToReplace", Y = "heightToReplace", items = ViewBag.arr, addedItems = "addedItemsToReplace" }))";
+        link = link.replace("heightToReplace", x);
+        link = link.replace("widthToReplace", y);
+        link = link.replace("addedItemsToReplace",JSON.stringify(arr, null, 2) );
+        window.location.href = link;
+
+    });
+    </script>
+
+

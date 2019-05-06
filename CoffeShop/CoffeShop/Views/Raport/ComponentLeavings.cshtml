@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewData["Title"] = "ComponentLeavings";
+}
+
+<div id="test">
+    <a asp-controller="Raport" asp-action="ComponentLeavings" asp-route-IsComponent="true">Залишки Компонентів</a>
+    <hr />
+    <a asp-controller="Raport" asp-action="ComponentLeavings" asp-route-IsComponent="false">Залишки Товарів</a>
+
+</div>
+<div class="city"  data-group-name="dupa">???????</div>
+@*@if (@ViewBag.IsComponent)
+{
+    <div>
+        @await Component.InvokeAsync("ComponentLeavings")
+    </div>
+}
+@if (!@ViewBag.IsComponent)
+{
+    <div>
+        @await Component.InvokeAsync("ItemLeavings")
+    </div>
+}*@
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        $('.city').click(function () {
+            alert("weszło");
+            var $city = $(this);
+         
+            //var serviceURL = '/User/ItemGroup_Components';
+            ////var $groupId = $city.data('group-id');
+            //$.ajax({
+            //    type: "Post",
+            //    url: serviceURL,
+            //    data: {},
+            //    contentType: "application/json; charset=utf-8",
+            //    dataType: "json",
+            //    success: function (responce) {
+            //        //alert($city.data('group-id'));
+            //        $('#test').html(responce);
+            //    },
+            //    error: function (xhr, a, error) {
+            //        alert(xhr + a + error);
+            //    }
+            //});
+        });
+    });
+</script>

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Order>
+
+@{
+    ViewData["Title"] = "Order_ListOfUser";
+}
+
+<h2>Мої замовлення</h2>
+
+<p>
+    <a asp-action="MainOrder">Нове Замовлення</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FinalPrice)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FinalPrice)
+            </td>
+            <td>
+                @if (!item.Active)
+                {
+                    @Html.ActionLink(
+                        "Усунений",
+                        "","",
+                        new { @class = "btn btn-info" })
+                }
+            </td>
+            <td>
+                @*<a asp-action="Details" asp-route-id="@item.Id">Детальніше</a> |||*@
+                <a asp-action="Order_Delete" asp-route-id="@item.Id">Усунути</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

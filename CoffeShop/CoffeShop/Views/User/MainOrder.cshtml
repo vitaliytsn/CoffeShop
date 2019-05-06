@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Item>
+@{
+    ViewData["Title"] = "MainOrder";
+}
+@{
+    Layout = (string)ViewData["Layout"] ?? "_Layout";
+}
+
+<h2>Замовлення</h2>
+<html style="height: 100%">
+<head>
+</head>
+<body style="height: 100%">
+<table class="table" style="background-color: #CF9979; ">
+    <thead>
+    <tr style="color: #87cefa">
+        <th>
+        </th>
+        <th >
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr style="color: azure">
+            <td>
+                @Html.Partial("Item_ImagePartial", new ViewDataDictionary(ViewData) { { "ImageId", item.Images[0].Id }, { "X", ViewBag.Width }, { "Y", ViewBag.Height } })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.ActionLink(
+                    "Усунути З Замовлення",
+                    "Item_RemoveFromOrder",
+                    "User",
+                    new {items = ViewBag.arr, ItemId = item.Id})
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<div>
+    @Html.ActionLink(
+        "Замовити",
+        "Order_Accept",
+        "User",
+        new { items = ViewBag.arr})
+</div>
+
+<hr/>
+<hr/>
+<div id="ItemGroupPartial" style="height: 5%; width: auto; overflow: auto;"/>
+<hr/>
+<hr/>
+
+</body>
+</html>
+
+
+
+<script type="text/javascript">
+    window.onload=function () {
+        var x = window.innerHeight;
+        var y = window.innerWidth;
+        var link =
+            "@Html.Raw(Url.Action("ItemGroup_ListPartial", "User", new { X= "widthToReplace", Y = "heightToReplace", items =@ViewBag.arr}))";
+        link = link.replace("heightToReplace", x);
+        link = link.replace("widthToReplace", y);
+        $("#ItemGroupPartial").load(link);
+    };
+</script>

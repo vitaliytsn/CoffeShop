@@ -1,0 +1,44 @@
+﻿@model Component
+
+@{
+    ViewData["Title"] = "Component_Edit";
+}
+
+<h2>Внести Зміни До Складника</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Component_Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @Html.HiddenFor(model => model.Id)
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Unit" class="control-label">СтаріОдиниці: </label>
+                <label asp-for="Unit" class="control-label">
+                    @ViewBag.OldUnit
+                </label>
+                <label asp-for="Unit" class="control-label">Нові Одиниці: </label>
+                <select asp-for="Unit" class="form-control" asp-items="ViewBag.Units"></select>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <input type="submit" value="Зберегти" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Component_List">назад</a>
+</div>
+

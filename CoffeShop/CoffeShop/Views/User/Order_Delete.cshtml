@@ -1,0 +1,34 @@
+﻿@model Order
+
+@{
+    ViewData["Title"] = "Order_Delete";
+}
+
+
+<h3>Ви впевнені що хочете усунути це замовлення?</h3>
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderDateTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OrderDateTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FinalPrice)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FinalPrice)
+        </dd>
+    </dl>
+    
+    <form asp-action="Order_Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Усунути" class="btn btn-default" /> 
+        <hr/>
+        <a asp-action="Order_ListOfUser">назад</a>
+    </form>
+</div>

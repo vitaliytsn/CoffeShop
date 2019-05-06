@@ -1,0 +1,41 @@
+﻿@model ItemComponent
+
+@{
+    ViewData["Title"] = "ItemComponent_Create";
+}
+
+<h2>Новий Складник Товару</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ItemComponent_Create">
+            @Html.HiddenFor(model => model.ComponentItem.Id)
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CurrentComponent.Id" class="control-label">Складники</label>
+                <select asp-for="CurrentComponent.Id" class="form-control" asp-items="ViewBag.Components"></select>
+                <span asp-validation-for="CurrentComponent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Створити" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <div>
+        @Html.ActionLink(
+            "назад",
+            "Item_Edit",            // controller action
+            "Admin",        // controller
+            new {ItemId = @ViewBag.itemId })
+    </div>
+</div>
+
