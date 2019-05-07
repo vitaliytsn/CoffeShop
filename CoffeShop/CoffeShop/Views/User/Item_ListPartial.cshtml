@@ -12,6 +12,9 @@
     @using (Html.BeginForm())
     {
     @Html.AntiForgeryToken()
+    <div>
+        <input  class="btnSub btn btn-default" type="button" value="Додати до замовлення" class="btn btn-default" />
+    </div>
     <table class="table">
         <thead>
             <tr>
@@ -90,7 +93,7 @@
         <tfoot>
             <tr>
                 <td>
-                    <input id="btnSubmit" type="button" value="Submit" class="btn btn-default" />
+                    <input class="btnSub btn btn-default" type="button" value="Додати до замовлення" class="btn btn-default" />
                 </td>
                 <td></td>
                 <td></td>
@@ -146,16 +149,17 @@
         });
     });
 
-    $('#btnSubmit').click(function () {
+        $('.btnSub').click(function () {
 
-        var arr = [1, 2, 3, 4, 5];
+        
+        var itemsArr = JSON.stringify(orders);
         var x = window.innerHeight;
         var y = window.innerWidth;
         var link =
-            "@Html.Raw(Url.Action("MainOrder", "User", new { X = "widthToReplace", Y = "heightToReplace", items = ViewBag.arr, addedItems = "addedItemsToReplace" }))";
+            "@Html.Raw(Url.Action("MainOrder", "User", new { selected = "selectedToReplace", Y = "heightToReplace", X = "widthToReplace", items = @ViewBag.arr }))";
         link = link.replace("heightToReplace", x);
-        link = link.replace("widthToReplace", y);
-        link = link.replace("addedItemsToReplace",JSON.stringify(arr, null, 2) );
+        link = link.replace("selectedToReplace", itemsArr);
+        link = link.replace("widthToReplace",y);
         window.location.href = link;
 
     });

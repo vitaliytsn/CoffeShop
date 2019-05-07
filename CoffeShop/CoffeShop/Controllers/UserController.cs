@@ -5,6 +5,7 @@ using CoffeShop.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,23 +36,31 @@ namespace CoffeShop.Controllers
             _itemRepository = itemRepository;
 
         }
-        public ActionResult MainOrder(int X, int Y, List<int> items,string addedItems)
+        public ActionResult MainOrder(string selected, List<int> items, int X, int Y)
         {
+
             if (HttpContext.Session.GetString("userRole") == null)
                 return RedirectToAction("Login", "Account");
-
-
+            if (selected != null)
+            {
+                List<MainOrderDataModel> modms = JsonConvert.DeserializeObject<MainOrderDataModel[]>(selected).ToList();
+                foreach (MainOrderDataModel modm in modms)
+                {
+                    for (int i = 0; i < modm.Amount; i++)
+                    {
+                        items.Add(modm.ItemId);
+                    }
+                }
+            }
             List<Item> orderItems = new List<Item>();
+            orderItems = (from item in items.ToList() select _context.Set<Item>().Include(x => x.Group).Include(x => x.Images).Where(y => y.Id == item).FirstOrDefault()).ToList();
 
-            /*     if (data.items.Length > 0)
-                 {
-                     List<Item> orderItems = new List<Item>();
-                     orderItems = (from item in data.items.ToList() select _context.Set<Item>().Include(x => x.Group).Include(x => x.Images).Where(y => y.Id == item).FirstOrDefault()).ToList();
-                     ViewBag.arr = data.items.ToList();
-                 }*/
+           
+
+
             ViewBag.arr = items;
-            ViewBag.Width = X;
-            ViewBag.Height = Y;
+            ViewBag.Width = X/10;
+            ViewBag.Height = Y/10;
 
             return View(orderItems);
         }

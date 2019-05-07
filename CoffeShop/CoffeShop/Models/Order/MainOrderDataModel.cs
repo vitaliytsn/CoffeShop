@@ -7,8 +7,7 @@ namespace CoffeShop.Models
 {
     public class MainOrderDataModel
     {
-        public int[] items { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int ItemId { get; set; }
+        public int Amount { get; set; }
     }
 }

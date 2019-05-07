@@ -73,6 +73,10 @@
               "target": "Package",
               "version": "[2.1.1, )"
             },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.2, )"
+            },
             "jQuery": {
               "target": "Package",
               "version": "[3.3.1, )"
