@@ -5,6 +5,7 @@ using CoffeShop.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,15 +36,32 @@ namespace CoffeShop.Controllers
             _itemRepository = itemRepository;
 
         }
-        public ActionResult MainOrder(List<int> items, int X, int Y)
+        public ActionResult MainOrder(string selected, List<int> items, int X, int Y)
         {
+
             if (HttpContext.Session.GetString("userRole") == null)
                 return RedirectToAction("Login", "Account");
-            List<Item> orderItems = (from item in items select _context.Set<Item>().Include(x => x.Group).Include(x => x.Images).Where(y => y.Id == item).FirstOrDefault()).ToList();
-            ViewBag.arr = items;
+            if (selected != null)
+            {
+                List<MainOrderDataModel> modms = JsonConvert.DeserializeObject<MainOrderDataModel[]>(selected).ToList();
+                foreach (MainOrderDataModel modm in modms)
+                {
+                    for (int i = 0; i < modm.Amount; i++)
+                    {
+                        items.Add(modm.ItemId);
+                    }
+                }
+            }
+            List<Item> orderItems = new List<Item>();
+            orderItems = (from item in items.ToList() select _context.Set<Item>().Include(x => x.Group).Include(x => x.Images).Where(y => y.Id == item).FirstOrDefault()).ToList();
 
-            ViewBag.Width = X;
-            ViewBag.Height = Y;
+           
+
+
+            ViewBag.arr = items;
+            ViewBag.Width = X/10;
+            ViewBag.Height = Y/10;
+
             return View(orderItems);
         }
 
@@ -69,6 +87,11 @@ namespace CoffeShop.Controllers
             }
             ViewBag.arr = items;
             return PartialView(itemGroup);
+        }
+        [HttpPost]
+        public ActionResult ItemGroup_Components(string get)
+        {
+            return View();
         }
 
         public ActionResult Order_Delete(int Id)
@@ -121,12 +144,12 @@ namespace CoffeShop.Controllers
                 CreatorUser = employee
             };
 
-           // order.OrderItems = 
+            // order.OrderItems = 
             order.FinalPrice = FinalPrice;
             order.OrderDateTime = DateTime.Now;
             order.Active = true;
-        
-            List<OrderItem> OrderItems= new List<OrderItem>();
+
+            List<OrderItem> OrderItems = new List<OrderItem>();
             foreach (var orderedItem in orderedItems)
             {
                 OrderItems.Add(new OrderItem() { Item = orderedItem, ItemId = orderedItem.Id });
@@ -141,12 +164,12 @@ namespace CoffeShop.Controllers
                 ItemComponents = (from ItemComponent in ItemComponents
                                   select _context.Set<ItemComponent>().Include(y => y.CurrentComponent).Where(y => y.Id == ItemComponent.Id)
                                       .FirstOrDefault()).ToList();
-          
+
 
                 if (ItemComponents.Count == 0)
                 {
                     List<ComponentDelivery> deliveries = _context.Set<ComponentDelivery>().Include(y => y.ItemDelivered)
-                        .Where(y => y.AlreadyUsed == false &&  y.ItemDelivered.Id == orderItem.Item.Id).OrderByDescending(x => x.DeliveryTime).ToList();
+                        .Where(y => y.AlreadyUsed == false && y.ItemDelivered.Id == orderItem.Item.Id).OrderByDescending(x => x.DeliveryTime).ToList();
                     ComponentDelivery currentDelivery = deliveries.FirstOrDefault();
                     if (currentDelivery != null)
                     {
@@ -169,7 +192,7 @@ namespace CoffeShop.Controllers
                         {
                             orderItem.ItemCost += itemComponent.Amount / currentDelivery.Amount *
                                                   currentDelivery.DeliveryPrice;
-                            if(currentDelivery.LeftOver>= itemComponent.Amount)currentDelivery.LeftOver -= itemComponent.Amount;
+                            if (currentDelivery.LeftOver >= itemComponent.Amount) currentDelivery.LeftOver -= itemComponent.Amount;
                             else
                             {
                                 double toRemove = itemComponent.Amount - currentDelivery.LeftOver;
@@ -181,18 +204,18 @@ namespace CoffeShop.Controllers
                     }
                 }
                 orderItem.ItemPrice = orderItem.Item.Price;
-               // _context.Set<OrderItem>().Add(orderItem);
+                // _context.Set<OrderItem>().Add(orderItem);
             }
 
-        
+
 
             order.OrderItems = OrderItems;
             foreach (var orderItem in OrderItems) order.OrderCost += orderItem.ItemCost;
 
             _context.Set<Order>().Add(order);
             _context.SaveChanges();
-            
-          
+
+
 
             return View(acceptedOrder);
         }
@@ -213,11 +236,21 @@ namespace CoffeShop.Controllers
 
             List<Item> itemsVM = _context.Set<Item>().Include(item => item.Group).Include(item => item.Images).Where(x => x.Group.Id == groupId && x.Active == true)
                 .ToList();
+            List<OrderedItemVm> orderItemsVM = new List<OrderedItemVm>();
+            foreach (var item in itemsVM)
+            {
+                orderItemsVM.Add(new OrderedItemVm(item));
+            }
 
-            return PartialView(itemsVM);
+            return PartialView(orderItemsVM);
+        }
+        [HttpPost]
+        public ActionResult Item_ListPartial(string getepassdata)
+        {
+            return View();
         }
 
-        public ActionResult ItemInfo(int X,int Y,int itemId, List<int> items)
+        public ActionResult ItemInfo(int X, int Y, int itemId, List<int> items)
         {
             ViewBag.arr = items;
             ViewBag.Width = X * 3;
