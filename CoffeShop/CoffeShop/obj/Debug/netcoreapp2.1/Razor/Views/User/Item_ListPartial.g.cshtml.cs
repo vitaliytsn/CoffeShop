@@ -274,7 +274,7 @@ WriteAttributeValue("", 2506, item.Item.Id, 2506, 13, false);
             WriteLiteral("\r\n\r\n    ");
             EndContext();
             BeginContext(3288, 51, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1915dfd191ed4b19ad6bbdbc1093047c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9ffcc565c81c451292c6b5f3f52d1894", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

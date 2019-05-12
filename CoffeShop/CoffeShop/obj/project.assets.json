@@ -13631,7 +13631,8 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\VitaliiTSN\\.nuget\\packages\\": {},
+    "C:\\Users\\vitaliyTsn\\.nuget\\packages\\": {},
+    "C:\\ProgramData\\Xamarin\\NuGet\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -13640,15 +13641,17 @@
       "projectUniqueName": "C:\\Projects\\CoffeShopRepo\\CoffeShop\\CoffeShop\\CoffeShop.csproj",
       "projectName": "CoffeShop",
       "projectPath": "C:\\Projects\\CoffeShopRepo\\CoffeShop\\CoffeShop\\CoffeShop.csproj",
-      "packagesPath": "C:\\Users\\VitaliiTSN\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\vitaliyTsn\\.nuget\\packages\\",
       "outputPath": "C:\\Projects\\CoffeShopRepo\\CoffeShop\\CoffeShop\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
+        "C:\\ProgramData\\Xamarin\\NuGet\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\VitaliiTSN\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\vitaliyTsn\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.1"

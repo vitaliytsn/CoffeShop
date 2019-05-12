@@ -174,3 +174,4 @@ C:\Projects\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\CoffeShop.
 C:\Projects\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\CoffeShop.csproj.CopyComplete
 C:\Projects\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\CoffeShop.dll
 C:\Projects\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\CoffeShop.pdb
+C:\Projects\CoffeShopRepo\CoffeShop\CoffeShop\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Components\ItemOrderList\Default.g.cshtml.cs

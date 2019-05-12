@@ -68,7 +68,7 @@ using CoffeShop.Models;
             WriteLiteral("\r\n<div id=\"test\">\r\n    ");
             EndContext();
             BeginContext(78, 110, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e53442c327f94ff296fa641b08fca2a9", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8a81668e6ea74f99985215d2e6258690", async() => {
                 BeginContext(165, 19, true);
                 WriteLiteral("Залишки Компонентів");
                 EndContext();
@@ -98,7 +98,7 @@ using CoffeShop.Models;
             WriteLiteral("\r\n    <hr />\r\n    ");
             EndContext();
             BeginContext(206, 107, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bafd7b48fdb3460fb92e4128c5839e86", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "105ded1ee5b740818a60fa9cbcde9ab0", async() => {
                 BeginContext(294, 15, true);
                 WriteLiteral("Залишки Товарів");
                 EndContext();
@@ -128,7 +128,7 @@ using CoffeShop.Models;
             WriteLiteral("\r\n\r\n</div>\r\n<div class=\"city\"  data-group-name=\"dupa\">???????</div>\r\n");
             EndContext();
             BeginContext(614, 51, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f36c5638cc9b4de7a1144dfa22c6545d", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "83ab60f45ce749bd9b3432b209b5c576", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

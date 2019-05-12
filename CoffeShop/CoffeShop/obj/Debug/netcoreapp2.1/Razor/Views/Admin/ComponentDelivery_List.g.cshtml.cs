@@ -67,7 +67,7 @@ using CoffeShop.Models;
             WriteLiteral("\r\n<!DOCTYPE html>\r\n\r\n<html>\r\n");
             EndContext();
             BeginContext(132, 117, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "241f5d9830d2424997fb5ff1f5071df4", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9ed05af2a8e441579702747dc215ab57", async() => {
                 BeginContext(138, 104, true);
                 WriteLiteral("\r\n    <meta name=\"viewport\" content=\"width=device-width\" />\r\n    <title>ComponentDelivery_List</title>\r\n");
                 EndContext();
@@ -87,12 +87,12 @@ using CoffeShop.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(251, 2057, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "46e05bd2f7544680928957191ce7fb31", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "168b70272f1540a0a9f5393871c85aea", async() => {
                 BeginContext(257, 19, true);
                 WriteLiteral("\r\n    <p>\r\n        ");
                 EndContext();
                 BeginContext(276, 67, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "590c655aaa3a4f59bc9ecc8cb6a50d01", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fcbf17b55a1c4ec4bd7f1d0acc009c84", async() => {
                     BeginContext(317, 22, true);
                     WriteLiteral("Надходження Компоненту");
                     EndContext();
@@ -114,7 +114,7 @@ using CoffeShop.Models;
                 WriteLiteral("\r\n    </p>\r\n    <p>\r\n        ");
                 EndContext();
                 BeginContext(372, 58, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "41faac446f4f4754b4d14e631f07b427", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d0e5e1ab08444216ad2fceeb00645702", async() => {
                     BeginContext(408, 18, true);
                     WriteLiteral("Надходження Товару");
                     EndContext();
@@ -265,7 +265,7 @@ using CoffeShop.Models;
                 WriteLiteral("\r\n                </td>\r\n                <td>\r\n                    ");
                 EndContext();
                 BeginContext(2134, 76, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2ae67bb023654994b85cf8300ac39efb", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "307a3e0285384405b8ec429124190ce1", async() => {
                     BeginContext(2199, 7, true);
                     WriteLiteral("Усунути");
                     EndContext();

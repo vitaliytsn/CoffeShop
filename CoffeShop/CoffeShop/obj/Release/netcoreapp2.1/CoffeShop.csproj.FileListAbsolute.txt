@@ -146,3 +146,4 @@ C:\Projects\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\CoffeSho
 C:\Projects\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\CoffeShop.pdb
 C:\Projects\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\UserSecretsAssemblyInfo.cs
 C:\Projects\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\CoffeShop.csprojAssemblyReference.cache
+C:\Projects\CoffeShopRepo\CoffeShop\CoffeShop\obj\Release\netcoreapp2.1\Razor\Views\Shared\Components\ItemOrderList\Default.g.cshtml.cs

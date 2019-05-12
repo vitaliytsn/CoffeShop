@@ -31,6 +31,7 @@
     </div>
 </div>
 <div id="SellingPartial">
+    @await Component.InvokeAsync("ItemOrderList", new { groupId=@Model.Id,items =@ViewBag.arr })
 </div>
 <div>
    
@@ -42,7 +43,7 @@
    
 </div>
 
-<script type="text/javascript">
+@*<script type="text/javascript">
     window.onload=function () {
         var x = window.innerHeight;
         var y = window.innerWidth;
@@ -52,7 +53,5 @@
         link = link.replace("widthToReplace", y);
         $("#SellingPartial").load(link);
     };
-</script>
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+</script>*@
+

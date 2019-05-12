@@ -48,7 +48,7 @@ namespace CoffeShop.Controllers
                 {
                     for (int i = 0; i < modm.Amount; i++)
                     {
-                        items.Add(modm.ItemId);
+                        items.Add(modm.ItemId); 
                     }
                 }
             }
@@ -86,7 +86,7 @@ namespace CoffeShop.Controllers
                 return NotFound();
             }
             ViewBag.arr = items;
-            return PartialView(itemGroup);
+            return View(itemGroup);
         }
         [HttpPost]
         public ActionResult ItemGroup_Components(string get)
